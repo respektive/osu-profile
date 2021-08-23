@@ -17,9 +17,9 @@
         <Label Content="osu! by peppy" HorizontalAlignment="Right" Margin="0,0,0,-10" VerticalAlignment="Bottom" Foreground="White"/>
         <TextBlock Height="18" HorizontalAlignment="Left" Margin="6,71,0,0" Text="Files" VerticalAlignment="Top" Width="56" TextWrapping="Wrap" Foreground="White" />
         <StackPanel Orientation="Horizontal" Height="36" Width="105" Margin="0,164,0,0" VerticalAlignment="Top" HorizontalAlignment="Right">
-            <TextBox x:Name="txtNum" x:FieldModifier="private" Margin="5,5,0,5" Width="50" Text="0" TextChanged="txtNum_TextChanged" IsReadOnly="False" />
-            <Button x:Name="cmdUp" x:FieldModifier="private" Margin="5,5,0,5" Content="˄" Width="20" Click="cmdUp_Click" />
-            <Button x:Name="cmdDown" x:FieldModifier="private" Margin="0,5,0,5"  Content="˅" Width="20" Click="cmdDown_Click" />
+            <TextBox x:Name="txtNum" x:FieldModifier="private" Margin="5,5,0,5" Width="50" Text="0" TextChanged="txtNum_TextChanged" IsReadOnly="False" Background="#FF111111" Foreground="White" />
+            <Button x:Name="cmdUp" x:FieldModifier="private" Margin="5,5,0,5" Content="˄" Width="20" Click="cmdUp_Click" Background="{x:Null}" Foreground="White" />
+            <Button x:Name="cmdDown" x:FieldModifier="private" Margin="0,5,0,5"  Content="˅" Width="20" Click="cmdDown_Click" Background="{x:Null}" Foreground="White" />
         </StackPanel>
         <Label Content="Time to wait after updating (s)" Height="28" Margin="0,168,105,0" Name="label1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="170" Foreground="White" />
         <ComboBox Height="23" Margin="64,206,0,0" Name="modelist" VerticalAlignment="Top" SelectionChanged="modelist_SelectionChanged" Loaded="modelist_Loaded" Foreground="White" Background="#FF111111" BorderBrush="LightGray">
@@ -30,15 +30,15 @@
         </ComboBox>
         <Label Content="Mode" Height="28" HorizontalAlignment="Left" Margin="6,209,0,0" VerticalAlignment="Top" Foreground="White" />
         <ListBox Height="85" Margin="64,73,62,0" Name="filelist" VerticalAlignment="Top" BorderThickness="1" BorderBrush="LightGray" Background="#FF111111" Foreground="White" />
-        <Button Content="Add" Height="23" Margin="0,73,0,0" Name="add" VerticalAlignment="Top" Click="add_Click" HorizontalAlignment="Right" Width="57" />
-        <Button Content="Edit" Height="23" Margin="0,103,0,0" Name="edit" VerticalAlignment="Top" Click="edit_Click" HorizontalAlignment="Right" Width="57" />
-        <Button Content="Remove" Height="23" Margin="0,133,0,0" Name="remove" VerticalAlignment="Top" Click="remove_Click" HorizontalAlignment="Right" Width="57" />
+        <Button Content="Add" Height="23" Margin="0,73,0,0" Name="add" VerticalAlignment="Top" Click="add_Click" HorizontalAlignment="Right" Width="57" Background="{x:Null}" Foreground="White" />
+        <Button Content="Edit" Height="23" Margin="0,103,0,0" Name="edit" VerticalAlignment="Top" Click="edit_Click" HorizontalAlignment="Right" Width="57" Background="{x:Null}" Foreground="White" />
+        <Button Content="Remove" Height="23" Margin="0,133,0,0" Name="remove" VerticalAlignment="Top" Click="remove_Click" HorizontalAlignment="Right" Width="57" Background="{x:Null}" Foreground="White" />
         <ComboBox Height="23" Margin="64,238,0,0" Name="scoremodelist" VerticalAlignment="Top" SelectionChanged="scoremodelist_SelectionChanged" Loaded="scoremodelist_Loaded" Foreground="White" Background="#FF111111" BorderBrush="LightGray">
             <ComboBoxItem Content="Each game" />
             <ComboBoxItem Content="This session" />
         </ComboBox>
         <Label Content="Score" Height="28" HorizontalAlignment="Left" Margin="6,241,0,0" VerticalAlignment="Top" Foreground="White" />
-        <Button x:Name="rankingButton" Content="Ranking panel elements" Margin="0,269,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="152" Click="rankingButton_Click"/>
+        <Button x:Name="rankingButton" Content="Ranking panel elements" Margin="0,269,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="152" Click="rankingButton_Click" Background="{x:Null}" Foreground="White"/>
         <CheckBox x:Name="alwaysontopcheck" Content="Always on top" Margin="0,299,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="102" Unchecked="alwaysontopcheck_Unchecked" Checked="alwaysontopcheck_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft" Foreground="White"/>
         <CheckBox x:Name="popupEachMap" Content="Popup when you get ranked score" Margin="0,322,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="207" Unchecked="popupEachMap_Unchecked" Checked="popupEachMap_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft" Foreground="White"/>
         <CheckBox x:Name="popupPPUp" Content="Popup when gain PP" Margin="0,345,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="136" Unchecked="popupPP_Unchecked" Checked="popupPP_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft" Foreground="White"/>

@@ -88,9 +88,9 @@
             </TabItem>
             <TabItem Header="Play" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Canvas Margin="0,0,387,179">
-                    <Label Content="Last played beatmaps" Canvas.Left="0" Canvas.Top="0" />
-                    <TextBox x:Name="playedbox" Height="153" Canvas.Left="0" Canvas.Right="0" Canvas.Bottom="0" Width="378" IsEnabled="True" AllowDrop="False" Focusable="False" Canvas.Top="26" IsReadOnly="True" />
-                    <CheckBox Canvas.Top="4" Content="Enabled" Canvas.Right="0" Height="18" Name="beatmapscheck" FlowDirection="RightToLeft" Checked="beatmapscheck_Checked" Unchecked="beatmapscheck_Unchecked" Canvas.Left="312" HorizontalAlignment="Right" />
+                    <Label Content="Last played beatmaps" Canvas.Left="0" Canvas.Top="0" Foreground="White" />
+                    <TextBox x:Name="playedbox" Height="153" Canvas.Left="0" Canvas.Right="0" Canvas.Bottom="0" Width="378" IsEnabled="True" AllowDrop="False" Focusable="False" Canvas.Top="26" IsReadOnly="True" Foreground="White" Background="#FF111111" />
+                    <CheckBox Canvas.Top="4" Content="Enabled" Canvas.Right="0" Height="18" Name="beatmapscheck" FlowDirection="RightToLeft" Checked="beatmapscheck_Checked" Unchecked="beatmapscheck_Unchecked" Canvas.Left="312" HorizontalAlignment="Right" Foreground="White" />
                 </Canvas>
             </TabItem>
         </TabControl>

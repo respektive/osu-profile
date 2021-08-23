@@ -13,7 +13,7 @@
         <CheckBox x:Name="accu" Content="Accuracy" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top" Foreground="White"/>
         <CheckBox x:Name="playcount" Content="Play Count" HorizontalAlignment="Left" Margin="10,171,0,0" VerticalAlignment="Top" Foreground="White"/>
         <CheckBox x:Name="topPP" Content="Top PP" HorizontalAlignment="Left" Margin="10,194,0,0" VerticalAlignment="Top" Foreground="White"/>
-        <Button x:Name="valid" Content="Valid" Margin="10,0,10,10" Click="valid_Click" Height="25" VerticalAlignment="Bottom"/>
+        <Button x:Name="valid" Content="Valid" Margin="10,0,10,10" Click="valid_Click" Height="25" VerticalAlignment="Bottom" Background="{x:Null}" Foreground="White"/>
         <CheckBox x:Name="rankA" Content="Rank A" HorizontalAlignment="Left" Margin="10,217,0,0" VerticalAlignment="Top" Foreground="White"/>
         <CheckBox x:Name="rankS" Content="Rank S" HorizontalAlignment="Left" Margin="10,240,0,0" VerticalAlignment="Top" Foreground="White"/>
         <CheckBox x:Name="rankSH" Content="Rank SH" HorizontalAlignment="Left" Margin="10,263,0,0" VerticalAlignment="Top" Foreground="White"/>
