@@ -1601,7 +1601,7 @@ namespace osu_Profile.Forms
                         MainWindow.MWindow.TotalHitsChangeBox.Foreground = new SolidColorBrush(Colors.Red);
                     }
 
-                    if (hitsperplayDif > 0)
+                    if (hitsperplayDif > 0.1)
                     {
                         MainWindow.MWindow.HitsPerPlayChange = "+" + MainWindow.MWindow.HitsPerPlayChange;
                         MainWindow.MWindow.HitsPerPlayChangeBox.Foreground = new SolidColorBrush(Colors.Green);
