@@ -59,10 +59,32 @@ namespace osu_Profile.OsuAPIObjects
         public float Accuracy { get; set; }
 
         /// <summary>
+        /// The time played by the player
+        /// </summary>
+        [JsonProperty("total_seconds_played", NullValueHandling = NullValueHandling.Ignore)]
+        public int PlayTime { get; set; }
+
+        /// <summary>
         /// The number of maps played by the player
         /// </summary>
         [JsonProperty("playcount", NullValueHandling = NullValueHandling.Ignore)]
         public int PlayCount { get; set; }
+
+        /// <summary>
+        /// The number of total hits by the player
+        /// </summary>
+        [JsonProperty("count300", NullValueHandling = NullValueHandling.Ignore)]
+        public int Count300 { get; set; }
+        [JsonProperty("count100", NullValueHandling = NullValueHandling.Ignore)]
+        public int Count100 { get; set; }
+        [JsonProperty("count50", NullValueHandling = NullValueHandling.Ignore)]
+        public int Count50 { get; set; }
+
+
+        /// <summary>
+        /// The number of total hits devided by placount by the player
+        /// </summary>
+        public float HitsPerPlay { get; set; }
 
         /// <summary>
         /// The number of A ranks made by the player
@@ -93,6 +115,11 @@ namespace osu_Profile.OsuAPIObjects
         /// </summary>
         [JsonProperty("count_rank_ssh", NullValueHandling = NullValueHandling.Ignore)]
         public int RankSSH { get; set; }
+
+        /// <summary>
+        /// The number of total S ranks made by the player
+        /// </summary>
+        public int TotalS { get; set; }
 
         /// <summary>
         /// User's top scores

@@ -4,18 +4,22 @@
         Height="270" Width="300"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="Osu!Profile" WindowStyle="None" ResizeMode="CanMinimize" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" ShowTitleBar="True" ShowIconOnTitleBar="False" Loaded="window1_Loaded" Name="window1" Closed="window1_Closed">
-    <Grid>
-        <Label Content="File Name" Height="28" HorizontalAlignment="Left" Margin="0,12,0,0" Name="label1" VerticalAlignment="Top" />
-        <Label Content="Content" Height="28" HorizontalAlignment="Left" Margin="0,74,0,0" Name="label2" VerticalAlignment="Top" />
-        <TextBox Height="23" HorizontalAlignment="Left" Margin="81,13,0,0" Name="filebox" VerticalAlignment="Top" Width="185" />
-        <TextBox Height="125" HorizontalAlignment="Left" Margin="81,76,0,0" Name="contentbox" VerticalAlignment="Top" Width="185" AcceptsReturn="True" />
-        <StackPanel Orientation="Horizontal" Height="36" Width="185" Margin="0,39,34,0" VerticalAlignment="Top" HorizontalAlignment="Right">
-            <TextBox x:Name="txtNum" x:FieldModifier="private" Margin="5,5,0,5" Width="130" Text="0" TextChanged="txtNum_TextChanged" IsReadOnly="False" />
+    <Grid Background="#FF222222">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="19*"/>
+            <ColumnDefinition Width="56*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="File Name" Height="28" HorizontalAlignment="Left" Margin="0,12,0,0" Name="label1" VerticalAlignment="Top" Foreground="White" />
+        <Label Content="Content" Height="28" HorizontalAlignment="Left" Margin="0,74,0,0" Name="label2" VerticalAlignment="Top" Foreground="White" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="5.223,13,0,0" Name="filebox" VerticalAlignment="Top" Width="185" Grid.Column="1" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+        <TextBox Height="125" HorizontalAlignment="Left" Margin="5.223,76,0,0" Name="contentbox" VerticalAlignment="Top" Width="185" AcceptsReturn="True" Grid.Column="1" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+        <StackPanel Orientation="Horizontal" Height="36" Width="185" Margin="0,39,34,0" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1">
+            <TextBox x:Name="txtNum" x:FieldModifier="private" Margin="5,5,0,5" Width="130" Text="0" TextChanged="txtNum_TextChanged" IsReadOnly="False" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
             <Button x:Name="cmdUp" x:FieldModifier="private" Margin="5,5,0,5" Content="˄" Width="20" Click="cmdUp_Click" />
             <Button x:Name="cmdDown" x:FieldModifier="private" Margin="0,5,0,5"  Content="˅" Width="20" Click="cmdDown_Click" />
         </StackPanel>
-        <Button Content="Valid" Height="23" HorizontalAlignment="Left" Margin="191,207,0,0" Name="valid" VerticalAlignment="Top" Width="75" Click="valid_Click" />
-        <Button Content="Cancel" Height="23" HorizontalAlignment="Left" Margin="110,207,0,0" Name="cancel" VerticalAlignment="Top" Width="75" Click="cancel_Click" />
-        <Label Content="Time to show" HorizontalAlignment="Left" Margin="0,45,0,0" VerticalAlignment="Top" />
+        <Button Content="Valid" Height="23" HorizontalAlignment="Left" Margin="115.223,207,0,0" Name="valid" VerticalAlignment="Top" Width="75" Click="valid_Click" Grid.Column="1" />
+        <Button Content="Cancel" Height="23" HorizontalAlignment="Left" Margin="34.223,207,0,0" Name="cancel" VerticalAlignment="Top" Width="75" Click="cancel_Click" Grid.Column="1" />
+        <Label Content="Time to show" HorizontalAlignment="Left" Margin="0,45,0,0" VerticalAlignment="Top" Foreground="White" Grid.ColumnSpan="2" />
     </Grid>
 </controls:MetroWindow>

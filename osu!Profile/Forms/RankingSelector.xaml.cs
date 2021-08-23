@@ -27,6 +27,7 @@ namespace osu_Profile.Forms
             rankSH.IsChecked = MainWindow.config.GetValue("User", "rankSHbox", "true") == "true";
             rankSS.IsChecked = MainWindow.config.GetValue("User", "rankSSbox", "true") == "true";
             rankSSH.IsChecked = MainWindow.config.GetValue("User", "rankSSHbox", "true") == "true";
+            totalS.IsChecked = MainWindow.config.GetValue("User", "totalSbox", "true") == "true";
         }
         #endregion
 
@@ -47,6 +48,7 @@ namespace osu_Profile.Forms
             MainWindow.config.SetValue("User", "rankSHbox", rankSH.IsChecked ?? false ? "true" : "false");
             MainWindow.config.SetValue("User", "rankSSbox", rankSS.IsChecked ?? false ? "true" : "false");
             MainWindow.config.SetValue("User", "rankSSHbox", rankSSH.IsChecked ?? false ? "true" : "false");
+            MainWindow.config.SetValue("User", "totalSbox", totalS.IsChecked ?? false ? "true" : "false");
             MainWindow.config.Export();
             ((MainWindow)this.Owner).UpdateRankingControls();
             this.Close();

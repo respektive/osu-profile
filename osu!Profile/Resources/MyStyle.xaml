@@ -16,6 +16,7 @@
     <Color x:Key="FlyoutColor">#FFF8F8F8</Color>
 
     <!-- re-set brushes too -->
+
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" />
     <SolidColorBrush x:Key="TextBrush" Color="{StaticResource BlackColor}" />
     <SolidColorBrush x:Key="LabelTextBrush" Color="{StaticResource BlackColor}" />
