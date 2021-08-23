@@ -28,6 +28,10 @@ namespace osu_Profile.Forms
             rankSS.IsChecked = MainWindow.config.GetValue("User", "rankSSbox", "true") == "true";
             rankSSH.IsChecked = MainWindow.config.GetValue("User", "rankSSHbox", "true") == "true";
             totalS.IsChecked = MainWindow.config.GetValue("User", "totalSbox", "true") == "true";
+            totalSS.IsChecked = MainWindow.config.GetValue("User", "totalSSbox", "true") == "true";
+            totalhits.IsChecked = MainWindow.config.GetValue("User", "totalhitsbox", "true") == "true";
+            playtime.IsChecked = MainWindow.config.GetValue("User", "playtimebox", "true") == "true";
+            hitsperplay.IsChecked = MainWindow.config.GetValue("User", "hitsperplaybox", "true") == "true";
         }
         #endregion
 
@@ -49,6 +53,10 @@ namespace osu_Profile.Forms
             MainWindow.config.SetValue("User", "rankSSbox", rankSS.IsChecked ?? false ? "true" : "false");
             MainWindow.config.SetValue("User", "rankSSHbox", rankSSH.IsChecked ?? false ? "true" : "false");
             MainWindow.config.SetValue("User", "totalSbox", totalS.IsChecked ?? false ? "true" : "false");
+            MainWindow.config.SetValue("User", "totalSSbox", totalSS.IsChecked ?? false ? "true" : "false");
+            MainWindow.config.SetValue("User", "totalhitsbox", totalhits.IsChecked ?? false ? "true" : "false");
+            MainWindow.config.SetValue("User", "playtimebox", playtime.IsChecked ?? false ? "true" : "false");
+            MainWindow.config.SetValue("User", "hitsperplaybox", hitsperplay.IsChecked ?? false ? "true" : "false");
             MainWindow.config.Export();
             ((MainWindow)this.Owner).UpdateRankingControls();
             this.Close();
