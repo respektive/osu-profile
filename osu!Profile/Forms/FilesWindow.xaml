@@ -15,11 +15,11 @@
         <TextBox Height="125" HorizontalAlignment="Left" Margin="5.223,76,0,0" Name="contentbox" VerticalAlignment="Top" Width="185" AcceptsReturn="True" Grid.Column="1" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
         <StackPanel Orientation="Horizontal" Height="36" Width="185" Margin="0,39,34,0" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1">
             <TextBox x:Name="txtNum" x:FieldModifier="private" Margin="5,5,0,5" Width="130" Text="0" TextChanged="txtNum_TextChanged" IsReadOnly="False" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
-            <Button x:Name="cmdUp" x:FieldModifier="private" Margin="5,5,0,5" Content="˄" Width="20" Click="cmdUp_Click" />
-            <Button x:Name="cmdDown" x:FieldModifier="private" Margin="0,5,0,5"  Content="˅" Width="20" Click="cmdDown_Click" />
+            <Button x:Name="cmdUp" x:FieldModifier="private" Margin="5,5,0,5" Content="˄" Width="20" Click="cmdUp_Click" Background="{x:Null}" Foreground="White" />
+            <Button x:Name="cmdDown" x:FieldModifier="private" Margin="0,5,0,5"  Content="˅" Width="20" Click="cmdDown_Click" Background="{x:Null}" Foreground="White" />
         </StackPanel>
-        <Button Content="Valid" Height="23" HorizontalAlignment="Left" Margin="115.223,207,0,0" Name="valid" VerticalAlignment="Top" Width="75" Click="valid_Click" Grid.Column="1" />
-        <Button Content="Cancel" Height="23" HorizontalAlignment="Left" Margin="34.223,207,0,0" Name="cancel" VerticalAlignment="Top" Width="75" Click="cancel_Click" Grid.Column="1" />
+        <Button Content="Valid" Height="23" HorizontalAlignment="Left" Margin="115.223,207,0,0" Name="valid" VerticalAlignment="Top" Width="75" Click="valid_Click" Grid.Column="1" Background="{x:Null}" Foreground="White" />
+        <Button Content="Cancel" Height="23" HorizontalAlignment="Left" Margin="34.223,207,0,0" Name="cancel" VerticalAlignment="Top" Width="75" Click="cancel_Click" Grid.Column="1" Background="{x:Null}" Foreground="White" />
         <Label Content="Time to show" HorizontalAlignment="Left" Margin="0,45,0,0" VerticalAlignment="Top" Foreground="White" Grid.ColumnSpan="2" />
     </Grid>
 </controls:MetroWindow>
