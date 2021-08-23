@@ -1683,7 +1683,7 @@ namespace osu_Profile.Forms
 
                     if (totalssCountDif > 0)
                     {
-                        MainWindow.MWindow.TotalSSChange = "+" + MainWindow.MWindow.TotalSChange;
+                        MainWindow.MWindow.TotalSSChange = "+" + MainWindow.MWindow.TotalSSChange;
                         MainWindow.MWindow.TotalSSChangeBox.Foreground = new SolidColorBrush(Colors.Green);
                     }
                     else
