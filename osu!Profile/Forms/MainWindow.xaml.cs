@@ -968,7 +968,7 @@ namespace osu_Profile.Forms
                 SetValue(playtimebox, PlayerActualState.PlayTime, "#,#");
                 SetValue(playcountbox, PlayerActualState.PlayCount, "#,#");
                 SetValue(totalhitsbox, PlayerActualState.Count300 + PlayerActualState.Count100 + PlayerActualState.Count50, "#,#");
-                SetValue(hitsperplaybox, (PlayerActualState.Count300 + PlayerActualState.Count100 + PlayerActualState.Count50) / PlayerActualState.PlayCount, "#,#.##");
+                SetValue(hitsperplaybox, (PlayerActualState.Count300 + PlayerActualState.Count100 + PlayerActualState.Count50) / PlayerActualState.PlayCount, "#,#.#####");
                 SetValue(rankAbox, PlayerActualState.RankA, "#,#");
                 SetValue(rankSbox, PlayerActualState.RankS, "#,#");
                 SetValue(rankSHbox, PlayerActualState.RankSH, "#,#");
@@ -1421,8 +1421,8 @@ namespace osu_Profile.Forms
                     if (MainWindow.MWindow.PlayerActualState.TopRanks != null && MainWindow.MWindow.PlayerActualState.TopRanks.Length > 0)
                         MainWindow.MWindow.TopPP = MainWindow.MWindow.PlayerActualState.TopRanks[0].PP.ToString("#,#.#####", CultureInfo.InvariantCulture);
 
-                    int ppRankDif = 0, ppCountryRankDif = 0, playCountDif = 0, aCountDif = 0, sCountDif = 0, shCountDif = 0, ssCountDif = 0, sshCountDif = 0, totalsCountDif = 0, totalssCountDif = 0, playTimeDif = 0, totalHitsDif = 0, hitsperplayDif = 0;
-                    float levelDif = 0, ppDif = 0, accuracyDif = 0, topPPDif = 0;
+                    int ppRankDif = 0, ppCountryRankDif = 0, aCountDif = 0, sCountDif = 0, shCountDif = 0, ssCountDif = 0, sshCountDif = 0, totalsCountDif = 0, totalssCountDif = 0, playTimeDif = 0;
+                    float levelDif = 0, ppDif = 0, accuracyDif = 0, topPPDif = 0, hitsperplayDif = 0, playCountDif = 0, totalHitsDif = 0;
                     long rankedScoreDif = 0, scoreDif = 0;
                     if (MainWindow.scoremode == 0) // Each game mode
                     {
@@ -1487,7 +1487,7 @@ namespace osu_Profile.Forms
                     MainWindow.MWindow.PlayTimeChange = string.Format("{0}h {1}m {2}s", ptc.Days * 24 + ptc.Hours, ptc.Minutes, ptc.Seconds); ;
                     MainWindow.MWindow.PlayCountChange = playCountDif.ToString("#,#", CultureInfo.InvariantCulture);
                     MainWindow.MWindow.TotalHitsChange = totalHitsDif.ToString("#,#", CultureInfo.InvariantCulture);
-                    MainWindow.MWindow.HitsPerPlayChange = hitsperplayDif.ToString("#,#.##", CultureInfo.InvariantCulture);
+                    MainWindow.MWindow.HitsPerPlayChange = hitsperplayDif.ToString("#,#0.##", CultureInfo.InvariantCulture);
                     MainWindow.MWindow.TopPPChange = topPPDif.ToString("#,#0.#####", CultureInfo.InvariantCulture);
                     MainWindow.MWindow.RankAChange = aCountDif.ToString("#,#", CultureInfo.InvariantCulture);
                     MainWindow.MWindow.RankSChange = sCountDif.ToString("#,#", CultureInfo.InvariantCulture);

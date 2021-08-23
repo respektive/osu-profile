@@ -68,17 +68,17 @@ namespace osu_Profile.OsuAPIObjects
         /// The number of maps played by the player
         /// </summary>
         [JsonProperty("playcount", NullValueHandling = NullValueHandling.Ignore)]
-        public int PlayCount { get; set; }
+        public float PlayCount { get; set; }
 
         /// <summary>
         /// The number of total hits by the player
         /// </summary>
         [JsonProperty("count300", NullValueHandling = NullValueHandling.Ignore)]
-        public int Count300 { get; set; }
+        public float Count300 { get; set; }
         [JsonProperty("count100", NullValueHandling = NullValueHandling.Ignore)]
-        public int Count100 { get; set; }
+        public float Count100 { get; set; }
         [JsonProperty("count50", NullValueHandling = NullValueHandling.Ignore)]
-        public int Count50 { get; set; }
+        public float Count50 { get; set; }
 
 
         /// <summary>
