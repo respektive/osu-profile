@@ -814,7 +814,7 @@ namespace osu_Profile.Forms
         {
             get
             {
-                return rankAchangebox;
+                return rankSHchangebox;
             }
         }
         public TextBox RankSSChangeBox
@@ -1484,7 +1484,14 @@ namespace osu_Profile.Forms
                     MainWindow.MWindow.PPChange = ppDif.ToString("#,#0.##", CultureInfo.InvariantCulture);
                     MainWindow.MWindow.AccuracyChange = accuracyDif.ToString("#,#0.#####", CultureInfo.InvariantCulture);
                     TimeSpan ptc = TimeSpan.FromSeconds(playTimeDif);
-                    MainWindow.MWindow.PlayTimeChange = string.Format("{0}h {1}m {2}s", ptc.Days * 24 + ptc.Hours, ptc.Minutes, ptc.Seconds); ;
+                    if (playTimeDif < 3600)
+                    {
+                        MainWindow.MWindow.PlayTimeChange = string.Format("{0}m {1}s", ptc.Minutes, ptc.Seconds);
+                    }
+                    else
+                    {
+                        MainWindow.MWindow.PlayTimeChange = string.Format("{0}h {1}m {2}s", ptc.Days * 24 + ptc.Hours, ptc.Minutes, ptc.Seconds);
+                    }
                     MainWindow.MWindow.PlayCountChange = playCountDif.ToString("#,#", CultureInfo.InvariantCulture);
                     MainWindow.MWindow.TotalHitsChange = totalHitsDif.ToString("#,#", CultureInfo.InvariantCulture);
                     MainWindow.MWindow.HitsPerPlayChange = hitsperplayDif.ToString("#,#0.##", CultureInfo.InvariantCulture);
@@ -1601,7 +1608,7 @@ namespace osu_Profile.Forms
                         MainWindow.MWindow.TotalHitsChangeBox.Foreground = new SolidColorBrush(Colors.Red);
                     }
 
-                    if (hitsperplayDif > 0.1)
+                    if (hitsperplayDif >= 0.01)
                     {
                         MainWindow.MWindow.HitsPerPlayChange = "+" + MainWindow.MWindow.HitsPerPlayChange;
                         MainWindow.MWindow.HitsPerPlayChangeBox.Foreground = new SolidColorBrush(Colors.Green);
