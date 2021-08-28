@@ -2361,8 +2361,7 @@ namespace osu_Profile.Forms
                             string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID);
                             scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
                             tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
-
-                            if ((tempScoerState != null) && (tempScoerState != PrevScoerState))
+                            if (tempScoerState != null)
                             {
                                 //if your enter top 10000, make starting score rank 10001.
                                 if ((MWindow.PlayerFirstState.scoerinfo == null) && (tempScoerState != null))
