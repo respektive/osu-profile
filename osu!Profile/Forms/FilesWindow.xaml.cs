@@ -81,7 +81,7 @@ namespace osu_Profile.Forms
                 + "[/ssrank] for SS ranks" + Environment.NewLine
                 + "[/sshrank] for SSH ranks" + Environment.NewLine
                 + "[/totals] for total S ranks" + Environment.NewLine
-                + "[/totalss] for total SSranks" + Environment.NewLine
+                + "[/totalss] for total SS ranks" + Environment.NewLine
                 + "[/clears] for profile clears" + Environment.NewLine
                 + "[/scorerank] for Score Rank (STD only)"
                 + Environment.NewLine + Environment.NewLine
