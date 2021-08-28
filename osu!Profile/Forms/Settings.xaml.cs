@@ -204,6 +204,7 @@ namespace osu_Profile.Forms
 
         private void scoremodelist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            MainWindow.scoremodeOld = MainWindow.scoremode;
             MainWindow.scoremode = scoremodelist.SelectedIndex;
             config.SetValue("User", "scoremode", MainWindow.scoremode.ToString());
         }
@@ -212,7 +213,7 @@ namespace osu_Profile.Forms
         {
             try
             {
-                MainWindow.scoremode = int.Parse(config.GetValue("User", "scoremode", "0"));
+                MainWindow.scoremode = int.Parse(config.GetValue("User", "scoremode", "1"));
             }
             catch (Exception) { }
             if (MainWindow.scoremode < 0) MainWindow.scoremode = 0; if (MainWindow.scoremode > 1) MainWindow.scoremode = 1;

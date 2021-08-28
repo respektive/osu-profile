@@ -35,6 +35,12 @@ namespace osu_Profile.OsuAPIObjects
         public int PPRank { get; set; }
 
         /// <summary>
+        /// Score api return
+        /// </summary>
+        [JsonProperty("score_rank", NullValueHandling = NullValueHandling.Ignore)]
+        public Scoerapi scoerinfo { get; set; }
+
+        /// <summary>
         /// The rank in performance ranking of the player in the country
         /// </summary>
         [JsonProperty("pp_country_rank", NullValueHandling = NullValueHandling.Ignore)]
@@ -124,11 +130,23 @@ namespace osu_Profile.OsuAPIObjects
         /// <summary>
         /// User's top scores
         /// <summary>
-        public Score[] TopRanks { get; set;}
+        public Score[] TopRanks { get; set; }
 
         /// <summary>
         /// Profile mode
         /// </summary>
         public int Mode { get; set; }
+
+        /// <summary>
+        /// Number of clears the player has
+        /// </summary>
+        [JsonProperty("clears", NullValueHandling = NullValueHandling.Ignore)]
+        public int Clears { get; set; }
+
+        /// <summary>
+        /// Completion percentage (All Ranked and loved maps)
+        /// </summary>
+        [JsonProperty("completion", NullValueHandling = NullValueHandling.Ignore)]
+        public int Completion { get; set; }
     }
 }

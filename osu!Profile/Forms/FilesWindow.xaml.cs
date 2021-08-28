@@ -81,7 +81,9 @@ namespace osu_Profile.Forms
                 + "[/ssrank] for SS ranks" + Environment.NewLine
                 + "[/sshrank] for SSH ranks" + Environment.NewLine
                 + "[/totals] for total S ranks" + Environment.NewLine
-                + "[/totalss] for total SSranks"
+                + "[/totalss] for total SS ranks" + Environment.NewLine
+                + "[/clears] for profile clears" + Environment.NewLine
+                + "[/scorerank] for Score Rank (STD only)"
                 + Environment.NewLine + Environment.NewLine
 
                 + "[/rankedscorechange] for ranked score difference" + Environment.NewLine
@@ -102,7 +104,9 @@ namespace osu_Profile.Forms
                 + "[/ssrankchange] for SS rank difference" + Environment.NewLine
                 + "[/sshrankchange] for SSH rank difference" + Environment.NewLine
                 + "[/totalschange] for total S rank difference" + Environment.NewLine
-                + "[/totalsschange] for total SS rank difference"
+                + "[/totalsschange] for total SS rank difference" + Environment.NewLine
+                + "[/clearschange] for profile clear difference" + Environment.NewLine
+                + "[/scorerankchange] for Score Rank Change (STD only)"
                 + Environment.NewLine + Environment.NewLine
 
                 + "[/lpbArtist] for the last played beatmap's artist" + Environment.NewLine

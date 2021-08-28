@@ -142,6 +142,8 @@
     <Compile Include="OsuAPIObjects\Beatmap.cs" />
     <Compile Include="OsuAPIObjects\Event.cs" />
     <Compile Include="IO\OutputFile.cs" />
+    <Compile Include="OsuAPIObjects\Mapsapi.cs" />
+    <Compile Include="OsuAPIObjects\Scoerapi.cs" />
     <Compile Include="OsuAPIObjects\Player.cs" />
     <Compile Include="Forms\RankingSelector.xaml.cs">
       <DependentUpon>RankingSelector.xaml</DependentUpon>
