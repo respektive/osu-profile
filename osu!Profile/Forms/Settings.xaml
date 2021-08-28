@@ -6,45 +6,45 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" Height="489.373" Width="352" Loaded="UserControl_Loaded">
-    <Grid Margin="10">
-        <TextBox x:Name="userbox" Height="23" Margin="64,10,62,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.48,0.53" KeyUp="userbox_KeyUp"/>
-        <Label Content="User" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,9,0,0" RenderTransformOrigin="0.706,0.692"/>
-        <Button x:Name="button" Content="Check" Margin="0,10,0,0" VerticalAlignment="Top" Click="Button_Click" Background="{x:Null}" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Width="57"/>
-        <Label Content="API key" HorizontalAlignment="Left" Margin="0,40,0,0" VerticalAlignment="Top"/>
-        <PasswordBox x:Name="apibox" Margin="64,41,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="versiontext" Content="Version" HorizontalAlignment="Left" Margin="7,0,0,-10" VerticalAlignment="Bottom" />
-        <Label Content="osu!profile by Entrivax" HorizontalAlignment="Right" Margin="0,0,0,5" VerticalAlignment="Bottom"/>
-        <Label Content="osu! by peppy" HorizontalAlignment="Right" Margin="0,0,0,-10" VerticalAlignment="Bottom"/>
-        <TextBlock Height="18" HorizontalAlignment="Left" Margin="6,71,0,0" Text="Files" VerticalAlignment="Top" Width="56" TextWrapping="Wrap" />
+    <Grid Margin="10" Background="#FF222222">
+        <TextBox x:Name="userbox" Height="23" Margin="64,10,62,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.48,0.53" KeyUp="userbox_KeyUp" Background="#FF111111" BorderBrush="LightGray" Foreground="White"/>
+        <Label Content="User" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,9,0,0" RenderTransformOrigin="0.706,0.692" Foreground="White"/>
+        <Button x:Name="button" Content="Check" Margin="0,10,0,0" VerticalAlignment="Top" Click="Button_Click" Background="{x:Null}" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Width="57" Foreground="White"/>
+        <Label Content="API key" HorizontalAlignment="Left" Margin="0,40,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <PasswordBox x:Name="apibox" Margin="64,41,0,0" VerticalAlignment="Top" Background="#FF111111" BorderBrush="LightGray"/>
+        <Label x:Name="versiontext" Content="Version" HorizontalAlignment="Left" Margin="7,0,0,-10" VerticalAlignment="Bottom" Foreground="White" />
+        <Label Content="osu!profile by Entrivax" HorizontalAlignment="Right" Margin="0,0,0,5" VerticalAlignment="Bottom" Foreground="White"/>
+        <Label Content="osu! by peppy" HorizontalAlignment="Right" Margin="0,0,0,-10" VerticalAlignment="Bottom" Foreground="White"/>
+        <TextBlock Height="18" HorizontalAlignment="Left" Margin="6,71,0,0" Text="Files" VerticalAlignment="Top" Width="56" TextWrapping="Wrap" Foreground="White" />
         <StackPanel Orientation="Horizontal" Height="36" Width="105" Margin="0,164,0,0" VerticalAlignment="Top" HorizontalAlignment="Right">
-            <TextBox x:Name="txtNum" x:FieldModifier="private" Margin="5,5,0,5" Width="50" Text="0" TextChanged="txtNum_TextChanged" IsReadOnly="False" />
-            <Button x:Name="cmdUp" x:FieldModifier="private" Margin="5,5,0,5" Content="˄" Width="20" Click="cmdUp_Click" />
-            <Button x:Name="cmdDown" x:FieldModifier="private" Margin="0,5,0,5"  Content="˅" Width="20" Click="cmdDown_Click" />
+            <TextBox x:Name="txtNum" x:FieldModifier="private" Margin="5,5,0,5" Width="50" Text="0" TextChanged="txtNum_TextChanged" IsReadOnly="False" Background="#FF111111" Foreground="White" />
+            <Button x:Name="cmdUp" x:FieldModifier="private" Margin="5,5,0,5" Content="˄" Width="20" Click="cmdUp_Click" Background="{x:Null}" Foreground="White" />
+            <Button x:Name="cmdDown" x:FieldModifier="private" Margin="0,5,0,5"  Content="˅" Width="20" Click="cmdDown_Click" Background="{x:Null}" Foreground="White" />
         </StackPanel>
-        <Label Content="Time to wait after updating (s)" Height="28" Margin="0,168,105,0" Name="label1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="170" />
-        <ComboBox Height="23" Margin="64,206,0,0" Name="modelist" VerticalAlignment="Top" SelectionChanged="modelist_SelectionChanged" Loaded="modelist_Loaded">
+        <Label Content="Time to wait after updating (s)" Height="28" Margin="0,168,105,0" Name="label1" VerticalAlignment="Top" HorizontalAlignment="Right" Width="170" Foreground="White" />
+        <ComboBox Height="23" Margin="64,206,0,0" Name="modelist" VerticalAlignment="Top" SelectionChanged="modelist_SelectionChanged" Loaded="modelist_Loaded" Foreground="White" Background="#FF111111" BorderBrush="LightGray">
             <ComboBoxItem Content="osu!" />
             <ComboBoxItem Content="Taiko" />
             <ComboBoxItem Content="Catch the Beat" />
             <ComboBoxItem Content="osu!mania" />
         </ComboBox>
-        <Label Content="Mode" Height="28" HorizontalAlignment="Left" Margin="6,209,0,0" VerticalAlignment="Top" />
-        <ListBox Height="85" Margin="64,73,62,0" Name="filelist" VerticalAlignment="Top" BorderThickness="1" BorderBrush="#FFCCCCCC" />
-        <Button Content="Add" Height="23" Margin="0,73,0,0" Name="add" VerticalAlignment="Top" Click="add_Click" HorizontalAlignment="Right" Width="57" />
-        <Button Content="Edit" Height="23" Margin="0,103,0,0" Name="edit" VerticalAlignment="Top" Click="edit_Click" HorizontalAlignment="Right" Width="57" />
-        <Button Content="Remove" Height="23" Margin="0,133,0,0" Name="remove" VerticalAlignment="Top" Click="remove_Click" HorizontalAlignment="Right" Width="57" />
-        <ComboBox Height="23" Margin="64,238,0,0" Name="scoremodelist" VerticalAlignment="Top" SelectionChanged="scoremodelist_SelectionChanged" Loaded="scoremodelist_Loaded">
+        <Label Content="Mode" Height="28" HorizontalAlignment="Left" Margin="6,209,0,0" VerticalAlignment="Top" Foreground="White" />
+        <ListBox Height="85" Margin="64,73,62,0" Name="filelist" VerticalAlignment="Top" BorderThickness="1" BorderBrush="LightGray" Background="#FF111111" Foreground="White" />
+        <Button Content="Add" Height="23" Margin="0,73,0,0" Name="add" VerticalAlignment="Top" Click="add_Click" HorizontalAlignment="Right" Width="57" Background="{x:Null}" Foreground="White" />
+        <Button Content="Edit" Height="23" Margin="0,103,0,0" Name="edit" VerticalAlignment="Top" Click="edit_Click" HorizontalAlignment="Right" Width="57" Background="{x:Null}" Foreground="White" />
+        <Button Content="Remove" Height="23" Margin="0,133,0,0" Name="remove" VerticalAlignment="Top" Click="remove_Click" HorizontalAlignment="Right" Width="57" Background="{x:Null}" Foreground="White" />
+        <ComboBox Height="23" Margin="64,238,0,0" Name="scoremodelist" VerticalAlignment="Top" SelectionChanged="scoremodelist_SelectionChanged" Loaded="scoremodelist_Loaded" Foreground="White" Background="#FF111111" BorderBrush="LightGray">
             <ComboBoxItem Content="Each game" />
             <ComboBoxItem Content="This session" />
         </ComboBox>
-        <Label Content="Score" Height="28" HorizontalAlignment="Left" Margin="6,241,0,0" VerticalAlignment="Top" />
-        <Button x:Name="rankingButton" Content="Ranking panel elements" Margin="0,269,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="152" Click="rankingButton_Click"/>
-        <CheckBox x:Name="alwaysontopcheck" Content="Always on top" Margin="0,299,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="102" Unchecked="alwaysontopcheck_Unchecked" Checked="alwaysontopcheck_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft"/>
-        <CheckBox x:Name="popupEachMap" Content="Popup when you get ranked score" Margin="0,322,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="207" Unchecked="popupEachMap_Unchecked" Checked="popupEachMap_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft"/>
-        <CheckBox x:Name="popupPPUp" Content="Popup when gain PP" Margin="0,345,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="136" Unchecked="popupPP_Unchecked" Checked="popupPP_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft"/>
-        <toolkit:ColorPicker x:Name="backgroundColor" Margin="64,368,0,0" Height="22" VerticalAlignment="Top" ColorMode="ColorCanvas" ShowAvailableColors="False" ShowAdvancedButton="False" ShowDropDownButton="False" ShowStandardColors="False" UsingAlphaChannel="False" SelectedColorChanged="backgroundColor_SelectedColorChanged" Loaded="backgroundColor_Loaded"/>
-        <Label Content="Color" HorizontalAlignment="Left" Margin="6,366,0,0" Height="26" VerticalAlignment="Top"/>
-        <CheckBox x:Name="checkOnStart" Content="Check on start" Margin="0,395,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="102" Unchecked="checkOnStart_Unchecked" Checked="checkOnStart_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft"/>
-        <CheckBox x:Name="startWithWindows" Content="Start with Windows" Margin="0,418,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="127" Unchecked="startWithWindows_Unchecked" Checked="startWithWindows_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft"/>
+        <Label Content="Score" Height="28" HorizontalAlignment="Left" Margin="6,241,0,0" VerticalAlignment="Top" Foreground="White" />
+        <Button x:Name="rankingButton" Content="Ranking panel elements" Margin="0,269,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="152" Click="rankingButton_Click" Background="{x:Null}" Foreground="White"/>
+        <CheckBox x:Name="alwaysontopcheck" Content="Always on top" Margin="0,299,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="102" Unchecked="alwaysontopcheck_Unchecked" Checked="alwaysontopcheck_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft" Foreground="White"/>
+        <CheckBox x:Name="popupEachMap" Content="Popup when you get ranked score" Margin="0,322,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="207" Unchecked="popupEachMap_Unchecked" Checked="popupEachMap_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft" Foreground="White"/>
+        <CheckBox x:Name="popupPPUp" Content="Popup when gain PP" Margin="0,345,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="136" Unchecked="popupPP_Unchecked" Checked="popupPP_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft" Foreground="White"/>
+        <toolkit:ColorPicker x:Name="backgroundColor" Margin="64,368,0,0" Height="22" VerticalAlignment="Top" ColorMode="ColorCanvas" ShowAvailableColors="False" ShowAdvancedButton="False" ShowDropDownButton="False" ShowStandardColors="False" UsingAlphaChannel="False" SelectedColorChanged="backgroundColor_SelectedColorChanged" Loaded="backgroundColor_Loaded" Background="#FF111111" BorderBrush="LightGray"/>
+        <Label Content="Color" HorizontalAlignment="Left" Margin="6,366,0,0" Height="26" VerticalAlignment="Top" Foreground="White"/>
+        <CheckBox x:Name="checkOnStart" Content="Check on start" Margin="0,395,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="102" Unchecked="checkOnStart_Unchecked" Checked="checkOnStart_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft" Foreground="White"/>
+        <CheckBox x:Name="startWithWindows" Content="Start with Windows" Margin="0,418,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="127" Unchecked="startWithWindows_Unchecked" Checked="startWithWindows_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft" Foreground="White"/>
     </Grid>
 </UserControl>

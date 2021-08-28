@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:OP="clr-namespace:osu_Profile.Forms"
-        Title="Osu!Profile" WindowStyle="None" ResizeMode="CanMinimize" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" ShowTitleBar="True" ShowIconOnTitleBar="False" Loaded="MetroWindow_Loaded" Name="window" Height="520" Width="413">
+        Title="Osu!Profile" WindowStyle="None" ResizeMode="CanMinimize" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" ShowTitleBar="True" ShowIconOnTitleBar="False" Loaded="MetroWindow_Loaded" Name="window" Height="721" Width="413" NonActiveWindowTitleBrush="#FF333333">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,6 +11,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <Controls:MetroWindow.Background>
+        <SolidColorBrush Color="#FF222222"/>
+    </Controls:MetroWindow.Background>
 
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -20,55 +23,76 @@
         <TabControl SelectionChanged="TabControl_SelectionChanged" Name="tab" VerticalAlignment="Top" HorizontalAlignment="Left">
             <TabItem Header="Ranking" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Canvas HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top">
-                    <Label x:Name="levelLab" Content="Level" Canvas.Left="0" Canvas.Top="14" />
-                    <TextBox x:Name="levelbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Width="162" AllowDrop="False" Focusable="False" IsEnabled="True" TextAlignment="Right" IsReadOnly="True" Canvas.Top="14" />
-                    <Label x:Name="rscoreLab" Content="Ranked Score" Canvas.Top="45" Canvas.Left="0" />
-                    <TextBox x:Name="rankedbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="45" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <Label x:Name="tscoreLab" Content="Total Score" Canvas.Top="76" Canvas.Left="0" />
-                    <TextBox x:Name="totalbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="76" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <Label x:Name="rankLab" Content="Performance Rank" Canvas.Top="107" Canvas.Left="0" />
-                    <TextBox x:Name="rankbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="107" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <Label x:Name="ppLab" Content="PP" Canvas.Top="169" Canvas.Left="0" />
-                    <TextBox x:Name="ppbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="169" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <TextBox x:Name="ppchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="169" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" />
-                    <Label x:Name="accuLab" Content="Accuracy" Canvas.Top="200" Canvas.Left="0" />
-                    <TextBox x:Name="accuracybox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="200" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <TextBox x:Name="rankchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="107" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" />
-                    <TextBox x:Name="levelchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Canvas.Top="14" />
-                    <TextBox x:Name="rankedscorechangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="45" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" />
-                    <TextBox x:Name="totalscorechangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="76" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" />
-                    <TextBox x:Name="accuracychangebox" Height="23" Canvas.Right="-327" TextWrapping="Wrap" Text="" Canvas.Top="200" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Canvas.Left="279" />
-                    <Label x:Name="playcountLab" Content="Play Count" Canvas.Top="231" Canvas.Left="0" />
-                    <TextBox x:Name="playcountbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="231" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <TextBox x:Name="playcountchangebox" Height="23" Canvas.Right="-327" TextWrapping="Wrap" Text="" Canvas.Top="231" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Canvas.Left="279" />
-                    <Label x:Name="topPPLab" Content="Top PP" Canvas.Top="262" Canvas.Left="0" />
-                    <TextBox x:Name="topPPbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="262" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <TextBox x:Name="topPPchangebox" Height="23" Canvas.Right="-327" TextWrapping="Wrap" Text="" Canvas.Top="262" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Canvas.Left="279" />
-                    <Label x:Name="countryrankLab" Content="Country Rank" Canvas.Top="138" Canvas.Left="0" />
-                    <TextBox x:Name="countryrankbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="138" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <TextBox x:Name="countryrankchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="138" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" />
-                    <Label x:Name="rankALab" Content="Rank A" Canvas.Top="293" Canvas.Left="0" />
-                    <TextBox x:Name="rankAbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="294" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <TextBox x:Name="rankAchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="294" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" />
-                    <Label x:Name="rankSLab" Content="Rank S" Canvas.Top="324" Canvas.Left="0" />
-                    <TextBox x:Name="rankSbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="325" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <TextBox x:Name="rankSchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="325" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" />
-                    <Label x:Name="rankSHLab" Content="Rank SH" Canvas.Top="355" Canvas.Left="0" />
-                    <TextBox x:Name="rankSHbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="356" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <TextBox x:Name="rankSHchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="356" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" />
-                    <Label x:Name="rankSSLab" Content="Rank SS" Canvas.Top="386" Canvas.Left="0" />
-                    <TextBox x:Name="rankSSbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="387" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <TextBox x:Name="rankSSchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="387" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" />
-                    <Label x:Name="rankSSHLab" Content="Rank SSH" Canvas.Top="417" Canvas.Left="0" />
-                    <TextBox x:Name="rankSSHbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="418" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" />
-                    <TextBox x:Name="rankSSHchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="418" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" />
+                    <Label x:Name="levelLab" Content="Level" Canvas.Left="0" Canvas.Top="14" Foreground="White" />
+                    <TextBox x:Name="levelbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Width="162" AllowDrop="False" Focusable="False" IsEnabled="True" TextAlignment="Right" IsReadOnly="True" Canvas.Top="14" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="levelchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Canvas.Top="14" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="rscoreLab" Content="Ranked Score" Canvas.Top="45" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="rankedbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="45" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="scorerankLab" Content="Score Rank" Canvas.Top="76" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="scorerankbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="76" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="scorerankchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="76" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="tscoreLab" Content="Total Score" Canvas.Top="107" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="totalbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="107" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="rankLab" Content="Performance Rank" Canvas.Top="138" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="rankbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="138" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="ppLab" Content="PP" Canvas.Top="200" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="ppbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="200" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="ppchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="200" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="accuLab" Content="Accuracy" Canvas.Top="231" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="accuracybox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="231" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="rankchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="138" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="rankedscorechangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="45" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="totalscorechangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="107" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="accuracychangebox" Height="23" Canvas.Right="-327" TextWrapping="Wrap" Text="" Canvas.Top="231" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Canvas.Left="279" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="playcountLab" Content="Play Count" Canvas.Top="293" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="playcountbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="293" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="playcountchangebox" Height="23" Canvas.Right="-327" TextWrapping="Wrap" Text="" Canvas.Top="293" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Canvas.Left="279" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="topPPLab" Content="Top PP" Canvas.Top="386" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="topPPbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="386" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="topPPchangebox" Height="23" Canvas.Right="-327" TextWrapping="Wrap" Text="" Canvas.Top="386" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Canvas.Left="279" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="countryrankLab" Content="Country Rank" Canvas.Top="169" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="countryrankbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="169" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="countryrankchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="169" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="rankALab" Content="Rank A" Canvas.Top="417" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="rankAbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="417" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="rankAchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="417" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="rankSLab" Content="Rank S" Canvas.Top="448" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="rankSbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="448" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="rankSchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="448" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="rankSHLab" Content="Rank SH" Canvas.Top="479" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="rankSHbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="479" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="rankSHchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="479" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="rankSSLab" Content="Rank SS" Canvas.Top="510" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="rankSSbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="510" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="rankSSchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="510" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="rankSSHLab" Content="Rank SSH" Canvas.Top="541" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="rankSSHbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="541" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="rankSSHchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="541" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="totalSLab" Content="Total S" Canvas.Top="572" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="totalSbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="572" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="totalSchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="572" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="totalSSLab" Content="Total SS" Canvas.Top="603" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="totalSSbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="603" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="totalSSchangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="603" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="totalhitsLab" Content="Total Hits" Canvas.Top="324" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="totalhitsbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="324" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="totalhitschangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="324" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="playtimeLab" Content="Play Time" Canvas.Top="262" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="playtimebox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="262" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="playtimechangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="262" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="hitsperplayLab" Content="Hits per Play" Canvas.Top="355" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="hitsperplaybox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="355" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="hitsperplaychangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="355" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <Label x:Name="clearsLab" Content="Profile Clears" Canvas.Top="634" Canvas.Left="0" Foreground="White" />
+                    <TextBox x:Name="clearsbox" Height="23" Canvas.Left="112" TextWrapping="Wrap" Text="" Canvas.Top="634" Width="162" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Right" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
+                    <TextBox x:Name="clearschangebox" Height="23" Canvas.Left="279" TextWrapping="Wrap" Text="" Canvas.Top="634" Width="100" IsEnabled="True" AllowDrop="False" Focusable="False" TextAlignment="Left" IsReadOnly="True" Background="#FF111111" BorderBrush="LightGray" Foreground="White" />
                 </Canvas>
             </TabItem>
             <TabItem Header="Play" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Canvas Margin="0,0,387,179">
-                    <Label Content="Last played beatmaps" Canvas.Left="0" Canvas.Top="0" />
-                    <TextBox x:Name="playedbox" Height="153" Canvas.Left="0" Canvas.Right="0" Canvas.Bottom="0" Width="378" IsEnabled="True" AllowDrop="False" Focusable="False" Canvas.Top="26" IsReadOnly="True" />
-                    <CheckBox Canvas.Top="4" Content="Enabled" Canvas.Right="0" Height="18" Name="beatmapscheck" FlowDirection="RightToLeft" Checked="beatmapscheck_Checked" Unchecked="beatmapscheck_Unchecked" Canvas.Left="312" HorizontalAlignment="Right" />
+                    <Label Content="Last played beatmaps" Canvas.Left="0" Canvas.Top="0" Foreground="White" />
+                    <TextBox x:Name="playedbox" Height="153" Canvas.Left="0" Canvas.Right="0" Canvas.Bottom="0" Width="378" IsEnabled="True" AllowDrop="False" Focusable="False" Canvas.Top="26" IsReadOnly="True" Foreground="White" Background="#FF111111" />
+                    <CheckBox Canvas.Top="4" Content="Enabled" Canvas.Right="0" Height="18" Name="beatmapscheck" FlowDirection="RightToLeft" Checked="beatmapscheck_Checked" Unchecked="beatmapscheck_Unchecked" Canvas.Left="312" HorizontalAlignment="Right" Foreground="White" />
                 </Canvas>
             </TabItem>
         </TabControl>
@@ -84,7 +108,7 @@
     </Grid>
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl Margin="0,30,0,0">
-            <Controls:Flyout x:Name="Options" Header="Settings" Position="Right" Width="413" ScrollViewer.CanContentScroll="True" Theme="Adapt" ClosingFinished="Options_ClosingFinished">
+            <Controls:Flyout x:Name="Options" Header="Settings" Position="Right" Width="413" ScrollViewer.CanContentScroll="True" Theme="Adapt" ClosingFinished="Options_ClosingFinished" Background="#FF222222" Foreground="White">
                 <Grid Margin="0,0,10,0">
                     <ScrollViewer>
                         <OP:Settings x:Name="settingsPanel" Width="382"/>

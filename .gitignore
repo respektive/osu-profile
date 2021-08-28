@@ -2,6 +2,7 @@
 /.project
 /osu!Profile/bin/
 /osu!Profile/obj/
+.vs/
 
 # Windows image file caches
 Thumbs.db
@@ -84,3 +85,4 @@ Temporary Items
 osu!Profile/osu!Profile/bin/
 osu!Profile/osu!Profile/obj/
 >>>>>>> fc139be0b15e249571951fec75048852fa6034aa
+.vs/osu!Profile/v16/.suo

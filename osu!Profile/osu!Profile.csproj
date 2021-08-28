@@ -142,6 +142,8 @@
     <Compile Include="OsuAPIObjects\Beatmap.cs" />
     <Compile Include="OsuAPIObjects\Event.cs" />
     <Compile Include="IO\OutputFile.cs" />
+    <Compile Include="OsuAPIObjects\Mapsapi.cs" />
+    <Compile Include="OsuAPIObjects\Scoerapi.cs" />
     <Compile Include="OsuAPIObjects\Player.cs" />
     <Compile Include="Forms\RankingSelector.xaml.cs">
       <DependentUpon>RankingSelector.xaml</DependentUpon>
@@ -241,6 +243,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config.ini" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

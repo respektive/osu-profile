@@ -63,36 +63,50 @@ namespace osu_Profile.Forms
             contentbox.Text = content;
             TimeToWait = time.ToString();
 
-            contentbox.ToolTip = "[/rs] for ranked score" + Environment.NewLine
-                + "[/ts] for total score" + Environment.NewLine
-                + "[/l] for level" + Environment.NewLine
-                + "[/r] for performance rank" + Environment.NewLine
-                + "[/cr] for country rank" + Environment.NewLine
+            contentbox.ToolTip = "[/rankedscore] for ranked score" + Environment.NewLine
+                + "[/totalscore] for total score" + Environment.NewLine
+                + "[/lvl] for level" + Environment.NewLine
+                + "[/rank] for performance rank" + Environment.NewLine
+                + "[/countryrank] for country rank" + Environment.NewLine
                 + "[/pp] for PP" + Environment.NewLine
-                + "[/a] for accuracy" + Environment.NewLine
-                + "[/pc] for play count" + Environment.NewLine
+                + "[/acc] for accuracy" + Environment.NewLine
+                + "[/playtime] for play time" + Environment.NewLine
+                + "[/playcount] for play count" + Environment.NewLine
+                + "[/totalhits] for total hits" + Environment.NewLine
+                + "[/hitsperplay] for hits per play" + Environment.NewLine
                 + "[/toppp] for the top PP" + Environment.NewLine 
-                + "[/ra] for A ranks" + Environment.NewLine
-                + "[/rs] for S ranks" + Environment.NewLine
-                + "[/rsh] for SH ranks" + Environment.NewLine
-                + "[/rss] for SS ranks" + Environment.NewLine
-                + "[/rssh] for SSH ranks" 
+                + "[/arank] for A ranks" + Environment.NewLine
+                + "[/srank] for S ranks" + Environment.NewLine
+                + "[/shrank] for SH ranks" + Environment.NewLine
+                + "[/ssrank] for SS ranks" + Environment.NewLine
+                + "[/sshrank] for SSH ranks" + Environment.NewLine
+                + "[/totals] for total S ranks" + Environment.NewLine
+                + "[/totalss] for total SSranks" + Environment.NewLine
+                + "[/clears] for total clears (With loved)" + Environment.NewLine
+                + "[/scorerank] for Score Rank (STD only)"
                 + Environment.NewLine + Environment.NewLine
 
-                + "[/rsc] for ranked score difference" + Environment.NewLine
-                + "[/tsc] for total score difference" + Environment.NewLine
-                + "[/lc] for level difference" + Environment.NewLine
-                + "[/rc] for performance rank difference" + Environment.NewLine
-                + "[/crc] for country rank difference" + Environment.NewLine
-                + "[/ppc] for PP difference" + Environment.NewLine
-                + "[/ac] for accuracy difference" + Environment.NewLine
-                + "[/pcc] for play count difference" + Environment.NewLine
-                + "[/topppc] for the top PP difference" + Environment.NewLine 
-                + "[/rac] for A rank difference" + Environment.NewLine
-                + "[/rsc] for S rank difference" + Environment.NewLine
-                + "[/rshc] for SH rank difference" + Environment.NewLine
-                + "[/rssc] for SS rank difference" + Environment.NewLine
-                + "[/rsshc] for SSH rank difference" 
+                + "[/rankedscorechange] for ranked score difference" + Environment.NewLine
+                + "[/totalscorechange] for total score difference" + Environment.NewLine
+                + "[/lvlchange] for level difference" + Environment.NewLine
+                + "[/rankchange] for performance rank difference" + Environment.NewLine
+                + "[/countryrankchange] for country rank difference" + Environment.NewLine
+                + "[/ppchange] for PP difference" + Environment.NewLine
+                + "[/accchange] for accuracy difference" + Environment.NewLine
+                + "[/playtimechange] for play time difference" + Environment.NewLine
+                + "[/playcountchange] for play count difference" + Environment.NewLine
+                + "[/totalhitschange] for total hits difference" + Environment.NewLine
+                + "[/hitsperplaychange] for hits per play difference" + Environment.NewLine
+                + "[/topppchange] for the top PP difference" + Environment.NewLine 
+                + "[/arankchange] for A rank difference" + Environment.NewLine
+                + "[/srankchange] for S rank difference" + Environment.NewLine
+                + "[/shrankchange] for SH rank difference" + Environment.NewLine
+                + "[/ssrankchange] for SS rank difference" + Environment.NewLine
+                + "[/sshrankchange] for SSH rank difference" + Environment.NewLine
+                + "[/totalschange] for total S rank difference" + Environment.NewLine
+                + "[/totalsschange] for total SS rank difference" + Environment.NewLine
+                + "[/clearschange] for total clears difference" + Environment.NewLine
+                + "[/scorerankchange] for Score Rank Change (STD only)"
                 + Environment.NewLine + Environment.NewLine
 
                 + "[/lpbArtist] for the last played beatmap's artist" + Environment.NewLine

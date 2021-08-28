@@ -35,6 +35,12 @@ namespace osu_Profile.OsuAPIObjects
         public int PPRank { get; set; }
 
         /// <summary>
+        /// Score api return
+        /// </summary>
+        [JsonProperty("score_rank", NullValueHandling = NullValueHandling.Ignore)]
+        public Scoerapi scoerinfo { get; set; }
+
+        /// <summary>
         /// The rank in performance ranking of the player in the country
         /// </summary>
         [JsonProperty("pp_country_rank", NullValueHandling = NullValueHandling.Ignore)]
@@ -59,10 +65,32 @@ namespace osu_Profile.OsuAPIObjects
         public float Accuracy { get; set; }
 
         /// <summary>
+        /// The time played by the player
+        /// </summary>
+        [JsonProperty("total_seconds_played", NullValueHandling = NullValueHandling.Ignore)]
+        public int PlayTime { get; set; }
+
+        /// <summary>
         /// The number of maps played by the player
         /// </summary>
         [JsonProperty("playcount", NullValueHandling = NullValueHandling.Ignore)]
-        public int PlayCount { get; set; }
+        public float PlayCount { get; set; }
+
+        /// <summary>
+        /// The number of total hits by the player
+        /// </summary>
+        [JsonProperty("count300", NullValueHandling = NullValueHandling.Ignore)]
+        public float Count300 { get; set; }
+        [JsonProperty("count100", NullValueHandling = NullValueHandling.Ignore)]
+        public float Count100 { get; set; }
+        [JsonProperty("count50", NullValueHandling = NullValueHandling.Ignore)]
+        public float Count50 { get; set; }
+
+
+        /// <summary>
+        /// The number of total hits devided by placount by the player
+        /// </summary>
+        public float HitsPerPlay { get; set; }
 
         /// <summary>
         /// The number of A ranks made by the player
@@ -95,13 +123,30 @@ namespace osu_Profile.OsuAPIObjects
         public int RankSSH { get; set; }
 
         /// <summary>
+        /// The number of total S ranks made by the player
+        /// </summary>
+        public int TotalS { get; set; }
+
+        /// <summary>
         /// User's top scores
         /// <summary>
-        public Score[] TopRanks { get; set;}
+        public Score[] TopRanks { get; set; }
 
         /// <summary>
         /// Profile mode
         /// </summary>
         public int Mode { get; set; }
+
+        /// <summary>
+        /// Number of clears the player has
+        /// </summary>
+        [JsonProperty("clears", NullValueHandling = NullValueHandling.Ignore)]
+        public int Clears { get; set; }
+
+        /// <summary>
+        /// Completion percentage (All Ranked and loved maps)
+        /// </summary>
+        [JsonProperty("completion", NullValueHandling = NullValueHandling.Ignore)]
+        public int Completion { get; set; }
     }
 }
