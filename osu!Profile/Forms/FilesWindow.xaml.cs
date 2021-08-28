@@ -82,7 +82,7 @@ namespace osu_Profile.Forms
                 + "[/sshrank] for SSH ranks" + Environment.NewLine
                 + "[/totals] for total S ranks" + Environment.NewLine
                 + "[/totalss] for total SSranks" + Environment.NewLine
-                + "[/clears] for total clears (With loved)" + Environment.NewLine
+                + "[/clears] for profile clears" + Environment.NewLine
                 + "[/scorerank] for Score Rank (STD only)"
                 + Environment.NewLine + Environment.NewLine
 
@@ -105,7 +105,7 @@ namespace osu_Profile.Forms
                 + "[/sshrankchange] for SSH rank difference" + Environment.NewLine
                 + "[/totalschange] for total S rank difference" + Environment.NewLine
                 + "[/totalsschange] for total SS rank difference" + Environment.NewLine
-                + "[/clearschange] for total clears difference" + Environment.NewLine
+                + "[/clearschange] for profile clear difference" + Environment.NewLine
                 + "[/scorerankchange] for Score Rank Change (STD only)"
                 + Environment.NewLine + Environment.NewLine
 
