@@ -251,6 +251,36 @@ namespace osu_Profile.Forms
                     hitsperplaybox.Text = value;
             }
         }
+
+        public String TSPerPlay
+        {
+            get
+            {
+                return tsperplaybox.Text;
+            }
+            set
+            {
+                if (value == "0")
+                    tsperplaybox.Text = "";
+                else
+                    tsperplaybox.Text = value;
+            }
+        }
+
+        public String RSPerPlay
+        {
+            get
+            {
+                return rsperplaybox.Text;
+            }
+            set
+            {
+                if (value == "0")
+                    rsperplaybox.Text = "";
+                else
+                    rsperplaybox.Text = value;
+            }
+        }
         public String TopPP
         {
             get
@@ -547,6 +577,36 @@ namespace osu_Profile.Forms
                     hitsperplaychangebox.Text = "";
                 else
                     hitsperplaychangebox.Text = value;
+            }
+        }
+
+        public String TSPerPlayChange
+        {
+            get
+            {
+                return tsperplaychangebox.Text;
+            }
+            set
+            {
+                if (value == "0")
+                    tsperplaychangebox.Text = "";
+                else
+                    tsperplaychangebox.Text = value;
+            }
+        }
+
+        public String RSPerPlayChange
+        {
+            get
+            {
+                return rsperplaychangebox.Text;
+            }
+            set
+            {
+                if (value == "0")
+                    rsperplaychangebox.Text = "";
+                else
+                    rsperplaychangebox.Text = value;
             }
         }
         public String TopPPChange
@@ -876,6 +936,22 @@ namespace osu_Profile.Forms
                 return hitsperplaychangebox;
             }
         }
+
+        public TextBox TSPerPlayChangeBox
+        {
+            get
+            {
+                return tsperplaychangebox;
+            }
+        }
+
+        public TextBox RSPerPlayChangeBox
+        {
+            get
+            {
+                return rsperplaychangebox;
+            }
+        }
         public TextBox TopPPChangeBox
         {
             get
@@ -1082,6 +1158,8 @@ namespace osu_Profile.Forms
                 SetValue(playcountbox, PlayerActualState.PlayCount, "#,#");
                 SetValue(totalhitsbox, PlayerActualState.Count300 + PlayerActualState.Count100 + PlayerActualState.Count50, "#,#");
                 SetValue(hitsperplaybox, (PlayerActualState.Count300 + PlayerActualState.Count100 + PlayerActualState.Count50) / PlayerActualState.PlayCount, "#,#.##");
+                SetValue(tsperplaybox, PlayerActualState.Score / PlayerActualState.PlayCount, "#,#.##");
+                SetValue(rsperplaybox, PlayerActualState.RankedScore / PlayerActualState.PlayCount, "#,#.##");
                 SetValue(rankAbox, PlayerActualState.RankA, "#,#");
                 SetValue(rankSbox, PlayerActualState.RankS, "#,#");
                 SetValue(rankSHbox, PlayerActualState.RankSH, "#,#");
@@ -1119,6 +1197,8 @@ namespace osu_Profile.Forms
                 SetValue(playcountchangebox, 0, "");
                 SetValue(totalhitschangebox, 0, "");
                 SetValue(hitsperplaychangebox, 0, "");
+                SetValue(tsperplaychangebox, 0, "");
+                SetValue(rsperplaychangebox, 0, "");
                 SetValue(topPPchangebox, 0, "");
                 SetValue(rankAchangebox, 0, "");
                 SetValue(rankSchangebox, 0, "");
@@ -1423,6 +1503,38 @@ namespace osu_Profile.Forms
                 hitsperplaychangebox.Visibility = Visibility.Hidden;
             }
 
+            if (config.GetValue("User", "tsperplaybox", "true") == "true")
+            {
+                tsperplayLab.Visibility = Visibility.Visible;
+                tsperplaybox.Visibility = Visibility.Visible;
+                tsperplaychangebox.Visibility = Visibility.Visible;
+                controls.Add(tsperplayLab);
+                controls.Add(tsperplaybox);
+                controls.Add(tsperplaychangebox);
+            }
+            else
+            {
+                tsperplayLab.Visibility = Visibility.Hidden;
+                tsperplaybox.Visibility = Visibility.Hidden;
+                tsperplaychangebox.Visibility = Visibility.Hidden;
+            }
+
+            if (config.GetValue("User", "rsperplaybox", "true") == "true")
+            {
+                rsperplayLab.Visibility = Visibility.Visible;
+                rsperplaybox.Visibility = Visibility.Visible;
+                rsperplaychangebox.Visibility = Visibility.Visible;
+                controls.Add(rsperplayLab);
+                controls.Add(rsperplaybox);
+                controls.Add(rsperplaychangebox);
+            }
+            else
+            {
+                rsperplayLab.Visibility = Visibility.Hidden;
+                rsperplaybox.Visibility = Visibility.Hidden;
+                rsperplaychangebox.Visibility = Visibility.Hidden;
+            }
+
             if (config.GetValue("User", "topPPbox", "true") == "true")
             {
                 topPPLab.Visibility = Visibility.Visible;
@@ -1607,6 +1719,8 @@ namespace osu_Profile.Forms
                 MWindow.PlayCount = MWindow.PlayerActualState.PlayCount.ToString("#,#", CultureInfo.InvariantCulture);
                 MWindow.TotalHits = (MWindow.PlayerActualState.Count300 + MWindow.PlayerActualState.Count100 + MWindow.PlayerActualState.Count50).ToString("#,#", CultureInfo.InvariantCulture);
                 MWindow.HitsPerPlay = ((MWindow.PlayerActualState.Count300 + MWindow.PlayerActualState.Count100 + MWindow.PlayerActualState.Count50) / MWindow.PlayerActualState.PlayCount).ToString("#,#.##", CultureInfo.InvariantCulture);
+                MWindow.TSPerPlay = (MWindow.PlayerActualState.Score / MWindow.PlayerActualState.PlayCount).ToString("#,#.##", CultureInfo.InvariantCulture);
+                MWindow.RSPerPlay = (MWindow.PlayerActualState.RankedScore / MWindow.PlayerActualState.PlayCount).ToString("#,#.##", CultureInfo.InvariantCulture);
                 MWindow.RankA = MWindow.PlayerActualState.RankA.ToString("#,#", CultureInfo.InvariantCulture);
                 MWindow.RankS = MWindow.PlayerActualState.RankS.ToString("#,#", CultureInfo.InvariantCulture);
                 MWindow.RankSH = MWindow.PlayerActualState.RankSH.ToString("#,#", CultureInfo.InvariantCulture);
@@ -1621,7 +1735,7 @@ namespace osu_Profile.Forms
                     MWindow.TopPP = MWindow.PlayerActualState.TopRanks[0].PP.ToString("#,#.#####", CultureInfo.InvariantCulture);
 
                 int ppRankDif = 0, ppCountryRankDif = 0, aCountDif = 0, sCountDif = 0, shCountDif = 0, ssCountDif = 0, sshCountDif = 0, totalsCountDif = 0, totalssCountDif = 0, playTimeDif = 0, clearsDif = 0;
-                float levelDif = 0, ppDif = 0, accuracyDif = 0, topPPDif = 0, hitsperplayDif = 0, playCountDif = 0, totalHitsDif = 0;
+                float levelDif = 0, ppDif = 0, accuracyDif = 0, topPPDif = 0, hitsperplayDif = 0, tsperplayDif = 0, rsperplayDif = 0, playCountDif = 0, totalHitsDif = 0;
                 long rankedScoreDif = 0, scoreDif = 0, scoreRankDif = 0;
                     if (scoremode == 0) // Each game mode
                     {
@@ -1640,6 +1754,8 @@ namespace osu_Profile.Forms
                         playCountDif = MWindow.PlayerActualState.PlayCount - MWindow.PlayerPreviousState.PlayCount;
                         totalHitsDif = MWindow.PlayerActualState.Count300 + MWindow.PlayerActualState.Count100 + MWindow.PlayerActualState.Count50 - (MWindow.PlayerPreviousState.Count300 + MWindow.PlayerPreviousState.Count100 + MWindow.PlayerPreviousState.Count50);
                         hitsperplayDif = ((MWindow.PlayerActualState.Count300 + MWindow.PlayerActualState.Count100 + MWindow.PlayerActualState.Count50) / MWindow.PlayerActualState.PlayCount) - ((MWindow.PlayerPreviousState.Count300 + MWindow.PlayerPreviousState.Count100 + MWindow.PlayerPreviousState.Count50) / MWindow.PlayerPreviousState.PlayCount);
+                        tsperplayDif = (MWindow.PlayerActualState.Score / MWindow.PlayerActualState.PlayCount) - (MWindow.PlayerPreviousState.Score / MWindow.PlayerPreviousState.PlayCount);
+                        rsperplayDif = (MWindow.PlayerActualState.RankedScore / MWindow.PlayerActualState.PlayCount) - (MWindow.PlayerPreviousState.RankedScore / MWindow.PlayerPreviousState.PlayCount);
                         aCountDif = MWindow.PlayerActualState.RankA - MWindow.PlayerPreviousState.RankA;
                         sCountDif = MWindow.PlayerActualState.RankS - MWindow.PlayerPreviousState.RankS;
                         shCountDif = MWindow.PlayerActualState.RankSH - MWindow.PlayerPreviousState.RankSH;
@@ -1675,6 +1791,8 @@ namespace osu_Profile.Forms
                                        - (MWindow.PlayerFirstState.Count300 + MWindow.PlayerFirstState.Count100 + MWindow.PlayerFirstState.Count50);
                         hitsperplayDif = ((MWindow.PlayerActualState.Count300 + MWindow.PlayerActualState.Count100 + MWindow.PlayerActualState.Count50) / MWindow.PlayerActualState.PlayCount)
                                        - ((MWindow.PlayerFirstState.Count300 + MWindow.PlayerFirstState.Count100 + MWindow.PlayerFirstState.Count50) / MWindow.PlayerFirstState.PlayCount);
+                        tsperplayDif = (MWindow.PlayerActualState.Score / MWindow.PlayerActualState.PlayCount) - (MWindow.PlayerFirstState.Score / MWindow.PlayerFirstState.PlayCount);
+                        rsperplayDif = (MWindow.PlayerActualState.RankedScore / MWindow.PlayerActualState.PlayCount) - (MWindow.PlayerFirstState.RankedScore / MWindow.PlayerFirstState.PlayCount);
                         aCountDif = MWindow.PlayerActualState.RankA - MWindow.PlayerFirstState.RankA;
                         sCountDif = MWindow.PlayerActualState.RankS - MWindow.PlayerFirstState.RankS;
                         shCountDif = MWindow.PlayerActualState.RankSH - MWindow.PlayerFirstState.RankSH;
@@ -1711,6 +1829,8 @@ namespace osu_Profile.Forms
                     MWindow.PlayCountChange = playCountDif.ToString("#,#", CultureInfo.InvariantCulture);
                     MWindow.TotalHitsChange = totalHitsDif.ToString("#,#", CultureInfo.InvariantCulture);
                     MWindow.HitsPerPlayChange = hitsperplayDif.ToString("#,#0.##", CultureInfo.InvariantCulture);
+                    MWindow.TSPerPlayChange = tsperplayDif.ToString("#,#0.##", CultureInfo.InvariantCulture);
+                    MWindow.RSPerPlayChange = rsperplayDif.ToString("#,#0.##", CultureInfo.InvariantCulture);
                     MWindow.TopPPChange = topPPDif.ToString("#,#0.#####", CultureInfo.InvariantCulture);
                     MWindow.RankAChange = aCountDif.ToString("#,#", CultureInfo.InvariantCulture);
                     MWindow.RankSChange = sCountDif.ToString("#,#", CultureInfo.InvariantCulture);
@@ -1997,6 +2117,26 @@ namespace osu_Profile.Forms
                         MWindow.HitsPerPlayChangeBox.Foreground = new SolidColorBrush(Colors.Red);
                     }
 
+                    if ((tsperplayDif >= 0.001) && (MWindow.TSPerPlayChange != ""))
+                    {
+                        MWindow.TSPerPlayChange = "+" + MWindow.TSPerPlayChange;
+                        MWindow.TSPerPlayChangeBox.Foreground = new SolidColorBrush(Colors.Green);
+                    }
+                    else
+                    {
+                        MWindow.TSPerPlayChangeBox.Foreground = new SolidColorBrush(Colors.Red);
+                    }
+
+                    if ((rsperplayDif >= 0.001) && (MWindow.RSPerPlayChange != ""))
+                    {
+                        MWindow.RSPerPlayChange = "+" + MWindow.RSPerPlayChange;
+                        MWindow.RSPerPlayChangeBox.Foreground = new SolidColorBrush(Colors.Green);
+                    }
+                    else
+                    {
+                        MWindow.RSPerPlayChangeBox.Foreground = new SolidColorBrush(Colors.Red);
+                    }
+
                     if (topPPDif > 0)
                     {
                         MWindow.TopPPChange = "+" + MWindow.TopPPChange;
@@ -2128,6 +2268,8 @@ namespace osu_Profile.Forms
                 MWindow.PlayCount = "";
                 MWindow.TotalHits = "";
                 MWindow.HitsPerPlay = "";
+                MWindow.TSPerPlay = "";
+                MWindow.RSPerPlay = "";
                 MWindow.TopPP = "";
                 MWindow.RankA = "";
                 MWindow.RankS = "";
@@ -2149,6 +2291,8 @@ namespace osu_Profile.Forms
                 MWindow.PlayCountChange = "";
                 MWindow.TotalHitsChange = "";
                 MWindow.HitsPerPlayChange = "";
+                MWindow.TSPerPlayChange = "";
+                MWindow.RSPerPlayChange = "";
                 MWindow.TopPPChange = "";
                 MWindow.RankAChange = "";
                 MWindow.RankSChange = "";
@@ -2587,6 +2731,8 @@ namespace osu_Profile.Forms
                                 output = output.Replace("[/playcount]", MWindow.PlayCount);
                                 output = output.Replace("[/totalhits]", MWindow.TotalHits);
                                 output = output.Replace("[/hitsperplay]", MWindow.HitsPerPlay);
+                                output = output.Replace("[/tsperplay]", MWindow.TSPerPlay);
+                                output = output.Replace("[/rsperplay]", MWindow.RSPerPlay);
                                 output = output.Replace("[/toppp]", MWindow.TopPP);
                                 output = output.Replace("[/arank]", MWindow.RankA);
                                 output = output.Replace("[/srank]", MWindow.RankS);
@@ -2609,6 +2755,8 @@ namespace osu_Profile.Forms
                                 output = output.Replace("[/playcountchange]", MWindow.PlayCountChange);
                                 output = output.Replace("[/totalhitschange]", MWindow.TotalHitsChange);
                                 output = output.Replace("[/hitsperplaychange]", MWindow.HitsPerPlayChange);
+                                output = output.Replace("[/tsperplaychange]", MWindow.TSPerPlayChange);
+                                output = output.Replace("[/rsperplaychange]", MWindow.RSPerPlayChange);
                                 output = output.Replace("[/topppchange]", MWindow.TopPPChange);
                                 output = output.Replace("[/arankchange]", MWindow.RankAChange);
                                 output = output.Replace("[/srankchange]", MWindow.RankSChange);

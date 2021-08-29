@@ -74,6 +74,8 @@ namespace osu_Profile.Forms
                 + "[/playcount] for play count" + Environment.NewLine
                 + "[/totalhits] for total hits" + Environment.NewLine
                 + "[/hitsperplay] for hits per play" + Environment.NewLine
+                + "[/tsperplay] for total score per play" + Environment.NewLine
+                + "[/rsperplay] for ranked score per play" + Environment.NewLine
                 + "[/toppp] for the top PP" + Environment.NewLine 
                 + "[/arank] for A ranks" + Environment.NewLine
                 + "[/srank] for S ranks" + Environment.NewLine
@@ -97,6 +99,8 @@ namespace osu_Profile.Forms
                 + "[/playcountchange] for play count difference" + Environment.NewLine
                 + "[/totalhitschange] for total hits difference" + Environment.NewLine
                 + "[/hitsperplaychange] for hits per play difference" + Environment.NewLine
+                + "[/tsperplaychange] for total score per play difference" + Environment.NewLine
+                + "[/rsperplaychange] for ranked score per play difference" + Environment.NewLine
                 + "[/topppchange] for the top PP difference" + Environment.NewLine 
                 + "[/arankchange] for A rank difference" + Environment.NewLine
                 + "[/srankchange] for S rank difference" + Environment.NewLine

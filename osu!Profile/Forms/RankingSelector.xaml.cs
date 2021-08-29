@@ -33,6 +33,8 @@ namespace osu_Profile.Forms
             totalhits.IsChecked = MainWindow.config.GetValue("User", "totalhitsbox", "true") == "true";
             playtime.IsChecked = MainWindow.config.GetValue("User", "playtimebox", "true") == "true";
             hitsperplay.IsChecked = MainWindow.config.GetValue("User", "hitsperplaybox", "true") == "true";
+            tsperplay.IsChecked = MainWindow.config.GetValue("User", "tsperplaybox", "true") == "true";
+            rsperplay.IsChecked = MainWindow.config.GetValue("User", "rsperplaybox", "true") == "true";
             clears.IsChecked = MainWindow.config.GetValue("User", "clearsbox", "true") == "true";
         }
         #endregion
@@ -60,6 +62,8 @@ namespace osu_Profile.Forms
             MainWindow.config.SetValue("User", "totalhitsbox", totalhits.IsChecked ?? false ? "true" : "false");
             MainWindow.config.SetValue("User", "playtimebox", playtime.IsChecked ?? false ? "true" : "false");
             MainWindow.config.SetValue("User", "hitsperplaybox", hitsperplay.IsChecked ?? false ? "true" : "false");
+            MainWindow.config.SetValue("User", "tsperplaybox", tsperplay.IsChecked ?? false ? "true" : "false");
+            MainWindow.config.SetValue("User", "rsperplaybox", rsperplay.IsChecked ?? false ? "true" : "false");
             MainWindow.config.SetValue("User", "clearsbox", clears.IsChecked ?? false ? "true" : "false");
             MainWindow.config.Export();
             ((MainWindow)this.Owner).UpdateRankingControls();
