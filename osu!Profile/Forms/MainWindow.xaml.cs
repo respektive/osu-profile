@@ -1780,7 +1780,7 @@ namespace osu_Profile.Forms
                     else if (scoremode == 1) // This session mode
                     {
                         rankedScoreDif = MWindow.PlayerActualState.RankedScore - MWindow.PlayerFirstState.RankedScore;
-                        if ((MWindow.PlayerActualState.scoerinfo != null) && (MWindow.PlayerFirstState.scoerinfo != null){
+                        if ((MWindow.PlayerActualState.scoerinfo != null) && (MWindow.PlayerFirstState.scoerinfo != null)){
                             if ((MWindow.PlayerActualState.scoerinfo.ID != 0) && (MWindow.PlayerFirstState.scoerinfo.ID != 0))
                             {
                                 scoreRankDif = MWindow.PlayerActualState.scoerinfo.ScoreRank - MWindow.PlayerFirstState.scoerinfo.ScoreRank;
