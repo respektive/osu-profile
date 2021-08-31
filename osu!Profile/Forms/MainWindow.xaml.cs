@@ -1114,9 +1114,6 @@ namespace osu_Profile.Forms
                         apiReturn = apiReturn.Substring(1, apiReturn.Length - 2);
                         PlayerActualState = JsonConvert.DeserializeObject<Player>(apiReturn);
                         userID = PlayerActualState.ID;
-                        //string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + mode);
-                        //scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                        //PlayerActualState.scoerinfo = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
                         PlayerActualState.TopRanks = JsonConvert.DeserializeObject<Score[]>(client.DownloadString("https://osu.ppy.sh/api/get_user_best?k=" + apikey + "&u=" + user + "&m=" + mode + "&limit=" + 2));
                         PlayerActualState.Mode = mode;
                         PlayerActualState.scoerinfo = new Scoerapi { ScoreRank = 0, ID = 0, SCOER = 0, Scoer_username = "None" };
