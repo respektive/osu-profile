@@ -1118,17 +1118,20 @@ namespace osu_Profile.Forms
                         {
                             string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID);
                             scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                            if (scoerapiReturn.Length > 2)
+                            PlayerActualState.scoerinfo = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                            if (PlayerActualState.scoerinfo.ID == 0)
                             {
-                                PlayerActualState.scoerinfo = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
-                            }
-                            else
+                                MWindow.ScoreRankBox.Text = "No Score Rank";
+                            } else
                             {
-                                PlayerActualState.scoerinfo = null;
+                                SetValue(scorerankbox, PlayerActualState.scoerinfo.ScoreRank, "#,#");
                             }
+                               
                         }
                         else
-                            PlayerActualState.scoerinfo = null;
+                        {
+                            MWindow.ScoreRankBox.Text = "Score Rank Unavailable";
+                        }  
                         PlayerActualState.TopRanks = JsonConvert.DeserializeObject<Score[]>(client.DownloadString("https://osu.ppy.sh/api/get_user_best?k=" + apikey + "&u=" + user + "&m=" + mode + "&limit=" + 2));
                         PlayerActualState.Mode = mode;
                         PlayerFirstState = PlayerPreviousState = PlayerActualState;
@@ -1167,17 +1170,7 @@ namespace osu_Profile.Forms
                 SetValue(rankSSHbox, PlayerActualState.RankSSH, "#,#");
                 SetValue(totalSbox, PlayerActualState.RankS + PlayerActualState.RankSH, "#,#");
                 SetValue(totalSSbox, PlayerActualState.RankSS + PlayerActualState.RankSSH, "#,#");
-                if (PlayerActualState.scoerinfo != null)
-                {
-                    SetValue(scorerankbox, PlayerActualState.scoerinfo.ScoreRank, "#,#");
-                }
-                else
-                    if (mode != 0)
-                {
-                    MWindow.ScoreRankBox.Text = "Score Rank Unavailable";
-                }
-                else
-                    MWindow.ScoreRankBox.Text = "No Score Rank";
+                
                 int clearcount = 0;
                 clearcount = PlayerActualState.RankA + PlayerActualState.RankS + PlayerActualState.RankSH + PlayerActualState.RankSS + PlayerActualState.RankSSH;
                 SetValue(clearsbox, clearcount, "#,#");
