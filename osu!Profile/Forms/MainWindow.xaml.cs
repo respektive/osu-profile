@@ -1139,7 +1139,10 @@ namespace osu_Profile.Forms
                     {
                         string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + mode);
                         scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                        PlayerActualState.scoerinfo = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                        if (scoerapiReturn.Length > 2)
+                        {
+                            PlayerActualState.scoerinfo = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                        }
                         downloaded = true;
                         PlayerFirstState.scoerinfo = PlayerPreviousState.scoerinfo = PlayerActualState.scoerinfo;
                     }
@@ -1709,10 +1712,13 @@ namespace osu_Profile.Forms
                 MWindow.RankedScoreChangeBox.Dispatcher.Invoke(new Action(() =>
                 {
                 MWindow.Ranked = MWindow.PlayerActualState.RankedScore.ToString("#,#", CultureInfo.InvariantCulture);
-                if (MWindow.PlayerActualState.scoerinfo.ID != 0)
-                {
-                    MWindow.ScoreRank = MWindow.PlayerActualState.scoerinfo.ScoreRank.ToString("#,#", CultureInfo.InvariantCulture);
-                }
+                    if (MWindow.PlayerActualState.scoerinfo != null)
+                    {
+                        if (MWindow.PlayerActualState.scoerinfo.ID != 0)
+                        {
+                            MWindow.ScoreRank = MWindow.PlayerActualState.scoerinfo.ScoreRank.ToString("#,#", CultureInfo.InvariantCulture);
+                        }
+                    }
                 MWindow.Level = MWindow.PlayerActualState.Level.ToString("#,#.####", CultureInfo.InvariantCulture);
                 MWindow.Total = MWindow.PlayerActualState.Score.ToString("#,#", CultureInfo.InvariantCulture);
                 MWindow.Rank = MWindow.PlayerActualState.PPRank.ToString("#,#", CultureInfo.InvariantCulture);
@@ -2523,7 +2529,10 @@ namespace osu_Profile.Forms
                         {
                             string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
                             scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                            tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                            if (scoerapiReturn.Length > 2)
+                            {
+                                tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                            }
                             if (tempScoerState.ID != 0)
                             {
                                 //if your enter top 10000, make starting score rank 10001.
@@ -2575,7 +2584,10 @@ namespace osu_Profile.Forms
                         {
                             string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
                             scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                            tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                            if (scoerapiReturn.Length > 2)
+                            {
+                                tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                            }
                             PrevScoerState = tempScoerState;
                             MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = tempScoerState;
                             downloaded = true;
@@ -2644,7 +2656,10 @@ namespace osu_Profile.Forms
                                 {
                                     string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
                                     scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                                    tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                                    if (scoerapiReturn.Length > 2)
+                                    {
+                                        tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                                    }
                                     downloaded = true;
                                 }
                                 catch (Exception) { downloaded = false; retry++; Thread.Sleep(new TimeSpan(0, 0, 1)); }
