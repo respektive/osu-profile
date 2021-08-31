@@ -1114,9 +1114,21 @@ namespace osu_Profile.Forms
                         apiReturn = apiReturn.Substring(1, apiReturn.Length - 2);
                         PlayerActualState = JsonConvert.DeserializeObject<Player>(apiReturn);
                         userID = PlayerActualState.ID;
-                        //string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + mode);
-                        //scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                        //PlayerActualState.scoerinfo = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                        if (mode == 0)
+                        {
+                            string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID);
+                            scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
+                            if (scoerapiReturn.Length > 2)
+                            {
+                                PlayerActualState.scoerinfo = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                            }
+                            else
+                            {
+                                PlayerActualState.scoerinfo = null;
+                            }
+                        }
+                        else
+                            PlayerActualState.scoerinfo = null;
                         PlayerActualState.TopRanks = JsonConvert.DeserializeObject<Score[]>(client.DownloadString("https://osu.ppy.sh/api/get_user_best?k=" + apikey + "&u=" + user + "&m=" + mode + "&limit=" + 2));
                         PlayerActualState.Mode = mode;
                         PlayerFirstState = PlayerPreviousState = PlayerActualState;
@@ -1132,30 +1144,6 @@ namespace osu_Profile.Forms
             }
             if (!downloaded)
                 return false;
-            downloaded = false;
-            retry = 0;
-            while (!downloaded && retry <= 3)
-                try
-                {
-                    using (WebClient client = new WebClient())
-                    {
-                        string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + mode);
-                        scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                        PlayerActualState.scoerinfo = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
-                        downloaded = true;
-                        PlayerFirstState.scoerinfo = PlayerPreviousState.scoerinfo = PlayerActualState.scoerinfo;
-                    }
-
-                }
-                catch (Exception e) { downloaded = false; retry++; Console.WriteLine(e.StackTrace); }
-            if (!downloaded)
-            {
-                PlayerActualState.scoerinfo.ScoreRank = 0;
-                PlayerActualState.scoerinfo.ID = 0;
-                PlayerActualState.scoerinfo.SCOER = 0;
-                PlayerActualState.scoerinfo.Scoer_username = "None";
-                PlayerFirstState.scoerinfo = PlayerPreviousState.scoerinfo = PlayerActualState.scoerinfo;
-            }
             if (PlayerActualState != null && PlayerActualState.ID != 0)
             {
                 this.Title = $"osu!Profile - {PlayerActualState.Username}";
@@ -1179,9 +1167,14 @@ namespace osu_Profile.Forms
                 SetValue(rankSSHbox, PlayerActualState.RankSSH, "#,#");
                 SetValue(totalSbox, PlayerActualState.RankS + PlayerActualState.RankSH, "#,#");
                 SetValue(totalSSbox, PlayerActualState.RankSS + PlayerActualState.RankSSH, "#,#");
-                if (PlayerActualState.scoerinfo.ID != 0)
+                if (PlayerActualState.scoerinfo != null)
                 {
                     SetValue(scorerankbox, PlayerActualState.scoerinfo.ScoreRank, "#,#");
+                }
+                else
+                    if (mode != 0)
+                {
+                    MWindow.ScoreRankBox.Text = "Score Rank Unavailable";
                 }
                 else
                     MWindow.ScoreRankBox.Text = "No Score Rank";
@@ -1711,7 +1704,7 @@ namespace osu_Profile.Forms
                 MWindow.RankedScoreChangeBox.Dispatcher.Invoke(new Action(() =>
                 {
                 MWindow.Ranked = MWindow.PlayerActualState.RankedScore.ToString("#,#", CultureInfo.InvariantCulture);
-                if (MWindow.PlayerActualState.scoerinfo.ID != 0)
+                if (MWindow.PlayerActualState.scoerinfo != null)
                 {
                     MWindow.ScoreRank = MWindow.PlayerActualState.scoerinfo.ScoreRank.ToString("#,#", CultureInfo.InvariantCulture);
                 }
@@ -1747,7 +1740,7 @@ namespace osu_Profile.Forms
                     if (scoremode == 0) // Each game mode
                     {
                         rankedScoreDif = MWindow.PlayerActualState.RankedScore - MWindow.PlayerPreviousState.RankedScore;
-                        if ((MWindow.PlayerActualState.scoerinfo.ID != 0) && (MWindow.PlayerPreviousState.scoerinfo.ID != 0))
+                        if ((MWindow.PlayerActualState.scoerinfo != null) && (MWindow.PlayerPreviousState.scoerinfo != null))
                         {
                             scoreRankDif = MWindow.PlayerActualState.scoerinfo.ScoreRank - MWindow.PlayerPreviousState.scoerinfo.ScoreRank;
                         }
@@ -1782,7 +1775,7 @@ namespace osu_Profile.Forms
                     else if (scoremode == 1) // This session mode
                     {
                         rankedScoreDif = MWindow.PlayerActualState.RankedScore - MWindow.PlayerFirstState.RankedScore;
-                        if ((MWindow.PlayerActualState.scoerinfo.ID != 0) && (MWindow.PlayerFirstState.scoerinfo.ID != 0))
+                        if ((MWindow.PlayerActualState.scoerinfo != null) && (MWindow.PlayerFirstState.scoerinfo != null))
                         {
                             scoreRankDif = MWindow.PlayerActualState.scoerinfo.ScoreRank - MWindow.PlayerFirstState.scoerinfo.ScoreRank;
                         }
@@ -1978,7 +1971,11 @@ namespace osu_Profile.Forms
                     ///Otherwise keep the previous section commented out. :)
                     ///If you don't want "#" prepended to your rank don't forget to also comment it out in SetValue() function along with the line in the "else" statement below!
                     
-                    if (MainWindow.MWindow.PlayerActualState.scoerinfo.ID == 0)
+                    if (MainWindow.mode != 0)
+                    {
+                        MWindow.ScoreRank = "Score Rank Unavailable";
+                    }
+                    else if (MainWindow.MWindow.PlayerActualState.scoerinfo == null)
                     {
                         MWindow.ScoreRank = "No Score Rank";
                     }
@@ -2484,8 +2481,6 @@ namespace osu_Profile.Forms
 
             private void UpdateRankingPanel()
             {
-                short retry = 0;
-                Player tempState = null;
                 bool downloaded = false;
                 while (!downloaded)
                 {
@@ -2495,233 +2490,172 @@ namespace osu_Profile.Forms
                         string apiReturn = client.DownloadString("https://osu.ppy.sh/api/get_user?k=" + APIKey + "&u=" + Username + "&m=" + mode);
                         apiReturn = apiReturn.Substring(1, apiReturn.Length - 2);
                         //long score = MainWindow.MWindow.PlayerActualState.Score;
-                        tempState = JsonConvert.DeserializeObject<Player>(apiReturn);
+                        Player tempState = JsonConvert.DeserializeObject<Player>(apiReturn);
+                        Scoerapi tempScoerState = null;
+                        Scoerapi PrevScoerState = null;
+                        //ScoerChange variable shows if a change in Score Rank has happened or not.
+                        bool ScoerChange = false;
+                        if (MWindow.PlayerActualState.scoerinfo != null)
+                        {
+                            PrevScoerState = MWindow.PlayerActualState.scoerinfo;
+                        }
+                        if ((tempState.Mode == 0) && (MWindow.PlayerFirstState.Mode == 0) && (tempState.ID == MWindow.PlayerFirstState.ID) && (scoremode == 1))
+                        {
+                            userID = tempState.ID;
+                            string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID);
+                            scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
+                            tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                            if (tempScoerState != null)
+                            {
+                                //if your enter top 10000, make starting score rank 10001.
+                                if ((MWindow.PlayerFirstState.scoerinfo == null) && (tempScoerState != null))
+                                {
+                                    MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo = tempScoerState;
+                                    MWindow.PlayerFirstState.scoerinfo.ScoreRank = 10001;
+                                    PrevScoerState = tempScoerState;
+                                    PrevScoerState.ScoreRank = 10001;
+                                    MWindow.PlayerActualState.scoerinfo.ScoreRank = tempScoerState.ScoreRank;
+                                    ScoerChange = true;
+                                }
+                                else
+                                {
+                                    MWindow.PlayerActualState.scoerinfo = tempScoerState;
+                                    ScoerChange = true;
+                                }
+                            }
+                        }
+                        tempState.Mode = mode;
+                        if ((tempState.Mode != MWindow.PlayerFirstState.Mode) || (tempState.ID != MWindow.PlayerFirstState.ID))
+                        {
+                            MWindow.PrevStatState = MWindow.PlayerPreviousState = MWindow.PlayerFirstState = MWindow.PlayerActualState = tempState;
+                            if (tempState.PP > 0)
+                            {
+                                MWindow.PlayerActualState.TopRanks = JsonConvert.DeserializeObject<Score[]>(client.DownloadString("https://osu.ppy.sh/api/get_user_best?k=" + APIKey + "&u=" + Username + "&m=" + mode + "&limit=" + 1));
+                                MWindow.PlayerFirstState.TopRanks = MWindow.PlayerPreviousState.TopRanks = MWindow.PlayerActualState.TopRanks;
+                            }
+                            if (tempState.Mode == 0)
+                            {
+                                userID = tempState.ID;
+                                string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID);
+                                scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
+                                tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                                PrevScoerState = tempScoerState;
+                                MWindow.PlayerPreviousState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = tempScoerState;
+                            }
+                        }
+                        if ((tempState.Score != MWindow.PlayerActualState.Score) || ((ScoerChange == true) && (scoremode == 1)) || (scoremodeOld != scoremode))
+                        {
+                            if (MWindow.PrevStatState == null) {
+                                MWindow.PrevStatState = MWindow.PlayerFirstState;
+                                if (MWindow.PlayerFirstState.scoerinfo != null)
+                                {
+                                    MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo;
+                                }
+                                MWindow.PrevStatState.TopRanks = MWindow.PlayerFirstState.TopRanks;
+                            }
+                            if ((tempState.Score == MWindow.PlayerActualState.Score)) {
+                                if (tempState.Score != MWindow.PlayerPreviousState.Score)
+                                {
+                                    MWindow.PrevStatState = MWindow.PlayerPreviousState;
+                                    MWindow.PrevStatState.TopRanks = MWindow.PlayerPreviousState.TopRanks;
+                                    if (MWindow.PlayerPreviousState.scoerinfo != null)
+                                    {
+                                        MWindow.PrevStatState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                MWindow.PrevStatState = MWindow.PlayerActualState;
+                                MWindow.PrevStatState.TopRanks = MWindow.PlayerActualState.TopRanks;
+                                if (MWindow.PlayerActualState.scoerinfo != null)
+                                {
+                                    MWindow.PrevStatState.scoerinfo = MWindow.PlayerActualState.scoerinfo;
+                                }
+                            }
+                            MWindow.PlayerPreviousState = MWindow.PlayerActualState;
+                            MWindow.PlayerActualState = tempState;
+                            if ((tempScoerState != null) || (scoremode == 0))
+                            {
+                                if ((scoremode == 0) && (mode == 0))
+                                {
+                                    userID = tempState.ID;
+                                    string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID);
+                                    scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
+                                    tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+
+                                    if ((tempScoerState != null) && (tempScoerState != PrevScoerState))
+                                    {
+                                        MWindow.PlayerPreviousState = MWindow.PrevStatState;
+                                        //if your enter top 10000, make starting score rank 10001.
+                                        if ((MWindow.PlayerFirstState.scoerinfo == null) && (tempScoerState != null))
+                                        {
+                                            MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo = tempScoerState;
+                                            MWindow.PlayerFirstState.scoerinfo.ScoreRank = 10001;
+                                            PrevScoerState = tempScoerState;
+                                            PrevScoerState.ScoreRank = 10001;
+                                            MWindow.PlayerActualState.scoerinfo.ScoreRank = tempScoerState.ScoreRank;
+                                        }
+                                        else
+                                        {
+                                            MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo;
+                                            MWindow.PlayerActualState.scoerinfo = tempScoerState;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    MWindow.PlayerPreviousState.scoerinfo = PrevScoerState;
+                                    MWindow.PlayerActualState.scoerinfo = tempScoerState;
+                                }
+                            }
+                            if ((scoremodeOld != scoremode) && (MWindow.PrevStatState != null))
+                            {
+                                scoremodeOld = scoremode;
+                                MWindow.PlayerPreviousState = MWindow.PrevStatState;
+                                if (MWindow.PrevStatState.TopRanks != null)
+                                {
+                                    MWindow.PlayerPreviousState.TopRanks = MWindow.PrevStatState.TopRanks;
+                                }
+                                if (MWindow.PrevStatState.scoerinfo != null)
+                                {
+                                    MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo;
+                                }
+                            }
+                            if (MWindow.PlayerPreviousState.PP < MWindow.PlayerActualState.PP)
+                            {
+                                MWindow.PrevStatState.TopRanks = MWindow.PlayerActualState.TopRanks;
+                                MWindow.PlayerActualState.TopRanks = JsonConvert.DeserializeObject<Score[]>(client.DownloadString("https://osu.ppy.sh/api/get_user_best?k=" + APIKey + "&u=" + Username + "&m=" + mode + "&limit=" + 1));
+                            }
+
+                            for (int i = 0; i < files.Count; i++)
+                            {
+                                MainWindow.files[i].TimeLeft = MainWindow.files[i].Time;
+                            }
+
+                            if (config.GetValue("User", "popupEachMap", "false") == "true" && MWindow.PlayerPreviousState.RankedScore != MWindow.PlayerActualState.RankedScore)
+                            {
+                                MWindow.RankedScoreChangeBox.Dispatcher.Invoke(new Action(() =>
+                                {
+                                    MWindow.Activate();
+                                    MWindow.Focus();
+                                }));
+                            }
+                            else if (config.GetValue("User", "popupPP", "false") == "true" && MWindow.PlayerPreviousState.PP < MWindow.PlayerActualState.PP)
+                            {
+                                MWindow.RankedScoreChangeBox.Dispatcher.Invoke(new Action(() =>
+                                {
+                                    MWindow.Activate();
+                                    MWindow.Focus();
+                                }));
+                            }
+                        }
                         downloaded = true;
                     }
                     catch (Exception) { downloaded = false; Thread.Sleep(new TimeSpan(0, 0, 1)); }
                 }
-                Scoerapi tempScoerState = null;
-                Scoerapi PrevScoerState = null;
-                //ScoerChange variable shows if a change in Score Rank has happened or not.
-                bool ScoerChange = false;
-                if (MWindow.PlayerActualState.scoerinfo != null)
-                {
-                    if (MWindow.PlayerActualState.scoerinfo.ID != 0)
-                    {
-                        PrevScoerState = MWindow.PlayerActualState.scoerinfo;
-                    }
-                }
-                if ((MWindow.PlayerFirstState.Mode == tempState.Mode) && (tempState.ID == MWindow.PlayerFirstState.ID) && (scoremode == 1))
-                {
-                    WebClient client = new WebClient();
-                    userID = tempState.ID;
-                    retry = 0;
-                    downloaded = false;
-                    while (!downloaded && retry < 3)
-                        try
-                        {
-                            string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
-                            scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                            tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
-                            if (tempScoerState.ID != 0)
-                            {
-                                //if your enter top 10000, make starting score rank 10001.
-                                if ((MWindow.PlayerFirstState.scoerinfo.ID == 0) && (tempScoerState.ID != 0))
-                                {
-                                    MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo = tempScoerState;
-                                    MWindow.PlayerFirstState.scoerinfo.ScoreRank = 10001;
-                                    PrevScoerState = tempScoerState;
-                                    PrevScoerState.ScoreRank = 10001;
-                                    MWindow.PlayerActualState.scoerinfo.ScoreRank = tempScoerState.ScoreRank;
-                                    ScoerChange = true;
-                                }
-                                else
-                                {
-                                    MWindow.PlayerActualState.scoerinfo = tempScoerState;
-                                    ScoerChange = true;
-                                }
-                            }
-                            downloaded = true;
-                        }
-                        catch (Exception) { retry++; downloaded = false; Thread.Sleep(new TimeSpan(0, 0, 1)); }
-                    if (!downloaded) { tempScoerState = MWindow.PlayerActualState.scoerinfo; }
-                }
-                tempState.Mode = mode;
-                if ((tempState.Mode != MWindow.PlayerFirstState.Mode) || (tempState.ID != MWindow.PlayerFirstState.ID))
-                {
-                    WebClient client = new WebClient();
-                    MWindow.PrevStatState = MWindow.PlayerPreviousState = MWindow.PlayerFirstState = MWindow.PlayerActualState = tempState;
-                    if (tempState.PP > 0)
-                    {
-                        downloaded = false;
-                        while (!downloaded)
-                        {
-                            try
-                            {
-                                MWindow.PlayerActualState.TopRanks = JsonConvert.DeserializeObject<Score[]>(client.DownloadString("https://osu.ppy.sh/api/get_user_best?k=" + APIKey + "&u=" + Username + "&m=" + mode + "&limit=" + 1));
-                                downloaded = true;
-                            }
-                            catch (Exception) { downloaded = false; Thread.Sleep(new TimeSpan(0, 0, 1)); }
-                        }
-                        MWindow.PlayerFirstState.TopRanks = MWindow.PlayerPreviousState.TopRanks = MWindow.PlayerActualState.TopRanks;
-                    }
-                    userID = tempState.ID;
-                    retry = 0;
-                    downloaded = false;
-                    while (!downloaded && retry <= 3)
-                    {
-                        try
-                        {
-                            string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
-                            scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                            tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
-                            PrevScoerState = tempScoerState;
-                            MWindow.PlayerPreviousState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = tempScoerState;
-                            downloaded = true;
-                        }
-                        catch (Exception) { downloaded = false; retry++; Thread.Sleep(new TimeSpan(0, 0, 1)); }
-                    }
-                    if (!downloaded) { MWindow.PlayerActualState.scoerinfo.ScoreRank = 0;
-                        MWindow.PlayerActualState.scoerinfo.ID = 0;
-                        MWindow.PlayerActualState.scoerinfo.SCOER = 0;
-                        MWindow.PlayerActualState.scoerinfo.Scoer_username = "None";
-                        MWindow.PlayerPreviousState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = tempScoerState = MWindow.PlayerActualState.scoerinfo;
-                    }
-                }
-                if ((tempState.Score != MWindow.PlayerActualState.Score) || ((ScoerChange == true) && (scoremode == 1)) || (scoremodeOld != scoremode))
-                {
-                    if (MWindow.PrevStatState == null)
-                    {
-                        MWindow.PrevStatState = MWindow.PlayerFirstState;
-                        if (MWindow.PlayerFirstState.scoerinfo.ID != 0)
-                        {
-                            MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo;
-                        }
-                        MWindow.PrevStatState.TopRanks = MWindow.PlayerFirstState.TopRanks;
-                    }
-                    if ((tempState.Score == MWindow.PlayerActualState.Score))
-                    {
-                        if (tempState.Score != MWindow.PlayerPreviousState.Score)
-                        {
-                            MWindow.PrevStatState = MWindow.PlayerPreviousState;
-                            MWindow.PrevStatState.TopRanks = MWindow.PlayerPreviousState.TopRanks;
-                            if (MWindow.PlayerPreviousState.scoerinfo != null)
-                            {
-                                if (MWindow.PlayerPreviousState.scoerinfo.ID != 0)
-                                {
-                                    MWindow.PrevStatState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        MWindow.PrevStatState = MWindow.PlayerActualState;
-                        MWindow.PrevStatState.TopRanks = MWindow.PlayerActualState.TopRanks;
-                        if (MWindow.PlayerActualState.scoerinfo.ID != 0)
-                        {
-                            MWindow.PrevStatState.scoerinfo = MWindow.PlayerActualState.scoerinfo;
-                        }
-                    }
-                    MWindow.PlayerPreviousState = MWindow.PlayerActualState;
-                    MWindow.PlayerActualState = tempState;
-                    if ((tempScoerState.ID != 0) || (scoremode == 0))
-                    {
-                        if (scoremode == 0)
-                        {
-                            WebClient client = new WebClient();
-                            userID = tempState.ID;
-                            retry = 0;
-                            downloaded = false;
-                            while (!downloaded && retry <= 3)
-                            {
-                                try
-                                {
-                                    string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
-                                    scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                                    tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
-                                    downloaded = true;
-                                }
-                                catch (Exception) { downloaded = false; retry++; Thread.Sleep(new TimeSpan(0, 0, 1)); }
-                            }
-                            if (!downloaded) { tempScoerState = MWindow.PlayerActualState.scoerinfo; }
-                            if ((tempScoerState.ID != 0) && (tempScoerState != PrevScoerState))
-                            {
-                                MWindow.PlayerPreviousState = MWindow.PrevStatState;
-                                //if your enter top 10000, make starting score rank 10001.
-                                if ((MWindow.PlayerFirstState.scoerinfo.ID == 0) && (tempScoerState.ID != 0))
-                                {
-                                    MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo = tempScoerState;
-                                    MWindow.PlayerFirstState.scoerinfo.ScoreRank = 10001;
-                                    PrevScoerState = tempScoerState;
-                                    PrevScoerState.ScoreRank = 10001;
-                                    MWindow.PlayerActualState.scoerinfo.ScoreRank = tempScoerState.ScoreRank;
-                                }
-                                else
-                                {
-                                    MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo;
-                                    MWindow.PlayerActualState.scoerinfo = tempScoerState;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            MWindow.PlayerPreviousState.scoerinfo = PrevScoerState;
-                            MWindow.PlayerActualState.scoerinfo = tempScoerState;
-                        }
-                    }
-                    if ((scoremodeOld != scoremode) && (MWindow.PrevStatState != null))
-                    {
-                        scoremodeOld = scoremode;
-                        MWindow.PlayerPreviousState = MWindow.PrevStatState;
-                        if (MWindow.PrevStatState.TopRanks != null)
-                        {
-                            MWindow.PlayerPreviousState.TopRanks = MWindow.PrevStatState.TopRanks;
-                        }
-                        if (MWindow.PrevStatState.scoerinfo.ID != 0)
-                        {
-                            MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo;
-                        }
-                    }
-                    if (MWindow.PlayerPreviousState.PP < MWindow.PlayerActualState.PP)
-                    {
-                        downloaded = false;
-                        while (!downloaded)
-                        {
-                            try
-                            {
-                                WebClient client = new WebClient();
-                                MWindow.PrevStatState.TopRanks = MWindow.PlayerActualState.TopRanks;
-                                MWindow.PlayerActualState.TopRanks = JsonConvert.DeserializeObject<Score[]>(client.DownloadString("https://osu.ppy.sh/api/get_user_best?k=" + APIKey + "&u=" + Username + "&m=" + mode + "&limit=" + 1));
-                                downloaded = true;
-                            }
-                            catch (Exception) { downloaded = false; Thread.Sleep(new TimeSpan(0, 0, 1)); }
-                        }
-                    }
 
-                    for (int i = 0; i < files.Count; i++)
-                    {
-                        MainWindow.files[i].TimeLeft = MainWindow.files[i].Time;
-                    }
-
-                    if (config.GetValue("User", "popupEachMap", "false") == "true" && MWindow.PlayerPreviousState.RankedScore != MWindow.PlayerActualState.RankedScore)
-                    {
-                        MWindow.RankedScoreChangeBox.Dispatcher.Invoke(new Action(() =>
-                        {
-                            MWindow.Activate();
-                            MWindow.Focus();
-                        }));
-                    }
-                    else if (config.GetValue("User", "popupPP", "false") == "true" && MWindow.PlayerPreviousState.PP < MWindow.PlayerActualState.PP)
-                    {
-                        MWindow.RankedScoreChangeBox.Dispatcher.Invoke(new Action(() =>
-                        {
-                            MWindow.Activate();
-                            MWindow.Focus();
-                        }));
-                    }
-                }
-                MWindow.UpdateRankingControls();
+               MWindow.UpdateRankingControls();
             }
 
             private void UpdatePlayPanel()
