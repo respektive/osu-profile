@@ -2581,7 +2581,12 @@ namespace osu_Profile.Forms
                         }
                         catch (Exception) { downloaded = false; retry++; Thread.Sleep(new TimeSpan(0, 0, 1)); }
                     }
-                    if (!downloaded) { tempScoerState = MWindow.PlayerActualState.scoerinfo; }
+                    if (!downloaded) { MWindow.PlayerActualState.scoerinfo.ScoreRank = 0;
+                        MWindow.PlayerActualState.scoerinfo.ID = 0;
+                        MWindow.PlayerActualState.scoerinfo.SCOER = 0;
+                        MWindow.PlayerActualState.scoerinfo.Scoer_username = "None";
+                        MWindow.PlayerPreviousState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = tempScoerState = MWindow.PlayerActualState.scoerinfo;
+                    }
                 }
                 if ((tempState.Score != MWindow.PlayerActualState.Score) || ((ScoerChange == true) && (scoremode == 1)) || (scoremodeOld != scoremode))
                 {
