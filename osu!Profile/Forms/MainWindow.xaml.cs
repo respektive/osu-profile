@@ -1174,9 +1174,12 @@ namespace osu_Profile.Forms
                 SetValue(rankSSHbox, PlayerActualState.RankSSH, "#,#");
                 SetValue(totalSbox, PlayerActualState.RankS + PlayerActualState.RankSH, "#,#");
                 SetValue(totalSSbox, PlayerActualState.RankSS + PlayerActualState.RankSSH, "#,#");
-                if (PlayerActualState.scoerinfo.ID != 0)
+                if (PlayerActualState.scoerinfo != null)
                 {
-                    SetValue(scorerankbox, PlayerActualState.scoerinfo.ScoreRank, "#,#");
+                    if (PlayerActualState.scoerinfo.ID != 0)
+                    {
+                        SetValue(scorerankbox, PlayerActualState.scoerinfo.ScoreRank, "#,#");
+                    }
                 }
                 else
                     MWindow.ScoreRankBox.Text = "No Score Rank";
@@ -1777,9 +1780,11 @@ namespace osu_Profile.Forms
                     else if (scoremode == 1) // This session mode
                     {
                         rankedScoreDif = MWindow.PlayerActualState.RankedScore - MWindow.PlayerFirstState.RankedScore;
-                        if ((MWindow.PlayerActualState.scoerinfo.ID != 0) && (MWindow.PlayerFirstState.scoerinfo.ID != 0))
-                        {
-                            scoreRankDif = MWindow.PlayerActualState.scoerinfo.ScoreRank - MWindow.PlayerFirstState.scoerinfo.ScoreRank;
+                        if ((MWindow.PlayerActualState.scoerinfo != null) && (MWindow.PlayerFirstState.scoerinfo != null){
+                            if ((MWindow.PlayerActualState.scoerinfo.ID != 0) && (MWindow.PlayerFirstState.scoerinfo.ID != 0))
+                            {
+                                scoreRankDif = MWindow.PlayerActualState.scoerinfo.ScoreRank - MWindow.PlayerFirstState.scoerinfo.ScoreRank;
+                            }
                         }
                         levelDif = MWindow.PlayerActualState.Level - MWindow.PlayerFirstState.Level;
                         scoreDif = MWindow.PlayerActualState.Score - MWindow.PlayerFirstState.Score;
@@ -1972,14 +1977,15 @@ namespace osu_Profile.Forms
                     ///If you are going to use the version with colors, comment this section out.
                     ///Otherwise keep the previous section commented out. :)
                     ///If you don't want "#" prepended to your rank don't forget to also comment it out in SetValue() function along with the line in the "else" statement below!
-                    
-                    if (MainWindow.MWindow.PlayerActualState.scoerinfo.ID == 0)
-                    {
-                        MWindow.ScoreRank = "No Score Rank";
-                    }
-                    else
-                    {
-                        MWindow.ScoreRank = "#" + MainWindow.MWindow.ScoreRank;
+                    if (MWindow.PlayerActualState.scoerinfo != null) {
+                        if (MainWindow.MWindow.PlayerActualState.scoerinfo.ID == 0)
+                        {
+                            MWindow.ScoreRank = "No Score Rank";
+                        }
+                        else
+                        {
+                            MWindow.ScoreRank = "#" + MainWindow.MWindow.ScoreRank;
+                        }
                     }
                     
 
@@ -2512,7 +2518,7 @@ namespace osu_Profile.Forms
                     userID = tempState.ID;
                     retry = 0;
                     downloaded = false;
-                    while (!downloaded && retry < 3)
+                    while (!downloaded && retry < 5)
                         try
                         {
                             string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
@@ -2563,7 +2569,7 @@ namespace osu_Profile.Forms
                     userID = tempState.ID;
                     retry = 0;
                     downloaded = false;
-                    while (!downloaded && retry <= 3)
+                    while (!downloaded && retry <= 5)
                     {
                         try
                         {
@@ -2576,10 +2582,8 @@ namespace osu_Profile.Forms
                         }
                         catch (Exception) { downloaded = false; retry++; Thread.Sleep(new TimeSpan(0, 0, 1)); }
                     }
-                    if (!downloaded) { MWindow.PlayerActualState.scoerinfo.ScoreRank = 0;
-                        MWindow.PlayerActualState.scoerinfo.ID = 0;
-                        MWindow.PlayerActualState.scoerinfo.SCOER = 0;
-                        MWindow.PlayerActualState.scoerinfo.Scoer_username = "None";
+                    if (!downloaded) {
+                        MWindow.PlayerActualState.scoerinfo = new Scoerapi { ID = 0, SCOER = 0, Scoer_username = "None", ScoreRank = 0 };
                         MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = tempScoerState = MWindow.PlayerActualState.scoerinfo;
                     }
                 }
@@ -2588,9 +2592,12 @@ namespace osu_Profile.Forms
                     if (MWindow.PrevStatState == null)
                     {
                         MWindow.PrevStatState = MWindow.PlayerFirstState;
-                        if (MWindow.PlayerFirstState.scoerinfo.ID != 0)
+                        if (MWindow.PlayerFirstState.scoerinfo != null)
                         {
-                            MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo;
+                            if (MWindow.PlayerFirstState.scoerinfo.ID != 0)
+                            {
+                                MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo;
+                            }
                         }
                         MWindow.PrevStatState.TopRanks = MWindow.PlayerFirstState.TopRanks;
                     }
@@ -2613,9 +2620,12 @@ namespace osu_Profile.Forms
                     {
                         MWindow.PrevStatState = MWindow.PlayerActualState;
                         MWindow.PrevStatState.TopRanks = MWindow.PlayerActualState.TopRanks;
-                        if (MWindow.PlayerActualState.scoerinfo.ID != 0)
+                        if (MWindow.PlayerActualState.scoerinfo != null)
                         {
-                            MWindow.PrevStatState.scoerinfo = MWindow.PlayerActualState.scoerinfo;
+                            if (MWindow.PlayerActualState.scoerinfo.ID != 0)
+                            {
+                                MWindow.PrevStatState.scoerinfo = MWindow.PlayerActualState.scoerinfo;
+                            }
                         }
                     }
                     MWindow.PlayerPreviousState = MWindow.PlayerActualState;
