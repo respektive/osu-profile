@@ -55,7 +55,7 @@ namespace osu_Profile.IO
             try
             {
                 content = File.ReadAllText(filename);
-            } catch { File.Create("Config.ini"); }
+            } catch (Exception) { File.Create("Config.ini"); }
             List<string> lines = new List<string>(content.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
             string currentsection = "";
             for (int i = 0; i < lines.Count; i++)
