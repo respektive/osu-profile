@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:OP="clr-namespace:osu_Profile.Forms"
-        Title="Osu!Profile" WindowStyle="None" ResizeMode="CanMinimize" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" ShowTitleBar="True" ShowIconOnTitleBar="False" Loaded="MetroWindow_Loaded" Name="window" Height="785" Width="413">
+        Title="Osu!Profile" WindowStyle="None" ResizeMode="CanMinimize" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" ShowTitleBar="True" ShowIconOnTitleBar="False" Loaded="MetroWindow_Loaded"
+                      Closed="MainWindow_Closing" Name="window" Height="785" Width="413">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

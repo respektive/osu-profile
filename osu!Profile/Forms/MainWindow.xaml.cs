@@ -1101,6 +1101,10 @@ namespace osu_Profile.Forms
             return;
         }
         */
+        private void MainWindow_Closing(object sender, EventArgs e)
+        {
+            config.Export();
+        }
         public bool Start(string user, string apikey)
         {
             int.TryParse(config.GetValue("User", "mode", "0"), out mode);
@@ -2634,6 +2638,7 @@ namespace osu_Profile.Forms
                     }
                     MWindow.PlayerPreviousState = MWindow.PlayerActualState;
                     MWindow.PlayerActualState = tempState;
+                    MWindow.PlayerActualState.scoerinfo = new Scoerapi { ID = 0, SCOER = 0, Scoer_username = "None", ScoreRank = 0 };
                     if ((tempScoerState.ID != 0) || (scoremode == 0))
                     {
                         if (scoremode == 0)
