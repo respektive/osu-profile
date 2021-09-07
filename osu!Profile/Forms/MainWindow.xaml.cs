@@ -52,6 +52,7 @@ namespace osu_Profile.Forms
         #region Constructor
         public MainWindow()
         {
+            System.Net.ServicePointManager.SecurityProtocol |= (SecurityProtocolType)(0xc0 | 0x300 | 0xc00);
             InitializeComponent();
             MWindow = this;
             config.Load();
@@ -70,7 +71,7 @@ namespace osu_Profile.Forms
             //versioncheck = new Thread(checkversion);
             //versioncheck.IsBackground = true;
             //versioncheck.Start();
-            
+
             beatmapscheck.IsChecked = config.GetValue("User", "beatmaps", "false") == "true";
             playedbox.IsEnabled = config.GetValue("User", "beatmaps", "false") == "true";
 
@@ -1025,7 +1026,7 @@ namespace osu_Profile.Forms
             {
                 return playedbox;
             }
-        }        
+        }
 
         public Player PlayerFirstState { get; set; }
         public Player PlayerPreviousState { get; set; }
@@ -1033,7 +1034,7 @@ namespace osu_Profile.Forms
 
         public static MainWindow MWindow { get; set; }
         #endregion
-        
+
         #region Methods
         /* This Function is outdated because it would access a page that doesn't exist.
         public static void checkversion()
@@ -1102,9 +1103,10 @@ namespace osu_Profile.Forms
         */
         public bool Start(string user, string apikey)
         {
+            int.TryParse(config.GetValue("User", "mode", "0"), out mode);
             bool downloaded = false;
             short retry = 0;
-            while (!downloaded && retry < 5)
+            while (!downloaded && retry <= 3)
             {
                 try
                 {
@@ -1112,7 +1114,12 @@ namespace osu_Profile.Forms
                     {
                         string apiReturn = client.DownloadString("https://osu.ppy.sh/api/get_user?k=" + apikey + "&u=" + user + "&m=" + mode);
                         apiReturn = apiReturn.Substring(1, apiReturn.Length - 2);
-                        PlayerActualState = JsonConvert.DeserializeObject<Player>(apiReturn);
+                        if (apiReturn.Length != 0)
+                        {
+                            PlayerActualState = JsonConvert.DeserializeObject<Player>(apiReturn);
+                        }
+                        else
+                            throw new WebException();
                         userID = PlayerActualState.ID;
                         PlayerActualState.TopRanks = JsonConvert.DeserializeObject<Score[]>(client.DownloadString("https://osu.ppy.sh/api/get_user_best?k=" + apikey + "&u=" + user + "&m=" + mode + "&limit=" + 2));
                         PlayerActualState.Mode = mode;
@@ -1133,22 +1140,25 @@ namespace osu_Profile.Forms
             downloaded = false;
             retry = 0;
             while (!downloaded && retry <= 3)
+            {
                 try
                 {
                     using (WebClient client = new WebClient())
                     {
                         string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + mode);
                         scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                        if (scoerapiReturn.Length > 2)
+                        if (scoerapiReturn.Length > 0)
                         {
                             PlayerActualState.scoerinfo = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
                         }
+                        else
+                            throw new WebException();
                         downloaded = true;
                         PlayerFirstState.scoerinfo = PlayerPreviousState.scoerinfo = PlayerActualState.scoerinfo;
                     }
-
                 }
                 catch (Exception e) { downloaded = false; retry++; Console.WriteLine(e.StackTrace); }
+            }
             if (!downloaded)
             {
                 PlayerActualState.scoerinfo = new Scoerapi { ScoreRank = 0, ID = 0, SCOER = 0, Scoer_username = "None" };
@@ -1177,12 +1187,9 @@ namespace osu_Profile.Forms
                 SetValue(rankSSHbox, PlayerActualState.RankSSH, "#,#");
                 SetValue(totalSbox, PlayerActualState.RankS + PlayerActualState.RankSH, "#,#");
                 SetValue(totalSSbox, PlayerActualState.RankSS + PlayerActualState.RankSSH, "#,#");
-                if (PlayerActualState.scoerinfo != null)
+                if (PlayerActualState.scoerinfo.ScoreRank != 0)
                 {
-                    if (PlayerActualState.scoerinfo.ID != 0)
-                    {
-                        SetValue(scorerankbox, PlayerActualState.scoerinfo.ScoreRank, "#,#");
-                    }
+                    SetValue(scorerankbox, PlayerActualState.scoerinfo.ScoreRank, "#,#");
                 }
                 else
                     MWindow.ScoreRankBox.Text = "No Score Rank";
@@ -1260,13 +1267,14 @@ namespace osu_Profile.Forms
                     image.EndInit();
                     image.Freeze();
                     window.Dispatcher.Invoke((Action)(() => { ((MainWindow)window).avatar.Source = image; }));
-                            }))).Start();
+                }))).Start();
                 return true;
             }
             return false;
         }
 
-        public static void SetValue(TextBox textbox, int obj, String format) {
+        public static void SetValue(TextBox textbox, int obj, String format)
+        {
             if (obj != 0)
             {
                 textbox.Text = obj.ToString(format, CultureInfo.InvariantCulture);
@@ -1275,14 +1283,13 @@ namespace osu_Profile.Forms
                 {
                     textbox.Text = "#" + textbox.Text;
                 }
-                if ((MWindow.PlayerActualState.scoerinfo.ScoreRank != 0)) {
-                    if (obj == MWindow.PlayerActualState.scoerinfo.ScoreRank)
-                    {
-                        textbox.Text = "#" + textbox.Text;
-                    }
+                if (obj == MWindow.PlayerActualState.scoerinfo.ScoreRank)
+                {
+                    textbox.Text = "#" + textbox.Text;
                 }
                 ///If the value is playtime
-                if ((obj == MWindow.PlayerActualState.PlayTime)) {
+                if ((obj == MWindow.PlayerActualState.PlayTime))
+                {
                     TimeSpan pt = TimeSpan.FromSeconds(obj);
                     MWindow.PlayTime = string.Format("{0}h {1}m {2}s", pt.Days * 24 + pt.Hours, pt.Minutes, pt.Seconds);
                 }
@@ -1711,43 +1718,40 @@ namespace osu_Profile.Forms
             {
                 MWindow.RankedScoreChangeBox.Dispatcher.Invoke(new Action(() =>
                 {
-                MWindow.Ranked = MWindow.PlayerActualState.RankedScore.ToString("#,#", CultureInfo.InvariantCulture);
-                    if (MWindow.PlayerActualState.scoerinfo != null)
+                    MWindow.Ranked = MWindow.PlayerActualState.RankedScore.ToString("#,#", CultureInfo.InvariantCulture);
+                    if (MWindow.PlayerActualState.scoerinfo.ID != 0)
                     {
-                        if (MWindow.PlayerActualState.scoerinfo.ID != 0)
-                        {
-                            MWindow.ScoreRank = MWindow.PlayerActualState.scoerinfo.ScoreRank.ToString("#,#", CultureInfo.InvariantCulture);
-                        }
+                        MWindow.ScoreRank = MWindow.PlayerActualState.scoerinfo.ScoreRank.ToString("#,#", CultureInfo.InvariantCulture);
                     }
-                MWindow.Level = MWindow.PlayerActualState.Level.ToString("#,#.####", CultureInfo.InvariantCulture);
-                MWindow.Total = MWindow.PlayerActualState.Score.ToString("#,#", CultureInfo.InvariantCulture);
-                MWindow.Rank = MWindow.PlayerActualState.PPRank.ToString("#,#", CultureInfo.InvariantCulture);
-                MWindow.CountryRank = MWindow.PlayerActualState.PPCountryRank.ToString("#,#", CultureInfo.InvariantCulture);
-                MWindow.PP = MWindow.PlayerActualState.PP.ToString("#,#.##", CultureInfo.InvariantCulture);
-                MWindow.Accuracy = (MWindow.PlayerActualState.Accuracy / 100).ToString("#,#.#####%", CultureInfo.InvariantCulture);
-                TimeSpan pt = TimeSpan.FromSeconds(MWindow.PlayerActualState.PlayTime);
-                MWindow.PlayTime = string.Format("{0}h {1}m {2}s", pt.Days * 24 + pt.Hours, pt.Minutes, pt.Seconds);
-                MWindow.PlayCount = MWindow.PlayerActualState.PlayCount.ToString("#,#", CultureInfo.InvariantCulture);
-                MWindow.TotalHits = (MWindow.PlayerActualState.Count300 + MWindow.PlayerActualState.Count100 + MWindow.PlayerActualState.Count50).ToString("#,#", CultureInfo.InvariantCulture);
-                MWindow.HitsPerPlay = ((MWindow.PlayerActualState.Count300 + MWindow.PlayerActualState.Count100 + MWindow.PlayerActualState.Count50) / MWindow.PlayerActualState.PlayCount).ToString("#,#.##", CultureInfo.InvariantCulture);
-                MWindow.TSPerPlay = (MWindow.PlayerActualState.Score / MWindow.PlayerActualState.PlayCount).ToString("#,#.##", CultureInfo.InvariantCulture);
-                MWindow.RSPerPlay = (MWindow.PlayerActualState.RankedScore / MWindow.PlayerActualState.PlayCount).ToString("#,#.##", CultureInfo.InvariantCulture);
-                MWindow.RankA = MWindow.PlayerActualState.RankA.ToString("#,#", CultureInfo.InvariantCulture);
-                MWindow.RankS = MWindow.PlayerActualState.RankS.ToString("#,#", CultureInfo.InvariantCulture);
-                MWindow.RankSH = MWindow.PlayerActualState.RankSH.ToString("#,#", CultureInfo.InvariantCulture);
-                MWindow.RankSS = MWindow.PlayerActualState.RankSS.ToString("#,#", CultureInfo.InvariantCulture);
-                MWindow.RankSSH = MWindow.PlayerActualState.RankSSH.ToString("#,#", CultureInfo.InvariantCulture);
-                MWindow.TotalS = (MWindow.PlayerActualState.RankS + MWindow.PlayerActualState.RankSH).ToString("#,#", CultureInfo.InvariantCulture);
-                MWindow.TotalSS = (MWindow.PlayerActualState.RankSS + MWindow.PlayerActualState.RankSSH).ToString("#,#", CultureInfo.InvariantCulture);
-                int clearcount = MWindow.PlayerActualState.RankA + MWindow.PlayerActualState.RankS + MWindow.PlayerActualState.RankSH
-                    + MWindow.PlayerActualState.RankSS + MWindow.PlayerActualState.RankSSH;
-                MWindow.Clears = (clearcount).ToString("#,#", CultureInfo.InvariantCulture);
-                if (MWindow.PlayerActualState.TopRanks != null && MWindow.PlayerActualState.TopRanks.Length > 0)
-                    MWindow.TopPP = MWindow.PlayerActualState.TopRanks[0].PP.ToString("#,#.#####", CultureInfo.InvariantCulture);
+                    MWindow.Level = MWindow.PlayerActualState.Level.ToString("#,#.####", CultureInfo.InvariantCulture);
+                    MWindow.Total = MWindow.PlayerActualState.Score.ToString("#,#", CultureInfo.InvariantCulture);
+                    MWindow.Rank = MWindow.PlayerActualState.PPRank.ToString("#,#", CultureInfo.InvariantCulture);
+                    MWindow.CountryRank = MWindow.PlayerActualState.PPCountryRank.ToString("#,#", CultureInfo.InvariantCulture);
+                    MWindow.PP = MWindow.PlayerActualState.PP.ToString("#,#.##", CultureInfo.InvariantCulture);
+                    MWindow.Accuracy = (MWindow.PlayerActualState.Accuracy / 100).ToString("#,#.#####%", CultureInfo.InvariantCulture);
+                    TimeSpan pt = TimeSpan.FromSeconds(MWindow.PlayerActualState.PlayTime);
+                    MWindow.PlayTime = string.Format("{0}h {1}m {2}s", pt.Days * 24 + pt.Hours, pt.Minutes, pt.Seconds);
+                    MWindow.PlayCount = MWindow.PlayerActualState.PlayCount.ToString("#,#", CultureInfo.InvariantCulture);
+                    MWindow.TotalHits = (MWindow.PlayerActualState.Count300 + MWindow.PlayerActualState.Count100 + MWindow.PlayerActualState.Count50).ToString("#,#", CultureInfo.InvariantCulture);
+                    MWindow.HitsPerPlay = ((MWindow.PlayerActualState.Count300 + MWindow.PlayerActualState.Count100 + MWindow.PlayerActualState.Count50) / MWindow.PlayerActualState.PlayCount).ToString("#,#.##", CultureInfo.InvariantCulture);
+                    MWindow.TSPerPlay = (MWindow.PlayerActualState.Score / MWindow.PlayerActualState.PlayCount).ToString("#,#.##", CultureInfo.InvariantCulture);
+                    MWindow.RSPerPlay = (MWindow.PlayerActualState.RankedScore / MWindow.PlayerActualState.PlayCount).ToString("#,#.##", CultureInfo.InvariantCulture);
+                    MWindow.RankA = MWindow.PlayerActualState.RankA.ToString("#,#", CultureInfo.InvariantCulture);
+                    MWindow.RankS = MWindow.PlayerActualState.RankS.ToString("#,#", CultureInfo.InvariantCulture);
+                    MWindow.RankSH = MWindow.PlayerActualState.RankSH.ToString("#,#", CultureInfo.InvariantCulture);
+                    MWindow.RankSS = MWindow.PlayerActualState.RankSS.ToString("#,#", CultureInfo.InvariantCulture);
+                    MWindow.RankSSH = MWindow.PlayerActualState.RankSSH.ToString("#,#", CultureInfo.InvariantCulture);
+                    MWindow.TotalS = (MWindow.PlayerActualState.RankS + MWindow.PlayerActualState.RankSH).ToString("#,#", CultureInfo.InvariantCulture);
+                    MWindow.TotalSS = (MWindow.PlayerActualState.RankSS + MWindow.PlayerActualState.RankSSH).ToString("#,#", CultureInfo.InvariantCulture);
+                    int clearcount = MWindow.PlayerActualState.RankA + MWindow.PlayerActualState.RankS + MWindow.PlayerActualState.RankSH
+                        + MWindow.PlayerActualState.RankSS + MWindow.PlayerActualState.RankSSH;
+                    MWindow.Clears = (clearcount).ToString("#,#", CultureInfo.InvariantCulture);
+                    if (MWindow.PlayerActualState.TopRanks != null && MWindow.PlayerActualState.TopRanks.Length > 0)
+                        MWindow.TopPP = MWindow.PlayerActualState.TopRanks[0].PP.ToString("#,#.#####", CultureInfo.InvariantCulture);
 
-                int ppRankDif = 0, ppCountryRankDif = 0, aCountDif = 0, sCountDif = 0, shCountDif = 0, ssCountDif = 0, sshCountDif = 0, totalsCountDif = 0, totalssCountDif = 0, playTimeDif = 0, clearsDif = 0;
-                float levelDif = 0, ppDif = 0, accuracyDif = 0, topPPDif = 0, hitsperplayDif = 0, tsperplayDif = 0, rsperplayDif = 0, playCountDif = 0, totalHitsDif = 0;
-                long rankedScoreDif = 0, scoreDif = 0, scoreRankDif = 0;
+                    int ppRankDif = 0, ppCountryRankDif = 0, aCountDif = 0, sCountDif = 0, shCountDif = 0, ssCountDif = 0, sshCountDif = 0, totalsCountDif = 0, totalssCountDif = 0, playTimeDif = 0, clearsDif = 0;
+                    float levelDif = 0, ppDif = 0, accuracyDif = 0, topPPDif = 0, hitsperplayDif = 0, tsperplayDif = 0, rsperplayDif = 0, playCountDif = 0, totalHitsDif = 0;
+                    long rankedScoreDif = 0, scoreDif = 0, scoreRankDif = 0;
                     if (scoremode == 0) // Each game mode
                     {
                         rankedScoreDif = MWindow.PlayerActualState.RankedScore - MWindow.PlayerPreviousState.RankedScore;
@@ -1786,11 +1790,9 @@ namespace osu_Profile.Forms
                     else if (scoremode == 1) // This session mode
                     {
                         rankedScoreDif = MWindow.PlayerActualState.RankedScore - MWindow.PlayerFirstState.RankedScore;
-                        if ((MWindow.PlayerActualState.scoerinfo != null) && (MWindow.PlayerFirstState.scoerinfo != null)){
-                            if ((MWindow.PlayerActualState.scoerinfo.ID != 0) && (MWindow.PlayerFirstState.scoerinfo.ID != 0))
-                            {
-                                scoreRankDif = MWindow.PlayerActualState.scoerinfo.ScoreRank - MWindow.PlayerFirstState.scoerinfo.ScoreRank;
-                            }
+                        if ((MWindow.PlayerActualState.scoerinfo.ID != 0) && (MWindow.PlayerFirstState.scoerinfo.ID != 0))
+                        {
+                            scoreRankDif = MWindow.PlayerActualState.scoerinfo.ScoreRank - MWindow.PlayerFirstState.scoerinfo.ScoreRank;
                         }
                         levelDif = MWindow.PlayerActualState.Level - MWindow.PlayerFirstState.Level;
                         scoreDif = MWindow.PlayerActualState.Score - MWindow.PlayerFirstState.Score;
@@ -1925,7 +1927,8 @@ namespace osu_Profile.Forms
                     ///Comment this out if you don't want this.
                     ///Don't forget to also comment this out in the SetValue function.
 
-                    if (MWindow.PlayerActualState.PPRank != 0) {
+                    if (MWindow.PlayerActualState.PPRank != 0)
+                    {
                         MWindow.Rank = "#" + MWindow.Rank;
                     }
 
@@ -1944,11 +1947,10 @@ namespace osu_Profile.Forms
                     {
                         MWindow.ScoreRank = "Score Rank Unavailable";
                     }
-                    else if (MWindow.PlayerActualState.scoerinfo == null) {
+                    else if (MWindow.PlayerActualState.scoerinfo.ScoreRank == 0) {
                         MWindow.ScoreRank = "No Score Rank";
                         MWindow.ScoreRankBox.Foreground = new SolidColorBrush(Colors.White);
-                    }
-                    else if (MWindow.PlayerActualState.scoerinfo.ScoreRank <= 0) {
+                    else if (MWindow.PlayerActualState.scoerinfo.ScoreRank < 0) {
                         MWindow.ScoreRankBox.Foreground = new SolidColorBrush(Colors.Red);
                     }
                     else if (MWindow.PlayerActualState.scoerinfo.ScoreRank == 1)
@@ -1983,17 +1985,15 @@ namespace osu_Profile.Forms
                     ///If you are going to use the version with colors, comment this section out.
                     ///Otherwise keep the previous section commented out. :)
                     ///If you don't want "#" prepended to your rank don't forget to also comment it out in SetValue() function along with the line in the "else" statement below!
-                    if (MWindow.PlayerActualState.scoerinfo != null) {
-                        if (MainWindow.MWindow.PlayerActualState.scoerinfo.ID == 0)
-                        {
-                            MWindow.ScoreRank = "No Score Rank";
-                        }
-                        else
-                        {
-                            MWindow.ScoreRank = "#" + MainWindow.MWindow.ScoreRank;
-                        }
+                    if (MainWindow.MWindow.PlayerActualState.scoerinfo.ID == 0)
+                    {
+                        MWindow.ScoreRank = "No Score Rank";
                     }
-                    
+                    else
+                    {
+                        MWindow.ScoreRank = "#" + MainWindow.MWindow.ScoreRank;
+                    }
+
 
 
 
@@ -2346,7 +2346,7 @@ namespace osu_Profile.Forms
 
         public static bool ContainsFilename(string filename)
         {
-            foreach(OutputFile outputfile in files)
+            foreach (OutputFile outputfile in files)
             {
                 if (outputfile.Name.ToLower() == filename.ToLower())
                     return true;
@@ -2413,7 +2413,7 @@ namespace osu_Profile.Forms
                 if (rankingcomponents == 0)
                     tab.Height = 200;
                 else
-                    tab.Height = 68 + rankingcomponents*31;
+                    tab.Height = 68 + rankingcomponents * 31;
             }
             else if (tab.SelectedIndex == 1)
             {
@@ -2440,7 +2440,7 @@ namespace osu_Profile.Forms
         {
             this.Options.IsOpen = true;
         }
-        
+
         private void Options_ClosingFinished(object sender, RoutedEventArgs e)
         {
             config.Export();
@@ -2511,28 +2511,25 @@ namespace osu_Profile.Forms
                 Scoerapi PrevScoerState = new Scoerapi { ScoreRank = 0, ID = 0, SCOER = 0, Scoer_username = "None" };
                 //ScoerChange variable shows if a change in Score Rank has happened or not.
                 bool ScoerChange = false;
-                if (MWindow.PlayerActualState.scoerinfo != null)
-                {
-                    if (MWindow.PlayerActualState.scoerinfo.ID != 0)
-                    {
-                        PrevScoerState = MWindow.PlayerActualState.scoerinfo;
-                    }
-                }
                 if ((MWindow.PlayerFirstState.Mode == tempState.Mode) && (tempState.ID == MWindow.PlayerFirstState.ID) && (scoremode == 1))
                 {
+                    PrevScoerState = MWindow.PlayerActualState.scoerinfo;
                     WebClient client = new WebClient();
                     userID = tempState.ID;
                     retry = 0;
                     downloaded = false;
-                    while (!downloaded && retry < 5)
+                    while (!downloaded && retry <= 3)
+                    {
                         try
                         {
                             string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
                             scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                            if (scoerapiReturn.Length > 2)
+                            if (scoerapiReturn.Length > 0)
                             {
                                 tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
                             }
+                            else
+                                throw new WebException();
                             if (tempScoerState.ID != 0)
                             {
                                 //if your enter top 10000, make starting score rank 10001.
@@ -2553,7 +2550,8 @@ namespace osu_Profile.Forms
                             }
                             downloaded = true;
                         }
-                        catch (Exception) { retry++; downloaded = false; Thread.Sleep(new TimeSpan(0, 0, 1)); }
+                        catch (Exception) { retry++; downloaded = false; Thread.Sleep(new TimeSpan(0, 0, 0, 0, 200)); }
+                    }
                     if (!downloaded) { tempScoerState = MWindow.PlayerActualState.scoerinfo; }
                 }
                 tempState.Mode = mode;
@@ -2578,38 +2576,38 @@ namespace osu_Profile.Forms
                     userID = tempState.ID;
                     retry = 0;
                     downloaded = false;
-                    while (!downloaded && retry <= 5)
+                    while (!downloaded && retry <= 3)
                     {
                         try
                         {
                             string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
                             scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                            if (scoerapiReturn.Length > 2)
+                            if (scoerapiReturn.Length > 0)
                             {
                                 tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
                             }
+                            else
+                                throw new WebException();
                             PrevScoerState = tempScoerState;
                             MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = tempScoerState;
                             downloaded = true;
                         }
-                        catch (Exception) { downloaded = false; retry++; Thread.Sleep(new TimeSpan(0, 0, 1)); }
+                        catch (Exception) { downloaded = false; retry++; Thread.Sleep(new TimeSpan(0, 0, 0, 0, 200)); }
                     }
-                    if (!downloaded) {
-                        MWindow.PlayerActualState.scoerinfo = new Scoerapi { ID = 0, SCOER = 0, Scoer_username = "None", ScoreRank = 0 };
-                        MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = tempScoerState = MWindow.PlayerActualState.scoerinfo;
+                    if (!downloaded)
+                    {
+                        tempScoerState = new Scoerapi { ID = 0, SCOER = 0, Scoer_username = "None", ScoreRank = 0 };
+                        MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = tempScoerState;
                     }
                 }
-                if (((tempState.Score != MWindow.PlayerActualState.Score) && (tempState.Mode == MWindow.PlayerActualState.Mode)) || ((ScoerChange == true) && (scoremode == 1)) || (scoremodeOld != scoremode))
+                if ((tempState.Score != MWindow.PlayerActualState.Score) || ((ScoerChange == true) && (scoremode == 1)) || (scoremodeOld != scoremode))
                 {
                     if (MWindow.PrevStatState == null)
                     {
                         MWindow.PrevStatState = MWindow.PlayerFirstState;
-                        if (MWindow.PlayerFirstState.scoerinfo != null)
+                        if (MWindow.PlayerFirstState.scoerinfo.ID != 0)
                         {
-                            if (MWindow.PlayerFirstState.scoerinfo.ID != 0)
-                            {
-                                MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo;
-                            }
+                            MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo;
                         }
                         MWindow.PrevStatState.TopRanks = MWindow.PlayerFirstState.TopRanks;
                     }
@@ -2619,12 +2617,9 @@ namespace osu_Profile.Forms
                         {
                             MWindow.PrevStatState = MWindow.PlayerPreviousState;
                             MWindow.PrevStatState.TopRanks = MWindow.PlayerPreviousState.TopRanks;
-                            if (MWindow.PlayerPreviousState.scoerinfo != null)
+                            if (MWindow.PlayerPreviousState.scoerinfo.ID != 0)
                             {
-                                if (MWindow.PlayerPreviousState.scoerinfo.ID != 0)
-                                {
-                                    MWindow.PrevStatState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo;
-                                }
+                                MWindow.PrevStatState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo;
                             }
                         }
                     }
@@ -2632,12 +2627,9 @@ namespace osu_Profile.Forms
                     {
                         MWindow.PrevStatState = MWindow.PlayerActualState;
                         MWindow.PrevStatState.TopRanks = MWindow.PlayerActualState.TopRanks;
-                        if (MWindow.PlayerActualState.scoerinfo != null)
+                        if (MWindow.PlayerActualState.scoerinfo.ID != 0)
                         {
-                            if (MWindow.PlayerActualState.scoerinfo.ID != 0)
-                            {
-                                MWindow.PrevStatState.scoerinfo = MWindow.PlayerActualState.scoerinfo;
-                            }
+                            MWindow.PrevStatState.scoerinfo = MWindow.PlayerActualState.scoerinfo;
                         }
                     }
                     MWindow.PlayerPreviousState = MWindow.PlayerActualState;
@@ -2656,13 +2648,15 @@ namespace osu_Profile.Forms
                                 {
                                     string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
                                     scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                                    if (scoerapiReturn.Length > 2)
+                                    if (scoerapiReturn.Length > 0)
                                     {
                                         tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
                                     }
+                                    else
+                                        throw new WebException();
                                     downloaded = true;
                                 }
-                                catch (Exception) { downloaded = false; retry++; Thread.Sleep(new TimeSpan(0, 0, 1)); }
+                                catch (Exception) { downloaded = false; retry++; Thread.Sleep(new TimeSpan(0, 0, 0, 0, 200)); }
                             }
                             if (!downloaded) { tempScoerState = MWindow.PlayerActualState.scoerinfo; }
                             if ((tempScoerState.ID != 0) && (tempScoerState != PrevScoerState))
@@ -2761,8 +2755,9 @@ namespace osu_Profile.Forms
                 }
 
                 lastplayedbeatmaps.Clear();
-                                
-                foreach(Event ev in events){
+
+                foreach (Event ev in events)
+                {
                     ev.Initialize(APIKey);
                     lastplayedbeatmaps.Add(ev);
                 }
