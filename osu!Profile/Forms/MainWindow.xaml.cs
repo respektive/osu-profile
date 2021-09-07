@@ -2401,6 +2401,7 @@ namespace osu_Profile.Forms
 
                     link.SetDescription("osu!profile");
                     link.SetPath(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+                    link.SetWorkingDirectory(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
 
                     IPersistFile file = (IPersistFile)link;
                     file.Save(startupShotcut, false);
