@@ -52,7 +52,7 @@ namespace osu_Profile.Forms
         #region Constructor
         public MainWindow()
         {
-            System.Net.ServicePointManager.SecurityProtocol |= (SecurityProtocolType)(0xc0 | 0x300 | 0xc00);
+            System.Net.ServicePointManager.SecurityProtocol |= (SecurityProtocolType)(0xc0 | 0x300 | 0xc00 | 0x3000);
             InitializeComponent();
             MWindow = this;
             config.Load();
