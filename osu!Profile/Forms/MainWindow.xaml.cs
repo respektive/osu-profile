@@ -2617,9 +2617,12 @@ namespace osu_Profile.Forms
                             {
                                 MWindow.PrevStatState = MWindow.PlayerPreviousState;
                                 MWindow.PrevStatState.TopRanks = MWindow.PlayerPreviousState.TopRanks;
-                                if (MWindow.PlayerPreviousState.scoerinfo.ID != 0)
+                                if (MWindow.PlayerPreviousState != null)
                                 {
-                                    MWindow.PrevStatState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo;
+                                    if (MWindow.PlayerPreviousState.scoerinfo.ID != 0)
+                                    {
+                                        MWindow.PrevStatState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo;
+                                    }
                                 }
                             }
                         }
@@ -2627,9 +2630,12 @@ namespace osu_Profile.Forms
                         {
                             MWindow.PrevStatState = MWindow.PlayerActualState;
                             MWindow.PrevStatState.TopRanks = MWindow.PlayerActualState.TopRanks;
-                            if (MWindow.PlayerActualState.scoerinfo.ID != 0)
+                            if (MWindow.PlayerActualState.scoerinfo != null)
                             {
-                                MWindow.PrevStatState.scoerinfo = MWindow.PlayerActualState.scoerinfo;
+                                if (MWindow.PlayerActualState.scoerinfo.ID != 0)
+                                {
+                                    MWindow.PrevStatState.scoerinfo = MWindow.PlayerActualState.scoerinfo;
+                                }
                             }
                         }
                         MWindow.PlayerPreviousState = MWindow.PlayerActualState;
