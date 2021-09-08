@@ -34,14 +34,14 @@
         <Button Content="Edit" Height="23" Margin="0,103,0,0" Name="edit" VerticalAlignment="Top" Click="edit_Click" HorizontalAlignment="Right" Width="57" Background="{x:Null}" />
         <Button Content="Remove" Height="23" Margin="0,133,0,0" Name="remove" VerticalAlignment="Top" Click="remove_Click" HorizontalAlignment="Right" Width="57" Background="{x:Null}" />
         <ComboBox Height="23" Margin="64,238,0,0" Name="scoremodelist" VerticalAlignment="Top" SelectionChanged="scoremodelist_SelectionChanged" Loaded="scoremodelist_Loaded">
-            <ComboBoxItem Content="Each game" />
+            <ComboBoxItem Content="Each play" />
             <ComboBoxItem Content="This session" />
         </ComboBox>
         <Label Content="Score" Height="28" HorizontalAlignment="Left" Margin="6,241,0,0" VerticalAlignment="Top" />
         <Button x:Name="rankingButton" Content="Ranking panel elements" Margin="0,269,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="152" Click="rankingButton_Click" Background="{x:Null}"/>
         <CheckBox x:Name="alwaysontopcheck" Content="Always on top" Margin="0,299,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="102" Unchecked="alwaysontopcheck_Unchecked" Checked="alwaysontopcheck_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft"/>
-        <CheckBox x:Name="popupEachMap" Content="Popup when you get ranked score" Margin="0,322,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="207" Unchecked="popupEachMap_Unchecked" Checked="popupEachMap_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft"/>
-        <CheckBox x:Name="popupPPUp" Content="Popup when gain PP" Margin="0,345,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="136" Unchecked="popupPP_Unchecked" Checked="popupPP_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft"/>
+        <CheckBox x:Name="popupEachMap" Content="Flash window when you get ranked score" Margin="0,322,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="245" Unchecked="popupEachMap_Unchecked" Checked="popupEachMap_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft"/>
+        <CheckBox x:Name="popupPPUp" Content="Flash window when you gain PP" Margin="0,345,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="196" Unchecked="popupPP_Unchecked" Checked="popupPP_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft"/>
         <toolkit:ColorPicker x:Name="backgroundColor" Margin="64,368,0,0" Height="22" VerticalAlignment="Top" ColorMode="ColorCanvas" ShowAvailableColors="False" ShowAdvancedButton="False" ShowDropDownButton="False" ShowStandardColors="False" UsingAlphaChannel="False" SelectedColorChanged="backgroundColor_SelectedColorChanged" Loaded="backgroundColor_Loaded"/>
         <Label Content="Color" HorizontalAlignment="Left" Margin="6,366,0,0" Height="26" VerticalAlignment="Top"/>
         <CheckBox x:Name="checkOnStart" Content="Check on start" Margin="0,395,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="102" Unchecked="checkOnStart_Unchecked" Checked="checkOnStart_Checked" Controls:ToggleButtonHelper.ContentDirection="RightToLeft"/>

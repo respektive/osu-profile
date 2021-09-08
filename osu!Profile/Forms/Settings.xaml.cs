@@ -125,8 +125,8 @@ namespace osu_Profile.Forms
             if (MainWindow.mode != modelist.SelectedIndex)
             {
                 MainWindow.mode = modelist.SelectedIndex;
-                MainWindow.MWindow.Start(userbox.Text, apibox.Password);
                 config.SetValue("User", "mode", MainWindow.mode.ToString());
+                MainWindow.MWindow.Start(userbox.Text, apibox.Password);
             }
         }
 
@@ -285,6 +285,7 @@ namespace osu_Profile.Forms
 
                 link.SetDescription("osu!profile");
                 link.SetPath(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+                link.SetWorkingDirectory(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
 
                 IPersistFile file = (IPersistFile)link;
                 file.Save(startupShotcut, false);

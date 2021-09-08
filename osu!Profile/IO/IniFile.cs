@@ -52,7 +52,10 @@ namespace osu_Profile.IO
             if (separator == null)
                 throw new ArgumentNullException("Can't call Load method with a null separator.");
             sections = new Dictionary<string, Dictionary<string, string>>();
-            content = File.ReadAllText(filename);
+            try
+            {
+                content = File.ReadAllText(filename);
+            } catch (Exception) { File.Create("Config.ini"); }
             List<string> lines = new List<string>(content.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
             string currentsection = "";
             for (int i = 0; i < lines.Count; i++)
