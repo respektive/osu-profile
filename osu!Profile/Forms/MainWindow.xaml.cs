@@ -1344,7 +1344,7 @@ namespace osu_Profile.Forms
                 switch (element)
                 {
                     case "scorerank":
-                        if (config.GetValue("User", "scorerank", "true") == "true")
+                        if (config.GetValue("User", "scorerankbox", "true") == "true")
                         {
                             scorerankLab.Visibility = Visibility.Visible;
                             scorerankbox.Visibility = Visibility.Visible;
@@ -1360,9 +1360,8 @@ namespace osu_Profile.Forms
                             scorerankchangebox.Visibility = Visibility.Hidden;
                         }
                         break;
-
                     case "level":
-                        if (config.GetValue("User", "level", "true") == "true")
+                        if (config.GetValue("User", "levelbox", "true") == "true")
                         {
                             levelLab.Visibility = Visibility.Visible;
                             levelbox.Visibility = Visibility.Visible;
