@@ -8,6 +8,8 @@ If you want to add the Score Rank to any of your programs you can use my Score R
 - https://score.respektive.pw/u/3172980 to look up the rank and score for a user id. mode parameters work here too like `https://score.respektive.pw/u/3172980?m=3`
 - https://score.respektive.pw/rank/727 to check the user for a specific rank. mode parameters work here too like `https://score.respektive.pw/rank/1?m=3`
 
+> I will try to keep this API running until there is a Score Rank Endpoint in the official API. But don't be suprised if this might just go offline at one point (It probably won't but I will make sure to update this readme then tho)
+
 # osu!Profile
 osu!Profile is a little program for helping you to see your progress in the ranking (if you're not very attentive and miss how many rank you've just passed when you finished a map), also allow you to export these data into files and importing them into your livestream with OBS or XSplit!
 
