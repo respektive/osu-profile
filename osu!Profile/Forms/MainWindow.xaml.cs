@@ -1330,374 +1330,412 @@ namespace osu_Profile.Forms
         {
             List<Control> controls = new List<Control>();
 
-            if (config.GetValue("User", "scorerankbox", "true") == "true")
+            if (!File.Exists("rankingorder.txt"))
             {
-                scorerankLab.Visibility = Visibility.Visible;
-                scorerankbox.Visibility = Visibility.Visible;
-                scorerankchangebox.Visibility = Visibility.Visible;
-                controls.Add(scorerankLab);
-                controls.Add(scorerankbox);
-                controls.Add(scorerankchangebox);
-            }
-            else
-            {
-                scorerankLab.Visibility = Visibility.Hidden;
-                scorerankbox.Visibility = Visibility.Hidden;
-                scorerankchangebox.Visibility = Visibility.Hidden;
+                List<string> defaultOrder = new List<string> { "scorerank", "level", "rankedscore", "totalscore", "pprank", "countryrank", "pp", "accuracy", "playtime", "playcount", "totalhits", "hitsperplay", "totalscoreperplay", "rankedscoreperplay", "topplay", "ranka", "ranks", "ranksh", "rankss", "rankssh", "totals", "totalss", "profileclears" };
+                File.WriteAllLines("rankingorder.txt", defaultOrder);
             }
 
-            if (config.GetValue("User", "levelbox", "true") == "true")
-            {
-                levelLab.Visibility = Visibility.Visible;
-                levelbox.Visibility = Visibility.Visible;
-                levelchangebox.Visibility = Visibility.Visible;
-                controls.Add(levelLab);
-                controls.Add(levelbox);
-                controls.Add(levelchangebox);
-            }
-            else
-            {
-                levelLab.Visibility = Visibility.Hidden;
-                levelbox.Visibility = Visibility.Hidden;
-                levelchangebox.Visibility = Visibility.Hidden;
-            }
 
-            if (config.GetValue("User", "rankscorebox", "true") == "true")
-            {
-                rscoreLab.Visibility = Visibility.Visible;
-                rankedbox.Visibility = Visibility.Visible;
-                rankedscorechangebox.Visibility = Visibility.Visible;
-                controls.Add(rscoreLab);
-                controls.Add(rankedbox);
-                controls.Add(rankedscorechangebox);
-            }
-            else
-            {
-                rscoreLab.Visibility = Visibility.Hidden;
-                rankedbox.Visibility = Visibility.Hidden;
-                rankedscorechangebox.Visibility = Visibility.Hidden;
-            }
+            var rankingOrder = new List<string>(File.ReadLines("rankingorder.txt"));
 
-            if (config.GetValue("User", "totalscorebox", "true") == "true")
+            foreach (string element in rankingOrder)
             {
-                tscoreLab.Visibility = Visibility.Visible;
-                totalbox.Visibility = Visibility.Visible;
-                totalscorechangebox.Visibility = Visibility.Visible;
-                controls.Add(tscoreLab);
-                controls.Add(totalbox);
-                controls.Add(totalscorechangebox);
+                switch (element)
+                {
+                    case "scorerank":
+                        if (config.GetValue("User", "scorerankbox", "true") == "true")
+                        {
+                            scorerankLab.Visibility = Visibility.Visible;
+                            scorerankbox.Visibility = Visibility.Visible;
+                            scorerankchangebox.Visibility = Visibility.Visible;
+                            controls.Add(scorerankLab);
+                            controls.Add(scorerankbox);
+                            controls.Add(scorerankchangebox);
+                        }
+                        else
+                        {
+                            scorerankLab.Visibility = Visibility.Hidden;
+                            scorerankbox.Visibility = Visibility.Hidden;
+                            scorerankchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "level":
+                        if (config.GetValue("User", "levelbox", "true") == "true")
+                        {
+                            levelLab.Visibility = Visibility.Visible;
+                            levelbox.Visibility = Visibility.Visible;
+                            levelchangebox.Visibility = Visibility.Visible;
+                            controls.Add(levelLab);
+                            controls.Add(levelbox);
+                            controls.Add(levelchangebox);
+                        }
+                        else
+                        {
+                            levelLab.Visibility = Visibility.Hidden;
+                            levelbox.Visibility = Visibility.Hidden;
+                            levelchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "rankedscore":
+                        if (config.GetValue("User", "rankscorebox", "true") == "true")
+                        {
+                            rscoreLab.Visibility = Visibility.Visible;
+                            rankedbox.Visibility = Visibility.Visible;
+                            rankedscorechangebox.Visibility = Visibility.Visible;
+                            controls.Add(rscoreLab);
+                            controls.Add(rankedbox);
+                            controls.Add(rankedscorechangebox);
+                        }
+                        else
+                        {
+                            rscoreLab.Visibility = Visibility.Hidden;
+                            rankedbox.Visibility = Visibility.Hidden;
+                            rankedscorechangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "totalscore":
+                        if (config.GetValue("User", "totalscorebox", "true") == "true")
+                        {
+                            tscoreLab.Visibility = Visibility.Visible;
+                            totalbox.Visibility = Visibility.Visible;
+                            totalscorechangebox.Visibility = Visibility.Visible;
+                            controls.Add(tscoreLab);
+                            controls.Add(totalbox);
+                            controls.Add(totalscorechangebox);
+                        }
+                        else
+                        {
+                            tscoreLab.Visibility = Visibility.Hidden;
+                            totalbox.Visibility = Visibility.Hidden;
+                            totalscorechangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "pprank":
+                        if (config.GetValue("User", "rankbox", "true") == "true")
+                        {
+                            rankLab.Visibility = Visibility.Visible;
+                            rankbox.Visibility = Visibility.Visible;
+                            rankchangebox.Visibility = Visibility.Visible;
+                            controls.Add(rankLab);
+                            controls.Add(rankbox);
+                            controls.Add(rankchangebox);
+                        }
+                        else
+                        {
+                            rankLab.Visibility = Visibility.Hidden;
+                            rankbox.Visibility = Visibility.Hidden;
+                            rankchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "countryrank":
+                        if (config.GetValue("User", "countryrankbox", "true") == "true")
+                        {
+                            countryrankLab.Visibility = Visibility.Visible;
+                            countryrankbox.Visibility = Visibility.Visible;
+                            countryrankchangebox.Visibility = Visibility.Visible;
+                            controls.Add(countryrankLab);
+                            controls.Add(countryrankbox);
+                            controls.Add(countryrankchangebox);
+                        }
+                        else
+                        {
+                            countryrankLab.Visibility = Visibility.Hidden;
+                            countryrankbox.Visibility = Visibility.Hidden;
+                            countryrankchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "pp":
+                        if (config.GetValue("User", "ppbox", "true") == "true")
+                        {
+                            ppLab.Visibility = Visibility.Visible;
+                            ppbox.Visibility = Visibility.Visible;
+                            ppchangebox.Visibility = Visibility.Visible;
+                            controls.Add(ppLab);
+                            controls.Add(ppbox);
+                            controls.Add(ppchangebox);
+                        }
+                        else
+                        {
+                            ppLab.Visibility = Visibility.Hidden;
+                            ppbox.Visibility = Visibility.Hidden;
+                            ppchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "accuracy":
+                        if (config.GetValue("User", "accubox", "true") == "true")
+                        {
+                            accuLab.Visibility = Visibility.Visible;
+                            accuracybox.Visibility = Visibility.Visible;
+                            accuracychangebox.Visibility = Visibility.Visible;
+                            controls.Add(accuLab);
+                            controls.Add(accuracybox);
+                            controls.Add(accuracychangebox);
+                        }
+                        else
+                        {
+                            accuLab.Visibility = Visibility.Hidden;
+                            accuracybox.Visibility = Visibility.Hidden;
+                            accuracychangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "playtime":
+                        if (config.GetValue("User", "playtimebox", "true") == "true")
+                        {
+                            playtimeLab.Visibility = Visibility.Visible;
+                            playtimebox.Visibility = Visibility.Visible;
+                            playtimechangebox.Visibility = Visibility.Visible;
+                            controls.Add(playtimeLab);
+                            controls.Add(playtimebox);
+                            controls.Add(playtimechangebox);
+                        }
+                        else
+                        {
+                            playtimeLab.Visibility = Visibility.Hidden;
+                            playtimebox.Visibility = Visibility.Hidden;
+                            playtimechangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "playcount":
+                        if (config.GetValue("User", "playcountbox", "true") == "true")
+                        {
+                            playcountLab.Visibility = Visibility.Visible;
+                            playcountbox.Visibility = Visibility.Visible;
+                            playcountchangebox.Visibility = Visibility.Visible;
+                            controls.Add(playcountLab);
+                            controls.Add(playcountbox);
+                            controls.Add(playcountchangebox);
+                        }
+                        else
+                        {
+                            playcountLab.Visibility = Visibility.Hidden;
+                            playcountbox.Visibility = Visibility.Hidden;
+                            playcountchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "totalhits":
+                        if (config.GetValue("User", "totalhitsbox", "true") == "true")
+                        {
+                            totalhitsLab.Visibility = Visibility.Visible;
+                            totalhitsbox.Visibility = Visibility.Visible;
+                            totalhitschangebox.Visibility = Visibility.Visible;
+                            controls.Add(totalhitsLab);
+                            controls.Add(totalhitsbox);
+                            controls.Add(totalhitschangebox);
+                        }
+                        else
+                        {
+                            totalhitsLab.Visibility = Visibility.Hidden;
+                            totalhitsbox.Visibility = Visibility.Hidden;
+                            totalhitschangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "hitsperplay":
+                        if (config.GetValue("User", "hitsperplaybox", "true") == "true")
+                        {
+                            hitsperplayLab.Visibility = Visibility.Visible;
+                            hitsperplaybox.Visibility = Visibility.Visible;
+                            hitsperplaychangebox.Visibility = Visibility.Visible;
+                            controls.Add(hitsperplayLab);
+                            controls.Add(hitsperplaybox);
+                            controls.Add(hitsperplaychangebox);
+                        }
+                        else
+                        {
+                            hitsperplayLab.Visibility = Visibility.Hidden;
+                            hitsperplaybox.Visibility = Visibility.Hidden;
+                            hitsperplaychangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "totalscoreperplay":
+                        if (config.GetValue("User", "tsperplaybox", "true") == "true")
+                        {
+                            tsperplayLab.Visibility = Visibility.Visible;
+                            tsperplaybox.Visibility = Visibility.Visible;
+                            tsperplaychangebox.Visibility = Visibility.Visible;
+                            controls.Add(tsperplayLab);
+                            controls.Add(tsperplaybox);
+                            controls.Add(tsperplaychangebox);
+                        }
+                        else
+                        {
+                            tsperplayLab.Visibility = Visibility.Hidden;
+                            tsperplaybox.Visibility = Visibility.Hidden;
+                            tsperplaychangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "rankedscoreperplay":
+                        if (config.GetValue("User", "rsperplaybox", "true") == "true")
+                        {
+                            rsperplayLab.Visibility = Visibility.Visible;
+                            rsperplaybox.Visibility = Visibility.Visible;
+                            rsperplaychangebox.Visibility = Visibility.Visible;
+                            controls.Add(rsperplayLab);
+                            controls.Add(rsperplaybox);
+                            controls.Add(rsperplaychangebox);
+                        }
+                        else
+                        {
+                            rsperplayLab.Visibility = Visibility.Hidden;
+                            rsperplaybox.Visibility = Visibility.Hidden;
+                            rsperplaychangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "topplay":
+                        if (config.GetValue("User", "topPPbox", "true") == "true")
+                        {
+                            topPPLab.Visibility = Visibility.Visible;
+                            topPPbox.Visibility = Visibility.Visible;
+                            topPPchangebox.Visibility = Visibility.Visible;
+                            controls.Add(topPPLab);
+                            controls.Add(topPPbox);
+                            controls.Add(topPPchangebox);
+                        }
+                        else
+                        {
+                            topPPLab.Visibility = Visibility.Hidden;
+                            topPPbox.Visibility = Visibility.Hidden;
+                            topPPchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "ranka":
+                        if (config.GetValue("User", "rankAbox", "true") == "true")
+                        {
+                            rankALab.Visibility = Visibility.Visible;
+                            rankAbox.Visibility = Visibility.Visible;
+                            rankAchangebox.Visibility = Visibility.Visible;
+                            controls.Add(rankALab);
+                            controls.Add(rankAbox);
+                            controls.Add(rankAchangebox);
+                        }
+                        else
+                        {
+                            rankALab.Visibility = Visibility.Hidden;
+                            rankAbox.Visibility = Visibility.Hidden;
+                            rankAchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "ranks":
+                        if (config.GetValue("User", "rankSbox", "true") == "true")
+                        {
+                            rankSLab.Visibility = Visibility.Visible;
+                            rankSbox.Visibility = Visibility.Visible;
+                            rankSchangebox.Visibility = Visibility.Visible;
+                            controls.Add(rankSLab);
+                            controls.Add(rankSbox);
+                            controls.Add(rankSchangebox);
+                        }
+                        else
+                        {
+                            rankSLab.Visibility = Visibility.Hidden;
+                            rankSbox.Visibility = Visibility.Hidden;
+                            rankSchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "ranksh":
+                        if (config.GetValue("User", "rankSHbox", "true") == "true")
+                        {
+                            rankSHLab.Visibility = Visibility.Visible;
+                            rankSHbox.Visibility = Visibility.Visible;
+                            rankSHchangebox.Visibility = Visibility.Visible;
+                            controls.Add(rankSHLab);
+                            controls.Add(rankSHbox);
+                            controls.Add(rankSHchangebox);
+                        }
+                        else
+                        {
+                            rankSHLab.Visibility = Visibility.Hidden;
+                            rankSHbox.Visibility = Visibility.Hidden;
+                            rankSHchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "rankss":
+                        if (config.GetValue("User", "rankSSbox", "true") == "true")
+                        {
+                            rankSSLab.Visibility = Visibility.Visible;
+                            rankSSbox.Visibility = Visibility.Visible;
+                            rankSSchangebox.Visibility = Visibility.Visible;
+                            controls.Add(rankSSLab);
+                            controls.Add(rankSSbox);
+                            controls.Add(rankSSchangebox);
+                        }
+                        else
+                        {
+                            rankSSLab.Visibility = Visibility.Hidden;
+                            rankSSbox.Visibility = Visibility.Hidden;
+                            rankSSchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "rankssh":
+                        if (config.GetValue("User", "rankSSHbox", "true") == "true")
+                        {
+                            rankSSHLab.Visibility = Visibility.Visible;
+                            rankSSHbox.Visibility = Visibility.Visible;
+                            rankSSHchangebox.Visibility = Visibility.Visible;
+                            controls.Add(rankSSHLab);
+                            controls.Add(rankSSHbox);
+                            controls.Add(rankSSHchangebox);
+                        }
+                        else
+                        {
+                            rankSSHLab.Visibility = Visibility.Hidden;
+                            rankSSHbox.Visibility = Visibility.Hidden;
+                            rankSSHchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "totals":
+                        if (config.GetValue("User", "totalSbox", "true") == "true")
+                        {
+                            totalSLab.Visibility = Visibility.Visible;
+                            totalSbox.Visibility = Visibility.Visible;
+                            totalSchangebox.Visibility = Visibility.Visible;
+                            controls.Add(totalSLab);
+                            controls.Add(totalSbox);
+                            controls.Add(totalSchangebox);
+                        }
+                        else
+                        {
+                            totalSLab.Visibility = Visibility.Hidden;
+                            totalSbox.Visibility = Visibility.Hidden;
+                            totalSchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "totalss":
+                        if (config.GetValue("User", "totalSSbox", "true") == "true")
+                        {
+                            totalSSLab.Visibility = Visibility.Visible;
+                            totalSSbox.Visibility = Visibility.Visible;
+                            totalSSchangebox.Visibility = Visibility.Visible;
+                            controls.Add(totalSSLab);
+                            controls.Add(totalSSbox);
+                            controls.Add(totalSSchangebox);
+                        }
+                        else
+                        {
+                            totalSSLab.Visibility = Visibility.Hidden;
+                            totalSSbox.Visibility = Visibility.Hidden;
+                            totalSSchangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "profileclears":
+                        if (config.GetValue("User", "clearsbox", "true") == "true")
+                        {
+                            clearsLab.Visibility = Visibility.Visible;
+                            clearsbox.Visibility = Visibility.Visible;
+                            clearschangebox.Visibility = Visibility.Visible;
+                            controls.Add(clearsLab);
+                            controls.Add(clearsbox);
+                            controls.Add(clearschangebox);
+                        }
+                        else
+                        {
+                            clearsLab.Visibility = Visibility.Hidden;
+                            clearsbox.Visibility = Visibility.Hidden;
+                            clearschangebox.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                }
             }
-            else
-            {
-                tscoreLab.Visibility = Visibility.Hidden;
-                totalbox.Visibility = Visibility.Hidden;
-                totalscorechangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "rankbox", "true") == "true")
-            {
-                rankLab.Visibility = Visibility.Visible;
-                rankbox.Visibility = Visibility.Visible;
-                rankchangebox.Visibility = Visibility.Visible;
-                controls.Add(rankLab);
-                controls.Add(rankbox);
-                controls.Add(rankchangebox);
-            }
-            else
-            {
-                rankLab.Visibility = Visibility.Hidden;
-                rankbox.Visibility = Visibility.Hidden;
-                rankchangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "countryrankbox", "true") == "true")
-            {
-                countryrankLab.Visibility = Visibility.Visible;
-                countryrankbox.Visibility = Visibility.Visible;
-                countryrankchangebox.Visibility = Visibility.Visible;
-                controls.Add(countryrankLab);
-                controls.Add(countryrankbox);
-                controls.Add(countryrankchangebox);
-            }
-            else
-            {
-                countryrankLab.Visibility = Visibility.Hidden;
-                countryrankbox.Visibility = Visibility.Hidden;
-                countryrankchangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "ppbox", "true") == "true")
-            {
-                ppLab.Visibility = Visibility.Visible;
-                ppbox.Visibility = Visibility.Visible;
-                ppchangebox.Visibility = Visibility.Visible;
-                controls.Add(ppLab);
-                controls.Add(ppbox);
-                controls.Add(ppchangebox);
-            }
-            else
-            {
-                ppLab.Visibility = Visibility.Hidden;
-                ppbox.Visibility = Visibility.Hidden;
-                ppchangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "accubox", "true") == "true")
-            {
-                accuLab.Visibility = Visibility.Visible;
-                accuracybox.Visibility = Visibility.Visible;
-                accuracychangebox.Visibility = Visibility.Visible;
-                controls.Add(accuLab);
-                controls.Add(accuracybox);
-                controls.Add(accuracychangebox);
-            }
-            else
-            {
-                accuLab.Visibility = Visibility.Hidden;
-                accuracybox.Visibility = Visibility.Hidden;
-                accuracychangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "playtimebox", "true") == "true")
-            {
-                playtimeLab.Visibility = Visibility.Visible;
-                playtimebox.Visibility = Visibility.Visible;
-                playtimechangebox.Visibility = Visibility.Visible;
-                controls.Add(playtimeLab);
-                controls.Add(playtimebox);
-                controls.Add(playtimechangebox);
-            }
-            else
-            {
-                playtimeLab.Visibility = Visibility.Hidden;
-                playtimebox.Visibility = Visibility.Hidden;
-                playtimechangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "playcountbox", "true") == "true")
-            {
-                playcountLab.Visibility = Visibility.Visible;
-                playcountbox.Visibility = Visibility.Visible;
-                playcountchangebox.Visibility = Visibility.Visible;
-                controls.Add(playcountLab);
-                controls.Add(playcountbox);
-                controls.Add(playcountchangebox);
-            }
-            else
-            {
-                playcountLab.Visibility = Visibility.Hidden;
-                playcountbox.Visibility = Visibility.Hidden;
-                playcountchangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "totalhitsbox", "true") == "true")
-            {
-                totalhitsLab.Visibility = Visibility.Visible;
-                totalhitsbox.Visibility = Visibility.Visible;
-                totalhitschangebox.Visibility = Visibility.Visible;
-                controls.Add(totalhitsLab);
-                controls.Add(totalhitsbox);
-                controls.Add(totalhitschangebox);
-            }
-            else
-            {
-                totalhitsLab.Visibility = Visibility.Hidden;
-                totalhitsbox.Visibility = Visibility.Hidden;
-                totalhitschangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "hitsperplaybox", "true") == "true")
-            {
-                hitsperplayLab.Visibility = Visibility.Visible;
-                hitsperplaybox.Visibility = Visibility.Visible;
-                hitsperplaychangebox.Visibility = Visibility.Visible;
-                controls.Add(hitsperplayLab);
-                controls.Add(hitsperplaybox);
-                controls.Add(hitsperplaychangebox);
-            }
-            else
-            {
-                hitsperplayLab.Visibility = Visibility.Hidden;
-                hitsperplaybox.Visibility = Visibility.Hidden;
-                hitsperplaychangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "tsperplaybox", "true") == "true")
-            {
-                tsperplayLab.Visibility = Visibility.Visible;
-                tsperplaybox.Visibility = Visibility.Visible;
-                tsperplaychangebox.Visibility = Visibility.Visible;
-                controls.Add(tsperplayLab);
-                controls.Add(tsperplaybox);
-                controls.Add(tsperplaychangebox);
-            }
-            else
-            {
-                tsperplayLab.Visibility = Visibility.Hidden;
-                tsperplaybox.Visibility = Visibility.Hidden;
-                tsperplaychangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "rsperplaybox", "true") == "true")
-            {
-                rsperplayLab.Visibility = Visibility.Visible;
-                rsperplaybox.Visibility = Visibility.Visible;
-                rsperplaychangebox.Visibility = Visibility.Visible;
-                controls.Add(rsperplayLab);
-                controls.Add(rsperplaybox);
-                controls.Add(rsperplaychangebox);
-            }
-            else
-            {
-                rsperplayLab.Visibility = Visibility.Hidden;
-                rsperplaybox.Visibility = Visibility.Hidden;
-                rsperplaychangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "topPPbox", "true") == "true")
-            {
-                topPPLab.Visibility = Visibility.Visible;
-                topPPbox.Visibility = Visibility.Visible;
-                topPPchangebox.Visibility = Visibility.Visible;
-                controls.Add(topPPLab);
-                controls.Add(topPPbox);
-                controls.Add(topPPchangebox);
-            }
-            else
-            {
-                topPPLab.Visibility = Visibility.Hidden;
-                topPPbox.Visibility = Visibility.Hidden;
-                topPPchangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "rankAbox", "true") == "true")
-            {
-                rankALab.Visibility = Visibility.Visible;
-                rankAbox.Visibility = Visibility.Visible;
-                rankAchangebox.Visibility = Visibility.Visible;
-                controls.Add(rankALab);
-                controls.Add(rankAbox);
-                controls.Add(rankAchangebox);
-            }
-            else
-            {
-                rankALab.Visibility = Visibility.Hidden;
-                rankAbox.Visibility = Visibility.Hidden;
-                rankAchangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "rankSbox", "true") == "true")
-            {
-                rankSLab.Visibility = Visibility.Visible;
-                rankSbox.Visibility = Visibility.Visible;
-                rankSchangebox.Visibility = Visibility.Visible;
-                controls.Add(rankSLab);
-                controls.Add(rankSbox);
-                controls.Add(rankSchangebox);
-            }
-            else
-            {
-                rankSLab.Visibility = Visibility.Hidden;
-                rankSbox.Visibility = Visibility.Hidden;
-                rankSchangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "rankSHbox", "true") == "true")
-            {
-                rankSHLab.Visibility = Visibility.Visible;
-                rankSHbox.Visibility = Visibility.Visible;
-                rankSHchangebox.Visibility = Visibility.Visible;
-                controls.Add(rankSHLab);
-                controls.Add(rankSHbox);
-                controls.Add(rankSHchangebox);
-            }
-            else
-            {
-                rankSHLab.Visibility = Visibility.Hidden;
-                rankSHbox.Visibility = Visibility.Hidden;
-                rankSHchangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "rankSSbox", "true") == "true")
-            {
-                rankSSLab.Visibility = Visibility.Visible;
-                rankSSbox.Visibility = Visibility.Visible;
-                rankSSchangebox.Visibility = Visibility.Visible;
-                controls.Add(rankSSLab);
-                controls.Add(rankSSbox);
-                controls.Add(rankSSchangebox);
-            }
-            else
-            {
-                rankSSLab.Visibility = Visibility.Hidden;
-                rankSSbox.Visibility = Visibility.Hidden;
-                rankSSchangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "rankSSHbox", "true") == "true")
-            {
-                rankSSHLab.Visibility = Visibility.Visible;
-                rankSSHbox.Visibility = Visibility.Visible;
-                rankSSHchangebox.Visibility = Visibility.Visible;
-                controls.Add(rankSSHLab);
-                controls.Add(rankSSHbox);
-                controls.Add(rankSSHchangebox);
-            }
-            else
-            {
-                rankSSHLab.Visibility = Visibility.Hidden;
-                rankSSHbox.Visibility = Visibility.Hidden;
-                rankSSHchangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "totalSbox", "true") == "true")
-            {
-                totalSLab.Visibility = Visibility.Visible;
-                totalSbox.Visibility = Visibility.Visible;
-                totalSchangebox.Visibility = Visibility.Visible;
-                controls.Add(totalSLab);
-                controls.Add(totalSbox);
-                controls.Add(totalSchangebox);
-            }
-            else
-            {
-                totalSLab.Visibility = Visibility.Hidden;
-                totalSbox.Visibility = Visibility.Hidden;
-                totalSchangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "totalSSbox", "true") == "true")
-            {
-                totalSSLab.Visibility = Visibility.Visible;
-                totalSSbox.Visibility = Visibility.Visible;
-                totalSSchangebox.Visibility = Visibility.Visible;
-                controls.Add(totalSSLab);
-                controls.Add(totalSSbox);
-                controls.Add(totalSSchangebox);
-            }
-            else
-            {
-                totalSSLab.Visibility = Visibility.Hidden;
-                totalSSbox.Visibility = Visibility.Hidden;
-                totalSSchangebox.Visibility = Visibility.Hidden;
-            }
-
-            if (config.GetValue("User", "clearsbox", "true") == "true")
-            {
-                clearsLab.Visibility = Visibility.Visible;
-                clearsbox.Visibility = Visibility.Visible;
-                clearschangebox.Visibility = Visibility.Visible;
-                controls.Add(clearsLab);
-                controls.Add(clearsbox);
-                controls.Add(clearschangebox);
-            }
-            else
-            {
-                clearsLab.Visibility = Visibility.Hidden;
-                clearsbox.Visibility = Visibility.Hidden;
-                clearschangebox.Visibility = Visibility.Hidden;
-            }
-
 
             rankingcomponents = controls.Count / 3;
             int count = 0;
@@ -2496,248 +2534,206 @@ namespace osu_Profile.Forms
 
             private void UpdateRankingPanel()
             {
-                if (MWindow.PlayerActualState != null)
+                bool downloaded = false;
+                while (!downloaded)
                 {
-                    short retry = 0;
-                    Player tempState = null;
-                    bool downloaded = false;
-                    while (!downloaded)
+                    try
                     {
-                        try
-                        {
-                            WebClient client = new WebClient();
-                            string apiReturn = client.DownloadString("https://osu.ppy.sh/api/get_user?k=" + APIKey + "&u=" + Username + "&m=" + mode);
-                            apiReturn = apiReturn.Substring(1, apiReturn.Length - 2);
-                            //long score = MainWindow.MWindow.PlayerActualState.Score;
-                            tempState = JsonConvert.DeserializeObject<Player>(apiReturn);
-                            downloaded = true;
-                        }
-                        catch (Exception) { downloaded = false; Thread.Sleep(new TimeSpan(0, 0, 1)); }
-                    }
-                    Scoerapi tempScoerState = new Scoerapi { ScoreRank = 0, ID = 0, SCOER = 0, Scoer_username = "None" };
-                    Scoerapi PrevScoerState = new Scoerapi { ScoreRank = 0, ID = 0, SCOER = 0, Scoer_username = "None" };
-                    //ScoerChange variable shows if a change in Score Rank has happened or not.
-                    bool ScoerChange = false;
-                    if ((MWindow.PlayerFirstState.Mode == tempState.Mode) && (tempState.ID == MWindow.PlayerFirstState.ID) && (scoremode == 1))
-                    {
-                        PrevScoerState = MWindow.PlayerActualState.scoerinfo;
                         WebClient client = new WebClient();
-                        userID = tempState.ID;
-                        retry = 0;
-                        downloaded = false;
-                        while (!downloaded && retry <= 3)
+                        string apiReturn = client.DownloadString("https://osu.ppy.sh/api/get_user?k=" + APIKey + "&u=" + Username + "&m=" + mode);
+                        apiReturn = apiReturn.Substring(1, apiReturn.Length - 2);
+                        //long score = MainWindow.MWindow.PlayerActualState.Score;
+                        Player tempState = JsonConvert.DeserializeObject<Player>(apiReturn);
+                        Scoerapi tempScoerState = new Scoerapi { SCOER = 0, Scoer_username = "None", ID = 0, ScoreRank = 0 };
+                        Scoerapi PrevScoerState = new Scoerapi { SCOER = 0, Scoer_username = "None", ID = 0, ScoreRank = 0 };
+                        //ScoerChange variable shows if a change in Score Rank has happened or not.
+                        bool ScoerChange = false;
+                        if ((tempState.ID == MWindow.PlayerFirstState.ID) && (scoremode == 1))
                         {
                             try
                             {
-                                string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
+                                if (MWindow.PlayerActualState.scoerinfo != null)
+                                {
+                                    PrevScoerState = MWindow.PlayerActualState.scoerinfo;
+                                }
+                                userID = tempState.ID;
+                                string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + mode);
                                 scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                                if (scoerapiReturn.Length > 0)
+                                if (scoerapiReturn.Length < 1)
                                 {
-                                    tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                                    throw new NullReferenceException();
                                 }
-                                else
-                                    throw new WebException();
-                                if (tempScoerState.ID != 0)
+                                tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                                if (tempScoerState != PrevScoerState)
                                 {
-                                    //if your enter top 10000, make starting score rank 10001.
-                                    if ((MWindow.PlayerFirstState.scoerinfo.ID == 0) && (tempScoerState.ID != 0))
-                                    {
-                                        MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo = tempScoerState;
-                                        MWindow.PlayerFirstState.scoerinfo.ScoreRank = 10001;
-                                        PrevScoerState = tempScoerState;
-                                        PrevScoerState.ScoreRank = 10001;
-                                        MWindow.PlayerActualState.scoerinfo.ScoreRank = tempScoerState.ScoreRank;
-                                        ScoerChange = true;
-                                    }
-                                    else
-                                    {
-                                        MWindow.PlayerActualState.scoerinfo = tempScoerState;
-                                        ScoerChange = true;
-                                    }
+                                    MWindow.PlayerActualState.scoerinfo = tempScoerState;
+                                    ScoerChange = true;
                                 }
-                                downloaded = true;
+                                else if ((MWindow.PlayerFirstState.scoerinfo.ScoreRank == 0) && (tempScoerState.ScoreRank != 0)) //if your enter top 10000, make starting score rank 10001.
+                                {
+                                    MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo = tempScoerState;
+                                    MWindow.PlayerFirstState.scoerinfo.ScoreRank = 10001;
+                                    PrevScoerState = tempScoerState;
+                                    PrevScoerState.ScoreRank = 10001;
+                                    MWindow.PlayerActualState.scoerinfo.ScoreRank = tempScoerState.ScoreRank;
+                                    ScoerChange = true;
+                                }
                             }
-                            catch (Exception) { retry++; downloaded = false; Thread.Sleep(new TimeSpan(0, 0, 0, 0, 200)); }
+                            catch (Exception) { MWindow.PlayerActualState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo; }
                         }
-                        if (!downloaded) { tempScoerState = MWindow.PlayerActualState.scoerinfo; }
-                    }
-                    tempState.Mode = mode;
-                    if ((tempState.Mode != MWindow.PlayerFirstState.Mode) || (tempState.ID != MWindow.PlayerFirstState.ID))
-                    {
-                        WebClient client = new WebClient();
-                        MWindow.PrevStatState = MWindow.PlayerPreviousState = MWindow.PlayerFirstState = MWindow.PlayerActualState = tempState;
-                        if (tempState.PP > 0)
+                        //if (tempState.Mode != 0)
+                        //{
+                        //    tempState.scoerinfo = new Scoerapi { ID = 0, SCOER = 0, Scoer_username = "None", ScoreRank = 0 };
+                        //}
+                        tempState.Mode = mode;
+                        if ((tempState.Mode != MWindow.PlayerFirstState.Mode) || (tempState.ID != MWindow.PlayerFirstState.ID)) //If mode changes reset session
                         {
-                            downloaded = false;
-                            while (!downloaded)
+                            MWindow.PlayerPreviousState = MWindow.PlayerFirstState = MWindow.PlayerActualState = tempState;
+                            if (tempState.PP > 0)
                             {
-                                try
-                                {
-                                    MWindow.PlayerActualState.TopRanks = JsonConvert.DeserializeObject<Score[]>(client.DownloadString("https://osu.ppy.sh/api/get_user_best?k=" + APIKey + "&u=" + Username + "&m=" + mode + "&limit=" + 1));
-                                    downloaded = true;
-                                }
-                                catch (Exception) { downloaded = false; Thread.Sleep(new TimeSpan(0, 0, 1)); }
+                                MWindow.PlayerActualState.TopRanks = JsonConvert.DeserializeObject<Score[]>(client.DownloadString("https://osu.ppy.sh/api/get_user_best?k=" + APIKey + "&u=" + Username + "&m=" + mode + "&limit=" + 1));
+                                MWindow.PlayerFirstState.TopRanks = MWindow.PlayerPreviousState.TopRanks = MWindow.PlayerActualState.TopRanks;
                             }
-                            MWindow.PlayerFirstState.TopRanks = MWindow.PlayerPreviousState.TopRanks = MWindow.PlayerActualState.TopRanks;
-                        }
-                        userID = tempState.ID;
-                        retry = 0;
-                        downloaded = false;
-                        MWindow.PrevStatState = MWindow.PlayerFirstState;
-                        MWindow.PrevStatState.TopRanks = MWindow.PlayerFirstState.TopRanks;
-                        while (!downloaded && retry <= 3)
-                        {
+                            MWindow.PrevStatState = MWindow.PlayerFirstState;
+                            MWindow.PrevStatState.TopRanks = MWindow.PlayerFirstState.TopRanks;
                             try
                             {
-                                string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
+                                userID = tempState.ID;
+                                string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + mode);
                                 scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                                if (scoerapiReturn.Length > 0)
+                                if (scoerapiReturn.Length < 1)
                                 {
-                                    tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                                    throw new NullReferenceException();
                                 }
-                                else
-                                    throw new WebException();
+                                tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
                                 PrevScoerState = tempScoerState;
-                                MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = tempScoerState;
-                                downloaded = true;
+                                MWindow.PrevStatState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = tempScoerState;
                             }
-                            catch (Exception) { downloaded = false; retry++; Thread.Sleep(new TimeSpan(0, 0, 0, 0, 200)); }
-                        }
-                        if (!downloaded)
-                        {
-                            tempScoerState = new Scoerapi { ID = 0, SCOER = 0, Scoer_username = "None", ScoreRank = 0 };
-                            MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = tempScoerState;
-                        }
-                    }
-                    if ((tempState.Score != MWindow.PlayerActualState.Score) || (ScoerChange && (scoremode == 1)) || (scoremodeOld != scoremode))
-                    {
-                        if (tempState.Score == MWindow.PlayerActualState.Score)
-                        {
-                            if (tempState.Score != MWindow.PlayerPreviousState.Score)
+                            catch (Exception)
                             {
-                                MWindow.PrevStatState = MWindow.PlayerPreviousState;
-                                MWindow.PrevStatState.TopRanks = MWindow.PlayerPreviousState.TopRanks;
-                                if (MWindow.PlayerPreviousState.scoerinfo.ID != 0)
-                                {
-                                    MWindow.PrevStatState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo;
-                                }
+                                tempScoerState = new Scoerapi { ID = 0, SCOER = 0, Scoer_username = "None", ScoreRank = 0 };
+                                MWindow.PrevStatState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo = MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = tempScoerState;
                             }
                         }
                         else
                         {
-                            MWindow.PrevStatState = MWindow.PlayerActualState;
-                            MWindow.PrevStatState.TopRanks = MWindow.PlayerActualState.TopRanks;
-                            if (MWindow.PlayerActualState.scoerinfo.ID != 0)
-                            {
-                                MWindow.PrevStatState.scoerinfo = MWindow.PlayerActualState.scoerinfo;
-                            }
                         }
-                        MWindow.PlayerPreviousState = MWindow.PlayerActualState;
-                        MWindow.PlayerActualState = tempState;
-                        MWindow.PlayerActualState.scoerinfo = new Scoerapi { ID = 0, SCOER = 0, Scoer_username = "None", ScoreRank = 0 };
-                        if ((tempScoerState.ID != 0) || (scoremode == 0))
+                        if ((tempState.Score != MWindow.PlayerActualState.Score) || ((ScoerChange == true) && (scoremode == 1)) || (scoremodeOld != scoremode))
                         {
+                            if ((tempState.Score == MWindow.PlayerActualState.Score) && (tempState.Mode == MWindow.PrevStatState.Mode))
+                            {
+                                if (tempState.Score != MWindow.PlayerPreviousState.Score)
+                                {
+                                    MWindow.PrevStatState = MWindow.PlayerPreviousState;
+                                    MWindow.PrevStatState.TopRanks = MWindow.PlayerPreviousState.TopRanks;
+                                    if (MWindow.PlayerPreviousState.scoerinfo != null)
+                                    {
+                                        MWindow.PrevStatState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                MWindow.PrevStatState = MWindow.PlayerActualState;
+                                MWindow.PrevStatState.TopRanks = MWindow.PlayerActualState.TopRanks;
+                                if (MWindow.PlayerActualState.scoerinfo != null)
+                                {
+                                    MWindow.PrevStatState.scoerinfo = MWindow.PlayerActualState.scoerinfo;
+                                }
+                            }
+                            MWindow.PlayerPreviousState = MWindow.PlayerActualState;
+                            MWindow.PlayerActualState = tempState;
                             if (scoremode == 0)
                             {
-                                WebClient client = new WebClient();
-                                userID = tempState.ID;
-                                retry = 0;
-                                downloaded = false;
-                                while (!downloaded && retry <= 3)
+                                try
                                 {
-                                    try
+                                    userID = tempState.ID;
+                                    string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + mode);
+                                    scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
+                                    if (scoerapiReturn.Length < 1)
                                     {
-                                        string scoerapiReturn = client.DownloadString("https://score.respektive.pw/u/" + userID + "?m=" + tempState.Mode);
-                                        scoerapiReturn = scoerapiReturn.Substring(1, scoerapiReturn.Length - 2);
-                                        if (scoerapiReturn.Length > 0)
+                                        throw new NullReferenceException();
+                                    }
+                                    tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+
+                                    if ((tempScoerState.ScoreRank != 0) && (tempScoerState != PrevScoerState))
+                                    {
+                                        MWindow.PlayerPreviousState = MWindow.PrevStatState;
+                                        //if your enter top 10000, make starting score rank 10001.
+                                        if ((MWindow.PlayerFirstState.scoerinfo.ScoreRank == 0) && (tempScoerState.ScoreRank != 0))
                                         {
-                                            tempScoerState = JsonConvert.DeserializeObject<Scoerapi>(scoerapiReturn);
+                                            MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo = tempScoerState;
+                                            MWindow.PlayerFirstState.scoerinfo.ScoreRank = 10001;
+                                            PrevScoerState = tempScoerState;
+                                            PrevScoerState.ScoreRank = 10001;
+                                            MWindow.PlayerActualState.scoerinfo.ScoreRank = tempScoerState.ScoreRank;
                                         }
                                         else
-                                            throw new WebException();
-                                        downloaded = true;
-                                    }
-                                    catch (Exception) { downloaded = false; retry++; Thread.Sleep(new TimeSpan(0, 0, 0, 0, 200)); }
-                                }
-                                if (!downloaded) { tempScoerState = MWindow.PlayerActualState.scoerinfo; }
-                                if ((tempScoerState.ID != 0) && (tempScoerState != PrevScoerState))
-                                {
-                                    MWindow.PlayerPreviousState = MWindow.PrevStatState;
-                                    //if your enter top 10000, make starting score rank 10001.
-                                    if ((MWindow.PlayerFirstState.scoerinfo.ID == 0) && (tempScoerState.ID != 0))
-                                    {
-                                        MWindow.PlayerFirstState.scoerinfo = MWindow.PlayerActualState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo = tempScoerState;
-                                        MWindow.PlayerFirstState.scoerinfo.ScoreRank = 10001;
-                                        PrevScoerState = tempScoerState;
-                                        PrevScoerState.ScoreRank = 10001;
-                                        MWindow.PlayerActualState.scoerinfo.ScoreRank = tempScoerState.ScoreRank;
-                                    }
-                                    else
-                                    {
-                                        MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo;
-                                        MWindow.PlayerActualState.scoerinfo = tempScoerState;
+                                        {
+                                            MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo;
+                                            MWindow.PlayerActualState.scoerinfo = tempScoerState;
+                                        }
                                     }
                                 }
+                                catch (Exception) { MWindow.PlayerActualState.scoerinfo = MWindow.PlayerPreviousState.scoerinfo; }
                             }
                             else
                             {
                                 MWindow.PlayerPreviousState.scoerinfo = PrevScoerState;
                                 MWindow.PlayerActualState.scoerinfo = tempScoerState;
                             }
-                        }
-                        if ((scoremodeOld != scoremode) && (MWindow.PrevStatState != null))
-                        {
-                            scoremodeOld = scoremode;
-                            MWindow.PlayerPreviousState = MWindow.PrevStatState;
-                            if (MWindow.PrevStatState.TopRanks != null)
+                            if ((scoremodeOld != scoremode) && (MWindow.PrevStatState != null))
                             {
-                                MWindow.PlayerPreviousState.TopRanks = MWindow.PrevStatState.TopRanks;
-                            }
-                            if (MWindow.PrevStatState.scoerinfo.ID != 0)
-                            {
-                                MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo;
-                            }
-                        }
-                        if (MWindow.PlayerPreviousState.PP < MWindow.PlayerActualState.PP)
-                        {
-                            downloaded = false;
-                            while (!downloaded)
-                            {
-                                try
+                                scoremodeOld = scoremode;
+                                MWindow.PlayerPreviousState = MWindow.PrevStatState;
+                                if (MWindow.PrevStatState.TopRanks != null)
                                 {
-                                    WebClient client = new WebClient();
-                                    MWindow.PrevStatState.TopRanks = MWindow.PlayerActualState.TopRanks;
-                                    MWindow.PlayerActualState.TopRanks = JsonConvert.DeserializeObject<Score[]>(client.DownloadString("https://osu.ppy.sh/api/get_user_best?k=" + APIKey + "&u=" + Username + "&m=" + mode + "&limit=" + 1));
-                                    downloaded = true;
+                                    MWindow.PlayerPreviousState.TopRanks = MWindow.PrevStatState.TopRanks;
                                 }
-                                catch (Exception) { downloaded = false; Thread.Sleep(new TimeSpan(0, 0, 1)); }
+                                if (MWindow.PrevStatState.scoerinfo != null)
+                                {
+                                    MWindow.PlayerPreviousState.scoerinfo = MWindow.PrevStatState.scoerinfo;
+                                }
+                            }
+                            if (MWindow.PlayerPreviousState.PP < MWindow.PlayerActualState.PP)
+                            {
+                                MWindow.PrevStatState.TopRanks = MWindow.PlayerActualState.TopRanks;
+                                MWindow.PlayerActualState.TopRanks = JsonConvert.DeserializeObject<Score[]>(client.DownloadString("https://osu.ppy.sh/api/get_user_best?k=" + APIKey + "&u=" + Username + "&m=" + mode + "&limit=" + 1));
+                            }
+
+                            for (int i = 0; i < files.Count; i++)
+                            {
+                                MainWindow.files[i].TimeLeft = MainWindow.files[i].Time;
+                            }
+
+                            int ActualClears = MWindow.PlayerActualState.RankA + MWindow.PlayerActualState.RankS + MWindow.PlayerActualState.RankSH + MWindow.PlayerActualState.RankSS + MWindow.PlayerActualState.RankSSH;
+                            int PreviousClears = MWindow.PlayerPreviousState.RankA + MWindow.PlayerPreviousState.RankS + MWindow.PlayerPreviousState.RankSH + MWindow.PlayerPreviousState.RankSS + MWindow.PlayerPreviousState.RankSSH;
+                            long Scoerdiff = (MWindow.PlayerActualState.Score - MWindow.PlayerPreviousState.Score) - (MWindow.PlayerActualState.RankedScore - MWindow.PlayerPreviousState.RankedScore);
+                            long Scoerchange = MWindow.PlayerActualState.Score - MWindow.PlayerPreviousState.Score;
+
+                            if (config.GetValue("User", "popupEachMap", "false") == "true" && MWindow.PlayerPreviousState.RankedScore != MWindow.PlayerActualState.RankedScore)
+                            {
+                                MWindow.RankedScoreChangeBox.Dispatcher.Invoke(new Action(() =>
+                                {
+                                    MWindow.Activate();
+                                    MWindow.Focus();
+                                }));
+                            }
+                            else if (config.GetValue("User", "popupPP", "false") == "true" && MWindow.PlayerPreviousState.PP < MWindow.PlayerActualState.PP)
+                            {
+                                MWindow.RankedScoreChangeBox.Dispatcher.Invoke(new Action(() =>
+                                {
+                                    MWindow.Activate();
+                                    MWindow.Focus();
+                                }));
                             }
                         }
-
-                        for (int i = 0; i < files.Count; i++)
-                        {
-                            MainWindow.files[i].TimeLeft = MainWindow.files[i].Time;
-                        }
-
-                        if (config.GetValue("User", "popupEachMap", "false") == "true" && MWindow.PlayerPreviousState.RankedScore != MWindow.PlayerActualState.RankedScore)
-                        {
-                            MWindow.RankedScoreChangeBox.Dispatcher.Invoke(new Action(() =>
-                            {
-                                MWindow.Activate();
-                                MWindow.Focus();
-                            }));
-                        }
-                        else if (config.GetValue("User", "popupPP", "false") == "true" && MWindow.PlayerPreviousState.PP < MWindow.PlayerActualState.PP)
-                        {
-                            MWindow.RankedScoreChangeBox.Dispatcher.Invoke(new Action(() =>
-                            {
-                                MWindow.Activate();
-                                MWindow.Focus();
-                            }));
-                        }
+                        downloaded = true;
                     }
-                    MWindow.UpdateRankingControls();
+                    catch (Exception) { downloaded = false; Thread.Sleep(new TimeSpan(0, 0, 1)); }
                 }
+
+                MWindow.UpdateRankingControls();
             }
 
             private void UpdatePlayPanel()
