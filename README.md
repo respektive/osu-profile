@@ -2,6 +2,18 @@ fork of [osu-profile](https://github.com/Entrivax/osu-profile) by [Entrivax](htt
 
 > Note that this is not actively being worked on anymore as it's just a pain in the ass to work with this code. In the future i might start working on a new osu! statistics tracking tool, but till then this has to do. Feel free to fork this yourself to add more stuff, as i probably won't check any PRs either. You might also check out [OsuAchievedOverlay](https://github.com/EngineerMark/OsuAchievedOverlay) which is getting regular updates and might become the spiritual successor of osu!Profile.
 
+# Newly added stats by this fork
+
+- Score Rank
+- Play Time
+- Total Hits
+- Hits per Play
+- Total S
+- Total SS
+- Profile Clears (Sum of SS/S/A Ranks)
+- Total Score per Play
+- Ranked Score per Play
+
 # Score Rank API
 
 Code is now available at <https://github.com/respektive/osu-score-rank-api> and endpoints explanation moved to its [readme file](https://github.com/respektive/osu-score-rank-api#score-rank-api).
